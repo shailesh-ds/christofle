@@ -1,0 +1,390 @@
+<div class="inline-block w-full align-middle bg-[#0C0C0C] pt-10 pb-10 lg:pb-20">
+  <div class="container">
+    <div class="max-w-[800px] mx-auto text-white text-center mb-10">
+      <h2 class="text-xl md:text-3xl font-semibold leading-tight mb-3 text-white uppercase">near by store</h2>
+      {{convertRTFToHTML c_abbotttext}}
+    </div>
+    <div class="location-data w-full grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-9"> </div>
+  </div>
+</div>
+<script>
+  function convertDays(days) {
+    const currentDate = new Date();
+    const dayNumber = currentDate.getDay();
+    const currentSelectedDay = days[dayNumber];
+    const beforeSelected = days.slice(0, dayNumber);
+    const afterSelected = days.slice(dayNumber, days.length);
+    beforeSelected.forEach((element) => {
+      afterSelected.push(element);
+    });
+    return {
+      afterSelected: afterSelected
+    };
+  }
+let path=window.location.href;
+ let days_string =['Sunday','Monday','Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    
+       if(path.includes("/fr")){
+      days_string=['dimanche','lundi','mardi', 'mercredi','jeudi','vendredi','samedi']
+    }    
+
+       if(path.includes("/ja")){
+      days_string=['日曜日','月曜日','火曜日', '水曜日','木曜日','金曜日','土曜日']
+ 
+    } 
+  
+  let BaseURL  = window.location.href;
+
+
+
+
+  $('.time-row').each(function () {
+
+    var day = $(this).attr('data-day');
+    var timeStart = $(this).attr('data-start');
+    var timeEnd = $(this).attr('data-end');
+
+    var today = new Date();
+    var dayName = days_string[today.getDay()];
+
+
+    // $(this).find('.time_start').html(formatTimE(timeStart));
+    // $(this).find('.time_end').html(formatTimE(timeEnd));
+
+    if (day) {
+      if (dayName == day) {
+        $(this).addClass('currentDay');
+        $(this).clone().prependTo(".hours-list");
+        $(this).remove();
+      }
+    } else {
+
+      if (dayName == day) {
+        $(this).addClass('currentDay');
+        $(this).clone().prependTo(".hours-list");
+        $(this).remove();
+      }
+
+    }
+
+  });
+
+  const convertedDays = convertDays(days_string);
+  const days = convertedDays.afterSelected;
+  console.log(days);
+  let day_html = '';
+  for (let i = 0; i < days.length; i++) {
+    let currentDay = '';
+    if (i == 0) {
+      currentDay = 'currentDay';
+    }
+    day_html += '<div class=" time-row px-5 flex flex-wrap group odd:bg-color_f5f5f5 ' + currentDay + ' " >'
+    day_html += $('.hours-list').find('.' + days[i]).html();
+    day_html += '</div>';
+  }
+  $('.hours-list').html(day_html);
+  window.dayName = function (currentDate) {
+    return days[currentDate.getDay()];
+  };
+</script>
+<script>
+
+
+
+  window.dayName = function (currentDate) {
+    return days[currentDate.getDay()];
+  };
+  window.formatDate = function (intervalStamp, addDays) {
+    let baseDate = new Date();
+    let hours = intervalStamp / 100;
+    let minutes = intervalStamp % 100;
+    baseDate.setHours(hours);
+    baseDate.setMinutes(minutes);
+    const options = { hour: '2-digit', minute: '2-digit' };
+    if (addDays != undefined) {
+      options.weekday = "short";
+      baseDate.setDate(baseDate.getDate() + addDays);
+    }
+    return baseDate.toLocaleTimeString([], options);
+  };
+  window.getYextTimeWithUtcOffset = function (entityUtcOffsetSeconds) {
+    const now = new Date();
+    let utcOffset = 0;
+    if (entityUtcOffsetSeconds) {
+      utcOffset = entityUtcOffsetSeconds * 1000;
+    }
+    if (utcOffset !== 0) {
+      const localUtcOffset = now.getTimezoneOffset() * 60 * 1000;
+      return new Date(now.valueOf() + utcOffset + localUtcOffset);
+    }
+    return now;
+  };
+  window.parseTimeZoneUtcOffset = function (timeString) {
+    if (!timeString) {
+      return 0;
+    }
+    const parts = timeString.split(":");
+    const hours = parseInt(parts[0].replace(/\u200E/g, ''), 10);
+    const minutes = parseInt(parts[1].replace(/\u200E/g, ''), 10);
+    if (hours < 0) {
+      return -(Math.abs(hours) + minutes / 60) * 60 * 60;
+    }
+    return (hours + minutes / 60) * 60 * 60;
+  };
+  window.dateStringToInt = function (dateString) {
+    return parseInt(dateString.replace(":", ""))
+  };
+  window.getOpenNowString = function (hoursData, utcOffset) {
+    if (!hoursData) {
+      return ""
+    }
+    const now = getYextTimeWithUtcOffset(utcOffset);
+    const tomorrow = new Date(now.getTime() + 60 * 60 * 24 * 1000);
+    const yesterday = new Date(now.getTime() - 60 * 60 * 24 * 1000);
+    const nowTimeNumber = now.getHours() + now.getMinutes() / 60;
+    function getIntervalOnDate(date) {
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+      
+      const dateString = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
+      const dayOfWeekString = days[date.getDay()];
+      // Check for holiday
+      if (hoursData.holidayHours) {
+        for (let i = 0; i < hoursData.holidayHours.length; i++) {
+          const holiday = hoursData.holidayHours[i];
+          if (holiday.date == dateString) {
+            if (holiday.openIntervals) {
+              return holiday.openIntervals;
+            } else if (holiday.isClosed === true) {
+              return null; // On holiday but closed
+            }
+          }
+        }
+      }
+      // Not on holiday
+      if (hoursData[dayOfWeekString] && hoursData[dayOfWeekString].openIntervals) {
+        return hoursData[dayOfWeekString].openIntervals;
+      } else {
+        return null;
+      }
+    }
+    function timeStringToNumber(timeString) {
+      const parts = timeString.split(":");
+      const hours = parseInt(parts[0].replace(/\u200E/g, ''), 10);
+      const minutes = parseInt(parts[1].replace(/\u200E/g, ''), 10);
+      return hours + minutes / 60;
+    }
+    function formatTime(time) {
+      const tempDate = new Date("January 1, 2020 " + time)
+      const localeString = 'en-US';
+      const tempTime = tempDate.toLocaleTimeString(localeString.replace('_', '-'), { hour: "numeric", minute: "numeric" });
+      return tempTime;
+    }
+    const intervalsToday = getIntervalOnDate(now);
+    const intervalsTomorrow = getIntervalOnDate(tomorrow);
+    const intervalsYesterday = getIntervalOnDate(yesterday);
+    let openRightNow = false;
+    let currentInterval = null;
+    let nextInterval = null;
+    if (intervalsYesterday) {
+      for (let i = 0; i < intervalsYesterday.length; i++) {
+        const interval = intervalsYesterday[i];
+        const startIntervalNumber = timeStringToNumber(interval.start);
+        const endIntervalNumber = timeStringToNumber(interval.end);
+        // If end overflows to the next day (i.e. today).
+        if (endIntervalNumber < startIntervalNumber) {
+          if (nowTimeNumber < endIntervalNumber) {
+            currentInterval = interval;
+            openRightNow = true;
+          }
+        }
+      }
+    }
+    // Assumes no overlapping intervals
+    if (intervalsToday) {
+      for (let i = 0; i < intervalsToday.length; i++) {
+        const interval = intervalsToday[i];
+        const startIntervalNumber = timeStringToNumber(interval.start);
+        const endIntervalNumber = timeStringToNumber(interval.end);
+        // If current time doesn't belong to one of yesterdays interval.
+        if (currentInterval == null) {
+          if (endIntervalNumber < startIntervalNumber) {
+            if (nowTimeNumber >= startIntervalNumber) {
+              currentInterval = interval;
+              openRightNow = true;
+            }
+          } else if (nowTimeNumber >= startIntervalNumber
+            && nowTimeNumber < endIntervalNumber) {
+            currentInterval = interval;
+            openRightNow = true;
+          }
+        }
+        if (nextInterval == null) {
+          if (startIntervalNumber > nowTimeNumber) {
+            nextInterval = interval
+          }
+        } else {
+          if (startIntervalNumber > nowTimeNumber
+            && startIntervalNumber < timeStringToNumber(nextInterval.start)) {
+            nextInterval = interval;
+          }
+        }
+      }
+    }
+    let nextIsTomorrow = false;
+    // If no more intervals in the day
+    if (nextInterval == null) {
+      if (intervalsTomorrow) {
+        if (intervalsTomorrow.length > 0) {
+          nextInterval = intervalsTomorrow[0];
+          nextIsTomorrow = true;
+        }
+      }
+    }
+    let message = 'Closed';
+    if (openRightNow) {
+      if (currentInterval.start === "00:00" && currentInterval.end === "23:59") {
+        message = 'Open 24 Hours';
+      } else {
+        message = 'Open · Closes at [closingTime]';
+        message = message.replace("[closingTime]", formatTime(currentInterval.end));
+      }
+    } else if (nextInterval) {
+      if (nextIsTomorrow) {
+        message = 'Closed · Opens at [openingTime] tomorrow';
+        message = message.replace("[openingTime]", formatTime(nextInterval.start));
+      } else {
+        message = 'Closed · Opens at [openingTime]';
+        message = message.replace("[openingTime]", formatTime(nextInterval.start));
+      }
+    }
+    return message;
+  };
+
+</script>
+
+<script>
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var baseURL = "https://liveapi-sandbox.yext.com/v2/accounts/me/entities/geosearch?";
+    var api_key = "{{global.liveApiKey}}";
+    var vparam = "20181017";
+    var lat = "{{latitude}}";
+    var lng = "{{longitude}}";
+    var location = lat + "," + lng;
+    var limit = 3;
+    var radius = 300;
+    var savedFilterId = "982931142";
+    var entityTypes = "location";
+    // var languages = ["fr","ja","en"];
+
+    var fields = "name,slug,hours,neighborhood,address,mainPhone,timeZoneUtcOffset,c_photoGallery2";
+    const savedSearchIdString = "";
+
+    var fullURL =
+      baseURL +
+      "api_key=" +
+      api_key +
+      "&v=" +
+      vparam +
+      "&location=" +
+      location +
+      "&limit=" +
+      (limit + 1) +
+      "&radius=" +
+      radius +
+      "&entityTypes=" +
+      entityTypes +
+      "&savedFilterIds=" +
+      savedFilterId +
+      "&fields=" +
+      fields +
+      // "&languages=" +
+      //languages +
+      "&resolvePlaceholders=true";
+    [].slice
+      .call(document.querySelectorAll(".location-data") || [])
+      .forEach(function (el) {
+        el.innerHTML = '<div class="col-span-2 text-center text-2xl mt-10 opacity-70 text-white">Loading...</div>';
+      });
+    //$.get(fullURL, function (data) {
+    fetch(fullURL).then(response => response.json()).then(data => {
+      //entities = data.response.entities;
+      entities = data.response.entities;
+      [].slice
+        .call(document.querySelectorAll(".location-data") || [])
+        .forEach(function (el) {
+          el.innerHTML = "";
+        });
+      if (
+        entities.length == 0 ||
+        (entities.length == 1 && entities[0].meta.id == "{{id}}")
+      ) {
+        [].slice
+          .call(document.querySelectorAll(".location-data") || [])
+          .forEach(function (el) {
+            el.innerHTML = '<div class="col-span-2 text-center text-2xl mt-10 opacity-70 text-white">No Locations Found</div>';
+          });
+      }
+      for (var i = 1; i < entities.length; i++) {
+        location = entities[i];
+        locationHTML = "";
+        const parsedOffset = parseTimeZoneUtcOffset(location.timeZoneUtcOffset);
+        //style="width:80%;height:auto;padding-top:2rem;padding-bottom:2rem;
+        //style="width:100%;height:auto;        
+        if (true) {
+
+          locationHTML =
+            '<div class="location bg-white rounded-tl-2xl rounded-br-2xl flex flex-wrap overflow-hidden leading-6"><div class="w-full sm:w-1/3 rounded-tl-2xl rounded-br-2xl relative overflow-hidden pt-[57%] sm:pt-0"><img src="' + location.c_photoGallery2[0].image.url + '" class="rounded-tl-2xl rounded-br-2xl w-full h-full absolute top-0 left-0 object-cover transition-all duration-500 transform hover:scale-105"/></div><div class="w-full sm:w-2/3 p-3 pb-11 text-sm relative"><h3 class="text-base font-bold mb-2.5"><a class="transition-all duration-300 hover:text-red" href="' + location.slug + '">' + ucwords(location.name) + '</a></h3><div class="address leading-6 relative pl-6 mb-3.5"><svg class="bg-red rounded-full fill-white absolute top-0.5 left-0 w-5 h-5 p-1 mr-2" xmlns="http://www.w3.org/2000/svg"width="7.954" height="10.606" viewBox="0 0 7.954 10.606"> <path data-name="Icon awesome-map-marker-alt"d="M3.568,10.392C.559,6.029,0,5.581,0,3.977a3.977,3.977,0,0,1,7.954,0c0,1.6-.559,2.051-3.568,6.415a.5.5,0,0,1-.817,0Zm.409-4.758A1.657,1.657,0,1,0,2.32,3.977,1.657,1.657,0,0,0,3.977,5.634Z" /> </svg><div class="">' + ucwords(location.address.line1) + '</div><div class="">' + ucwords(location.address.city) + ', ' + location.address.postalCode + '</div></div><div class="relative pl-6 mb-3.5"><svg class="bg-red rounded-full fill-white absolute top-0.5 left-0 w-5 h-5 p-1 mr-2" xmlns="http://www.w3.org/2000/svg"width="7.955" height="7.955" viewBox="0 0 7.955 7.955"> <path  data-name="Icon awesome-phone-alt"d="M7.728,5.621l-1.74-.746a.373.373,0,0,0-.435.107l-.771.942A5.759,5.759,0,0,1,2.029,3.172L2.971,2.4a.372.372,0,0,0,.107-.435L2.332.226A.375.375,0,0,0,1.9.01L.289.383A.373.373,0,0,0,0,.746,7.208,7.208,0,0,0,7.209,7.955a.373.373,0,0,0,.364-.289L7.945,6.05a.377.377,0,0,0-.218-.429Z"transform="translate(0 0)" /> </svg><a class="phone inline-block align-middle leading-6 transition-all duration-300 hover:text-red" href="tel:' + location.mainPhone + '">' + location.mainPhone + '</a></div><div class="open-close-time font-semibold">' + window.getOpenNowString(location.hours, parsedOffset) + '</div><a class="text-sm leading-[22px] py-1.5 font-semibold text-white px-6 border border-red bg-red inline-flex items-center rounded-br-2xl absolute bottom-0 right-0 transition-all duration-300 hover:opacity-90" href="https://www.google.com/maps/dir/?api=1&destination=' + ucwords(location.address.line1) + '" target="_blank">Get Direction <svg class="ml-1.5 fill-white" xmlns="http://www.w3.org/2000/svg" width="16.987" height="11.33" viewBox="0 0 16.987 11.33"><path id = "Icon_ionic-ios-arrow-round-forward" data-name="Icon ionic-ios-arrow-round-forward" d = "M18.708,11.469a.771.771,0,0,0-.006,1.086l3.587,3.593H8.636a.767.767,0,0,0,0,1.534H22.284L18.7,21.275a.777.777,0,0,0,.006,1.086.764.764,0,0,0,1.08-.006l4.862-4.9h0a.861.861,0,0,0,.159-.242.732.732,0,0,0,.059-.3.769.769,0,0,0-.218-.537l-4.862-4.9A.752.752,0,0,0,18.708,11.469Z" transform = "translate(-7.875 -11.252)" /></svg ></a ></div ></div > ';
+          //console.log(locationHTML);
+          [].slice
+            .call(document.querySelectorAll(".location-data") || [])
+            .forEach(function (el) {
+              el.innerHTML += locationHTML;
+            });
+        }
+      }
+    });
+
+    function ucwords(title) {
+      let str = title.toLowerCase();
+      str = str.replace(/-/g, ' ');
+      str = str.replace(/_/g, ' ');
+      return str.replace(/(^([a-zA-Z\p{M}]))|([ -_][a-zA-Z\p{M}])/g, function (s) { return s.toUpperCase(); });
+    }
+
+    var entityId = '{{id}}';
+
+    var entURL = "https://liveapi-sandbox.yext.com/v2/accounts/me/entities/" + entityId + '?';
+
+    var fullURL =
+      entURL +
+      "api_key=" +
+      api_key +
+      "&v=" +
+      vparam +
+      "&limit=" +
+      limit +
+      "&entityTypes=" +
+      entityTypes;
+
+    fetch(fullURL).then(response => response.json()).then(result => {
+      if (!result.errors) {
+        var hours = result.response.hours;
+        var parsedOffset = parseTimeZoneUtcOffset(result.response.timeZoneUtcOffset);
+        var openingCloseTime = window.getOpenNowString(hours, parsedOffset);
+        // $('.timeshow').html(openingCloseTime);      
+        [].slice
+          .call(document.querySelectorAll(".timeshow") || [])
+          .forEach(function (el) {
+            el.innerHTML = openingCloseTime;
+          });
+      } else {
+
+      }
+    });
+
+  });
+</script>

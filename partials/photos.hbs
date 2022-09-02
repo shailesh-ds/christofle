@@ -1,0 +1,50 @@
+<div class="inline-block w-full align-middle py-10 lg:py-20">
+  <div class="container">
+    <h2 class="text-xl md:text-3xl font-semibold leading-tight mb-4 lg:mb-8 uppercase text-center getPhoto"></h2>
+    <div class="-mx-4">
+      <div class="photoGallery owl-carousel">
+        {{#each photoGallery}}
+        <div class="slide p-4">
+          <div
+            class="border border-border_grey rounded-tl-2xl rounded-br-2xl shadow-[4px_8px_6px_rgba(0,0,0,0.10)] p-3">
+            <div class="pt-[70%] relative inline-block w-full align-bottom overflow-hidden">
+              <img src="{{image.url}}" class="absolute top-0 left-0 object-cover object-center h-full rounded-lg transition-all duration-300 transform hover:scale-105"
+                alt="..." />
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+  </div>
+</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"
+  integrity="sha512-UTNP5BXLIptsaj5WdKFrkFov94lDx+eBvbKyoe1YAfjeRPC+gT5kyZ10kOHCfNZqEui1sxmqvodNUx3KbuYI/A=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+  integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+  $('.photoGallery').owlCarousel({
+    loop: true,
+    responsiveClass: true,
+    dots: false,
+    responsive: {
+      0: {
+        items: 1,
+        nav: true
+      },
+      600: {
+        items: 3,
+        nav: false
+      },
+      1000: {
+        items: 4,
+        nav: true,
+        loop: false,
+      }
+    }
+  })
+</script>

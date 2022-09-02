@@ -1,0 +1,162 @@
+---
+{
+    "stream": {
+        "$id": "location-detail-pages",
+        "source": "knowledgeGraph",
+        "destination": "pages",
+        "filter" : {
+            "entityTypes": [
+                "location"
+            ],
+            "savedFilterIds":[
+                "982931142"
+            ]
+        },
+        "fields": [
+            "id",
+            "uid",
+            "meta",
+            "name",
+            "address",
+            "description",
+            "hours",
+            "emails",
+            "mainPhone",
+            "photoGallery",
+            "slug",
+            "c_abbotttext",
+            "c_aboutch.title",
+            "c_aboutch.description",
+            "geocodedCoordinate",
+            "neighborhood",
+            "paymentOptions",
+            "c_cTA",
+            "c_description1",
+            "c_photo"
+            
+        ],
+        "localization": {
+            "locales": ["en","fr","ja"]
+        }
+    },
+    "urlFormat": "{{slug}}"
+}
+---
+<!DOCTYPE html>
+<html lang="{{locale}}">
+
+<head>
+    {{>head }}
+    <title>{{name}} - {{neighborhood}}</title>
+    {{>schema}}
+    <link rel="shortcut icon" type="image/png" href="/images/favicon.png" />
+    <script>
+        console.log("defining initMaps Functions");
+        var initMapsFunctions = [];
+        var initMaps = function (noKey) {
+            for (i = 0; i < initMapsFunctions.length; i++) {
+                initMapsFunctions[i](noKey);
+            }
+        }
+    </script>
+    <script>
+        function loadScriptAsync(url) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement("script");
+                script.type = 'text/javascript';
+                script.async = true;
+                script.defer = true;
+                script.onload = resolve;
+                script.onerror = reject;
+                script.src = url;
+                document.head.appendChild(script);
+            });
+        }
+        window.mapsLoader = loadScriptAsync("https://maps.googleapis.com/maps/api/js?key={{global.googleApiKey}}&callback=initMaps&libraries=places");
+    </script>
+</head>
+
+<body class="font-lato" id="body">
+    {{>header}}
+    <div class="inline-block w-full align-middle">
+        <div class="container" id="countries">
+            <ul class="flex leading-5 text-sm text-red py-3.5" id="getvalue">
+                {{!-- {{#each c_cTAbutton}} --}}
+                <li class="after:content-['>'] after:mx-2 after:font-bold"><a href="{{c_cTA.uRL}}"
+                        class="inline-block font-bold">{{formatOption c_cTA.primaryCTA}}</a></li>
+                {{!-- {{/each}} --}}
+                <li class="after:content-['>'] after:mx-2 after:font-bold"><a href="/?Country={{address.countryCode}}"
+                        class="inline-block font-bold">{{formatOption address.countryCode}}</a></li>
+                <li class="after:content-['>'] after:mx-2 after:font-bold"><a
+                        href="/?city={{address.city}}&Country={{address.countryCode}}"
+                        class="inline-block font-bold">{{formatOption address.city}}</a></li>
+                <li class="inline-block">{{formatOption name}}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="inline-block bg-grey w-full align-middle py-5 md:py-8 lg:py-12">
+        <div class="container">
+            <h1 class="text-2xl md:text-4xl text-center font-semibold leading-tight uppercase">{{formatOption name}}
+            </h1>
+        </div>
+    </div>
+
+
+    <div class="inline-block w-full align-middle relative z-0">
+        <img class="w-full absolute top-0 left-0 -z-[1]" src="/images/grid.svg" alt="grid" />
+        <div class="container">
+            {{>locationdetails}}
+        </div>
+    </div>
+    {{#if c_description1}}
+    <div class="inline-block align-middle w-full pt-10 lg:pt-20">
+        <div class="container max-w-[980px]">
+            <div class="w-full text-center">
+                <h2 class="text-xl md:text-3xl font-semibold leading-tight mb-5 uppercase">About Boutique Christofle
+                </h2>
+                {{convertRTFToHTML c_description1}}
+            </div>
+        </div>
+    </div>
+    {{/if}}
+
+    <div
+        class="inline-block align-middle w-full py-10 lg:py-20 relative z-0 overflow-hidden after:content-[''] after:absolute after:-bottom-[210px] after:-right-[138px] after:w-[370px] after:h-[370px] after:border-[41px] after:border-[#DC1D1D] after:rounded-full after:-z-[1] after:opacity-[0.03]">
+        <div class="container">
+            {{>aboutus}}
+        </div>
+    </div>
+
+
+    {{>nearby geocodedCoordinate}}
+
+
+    {{>photos}}
+
+ 
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        window.onload = function () {
+            setInterval(function () {
+
+                $("select").on('change', function () {
+                    var optionIndex = $(this).find('option:selected').index();
+                    $(this).parent().addClass('hasActive', optionIndex == 0);
+                });
+
+            }, 1000);
+        };
+
+    </script>
+
+</body>
+
+{{>footer}}
+
+</body>
+
+</html>

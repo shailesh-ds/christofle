@@ -1,0 +1,18 @@
+<div class="hours-list">  
+  {{#with (formatHours this "Monday" "TimeFormatShort" "DateFormatShort") }}
+      {{#each this.regularHours}}
+      <div class="{{this.displayDay}} time-row px-5 flex flex-wrap odd:bg-color_f5f5f5">
+        <div class="w-28 pr-2.5">
+          <strong class="font-normal">{{this.displayDay}}</strong>
+        </div>
+        <div class="w-[calc(100%_-_112px)] {{#if this.isClosed}}text-red closed{{/if}}">
+          {{#if this.isClosed}}Closed{{/if}}
+          {{#if this.is247}}Open 24/7{{/if}}
+          {{#each this.openIntervals}}
+            {{this.start}}-{{this.end}}
+          {{/each}}
+        </div>
+      </div>
+      {{/each}}
+  {{/with}}
+</div>

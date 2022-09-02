@@ -1,0 +1,109 @@
+---
+{
+    "stream": {
+        "$id": "locator-pages",
+        "source": "knowledgeGraph",
+        "destination": "pages",
+        "filter" : {
+            "entityTypes": [
+                "ce_cristofleLocator"
+            ]
+        }, 
+        "fields": [
+            "id",
+            "c_datashow"
+        ],
+        "localization": {
+            "locales": [
+                "en",
+                "fr",
+                "ja"
+            ]
+        }
+    },
+    "urlFormat" : "{{locale}}/index.html"
+}
+---
+<!DOCTYPE html>
+<html lang={{locale}}>
+<head>
+    {{>head }}
+    <title class="StoreTitle"></title>
+    <link rel="shortcut icon" type="image/jpg" href="/images/yext-favicon.png" />
+    <script>
+        console.log("defining initMaps Functions");
+        var initMapsFunctions = [];
+        var initMaps = function (noKey) {
+            for (i = 0; i < initMapsFunctions.length; i++) {
+                initMapsFunctions[i](noKey);
+            }
+        }
+    </script>
+    <script>
+        function loadScriptAsync(url) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement("script");
+                script.type = 'text/javascript';
+                script.async = true;
+                script.defer = true;
+                script.onload = resolve;
+                script.onerror = reject;
+                script.src = url;
+                document.head.appendChild(script);
+            });
+        }
+        window.mapsLoader = loadScriptAsync("https://maps.googleapis.com/maps/api/js?key={{global.googleApiKey}}&callback=initMaps&libraries=places");
+    
+    </script>
+</head>
+
+<body class="font-lato" id="body">
+
+    {{>header}}
+    {{!-- <div class="inline-block w-full align-middle">
+        <div class="container" id="countries">
+            <ul class="flex leading-5 text-sm text-red py-3.5" id="getvalue">
+                <li class="after:content-['>'] after:mx-2 after:font-bold"><a href="{{c_cTA.uRL}}"
+                        class="inline-block font-bold">{{formatOption c_cTA.primaryCTA}}</a></li>
+                <div class="Store-locator"></div>
+            </ul>
+        </div>
+    </div> --}}
+
+    {{>locator}}
+   <h1>{{c_datashow.text}}</h1>
+     <p>{{c_datashow.descriptions}}</p>
+     <p>{{c_datashow.mainphonenumber}}</p>
+
+
+    {{>footer}}
+
+    <script>
+        window.onload = function () {
+            setInterval(function () {
+                $("select").on('change', function () {
+                    var optionIndex = $(this).find('option:selected').index();
+                    $(this).parent().addClass('hasActive', optionIndex == 0);
+                });
+
+                $(".result .storelocation-name").on("click", function () {
+                    var findChild = $(this).closest('.center-column').html();
+                    $('#full-details').empty();
+                    $('#full-details').append(findChild).prepend('<a href="javascript:void(0);" class="back mb-5 text-sm leading-[22px] py-1.5 font-semibold text-white px-6 rounded-sm border bg-red border-red inline-flex items-center transition-all duration-300 group hover:text-red hover:bg-white"><svg class="mr-1.5 fill-white group-hover:fill-red transform  rotate-180" xmlns="http://www.w3.org/2000/svg" width="16.987" height="11.33" viewBox="0 0 16.987 11.33"><path data-name="Icon ionic-ios-arrow-round-forward" d="M18.708,11.469a.771.771,0,0,0-.006,1.086l3.587,3.593H8.636a.767.767,0,0,0,0,1.534H22.284L18.7,21.275a.777.777,0,0,0,.006,1.086.764.764,0,0,0,1.08-.006l4.862-4.9h0a.861.861,0,0,0,.159-.242.732.732,0,0,0,.059-.3.769.769,0,0,0-.218-.537l-4.862-4.9A.752.752,0,0,0,18.708,11.469Z" transform="translate(-7.875 -11.252)"></path></svg></a>');
+                    $('#full-details').removeClass('-translate-x-full').addClass('translate-x-0');
+                    $('#full-details').removeClass('-translate-x-full').addClass('translate-x-0');
+                    $('#full-details *').removeAttr('id');
+                });
+
+                $(".back").on("click", function () {
+                    $('#full-details').empty();
+                    $('#full-details').removeClass('translate-x-0').addClass('-translate-x-full');
+                });
+            }, 1000);
+        };
+    </script>
+
+
+</body>
+
+</html>
