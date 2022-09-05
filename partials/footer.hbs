@@ -1,21 +1,23 @@
 <footer class="">
   <div class="bg-black text-white text-sm py-2.5">
     <div class="container flex flex-wrap max-w-7xl">
+     
       <div class="w-full md:w-1/2 lg:w-1/4 flex items-center lg:justify-center text-left p-2.5">
         <span class="before:content-['\006c'] font-chrisfo-icon text-2xl mr-3"></span>
-        <p>Livraison standard 48h Offerte sans minimum d'achat</p>
+         {{#each c_locations}} <p>{{c_topfooter.[0].text}}</p>   {{/each}}
       </div>
+   
       <div class="w-full md:w-1/2 lg:w-1/4 flex items-center lg:justify-center text-left p-2.5">
         <span class="before:content-['\006b'] font-chrisfo-icon text-2xl mr-3"></span>
-        <p>E-réservation</p>
+       {{#each c_locations}} <p>{{c_topfooter.[1].text}}</p>   {{/each}}
       </div>
       <div class="w-full md:w-1/2 lg:w-1/4 flex items-center lg:justify-center text-left p-2.5">
         <span class="before:content-['\006a'] font-chrisfo-icon text-2xl mr-3"></span>
-        <p>Paiement sécurisé</p>
+         {{#each c_locations}} <p>{{c_topfooter.[2].text}}</p>   {{/each}}
       </div>
       <div class="w-full md:w-1/2 lg:w-1/4 flex items-center lg:justify-center text-left p-2.5">
         <span class="before:content-['\006d'] font-chrisfo-icon text-2xl mr-3"></span>
-        <p>Retour sous 14 jours</p>
+         {{#each c_locations}} <p>{{c_topfooter.[3].text}}</p>   {{/each}}
       </div>
     </div>
   </div>
@@ -29,61 +31,72 @@
         </a>
       </div>
       <div class="w-full sm:w-1/2 md:w-1/4 md:px-4 mb-5">
-        <h4 class="font-bold text-sm leading-[21px] uppercase mb-2.5">NOS UNIVERS</h4>
+        {{#each c_locations}}
+        <h4 class="font-bold text-sm leading-[21px] uppercase mb-2.5">{{c_singletext.[0].text}}</h4>
+        {{/each}}
         <ul class="leading-[21px] text-sm">
-          <li><a href="#" class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">Couverts</a></li>
-          <li><a href="#" class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">Arts de la table</a></li>
-          <li><a href="#" class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">Bar</a></li>
-          <li><a href="#" class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">Décoration</a></li>
-          <li><a href="#" class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">Enfants</a></li>
-          <li><a href="#" class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">Bijoux & accessoires</a></li>
-          <li><a href="#" class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">Cadeaux</a></li>
+          {{#each c_locations}}
+          {{#each c_onefooter}}
+          <li><a href="{{cta.link}}"
+              class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">{{cta.label}}</a>
+          </li>
+          {{/each}}
+          {{/each}}
         </ul>
       </div>
       <div class="w-full sm:w-1/2 md:w-1/4 md:px-4 mb-5">
-        <h4 class="font-bold text-sm leading-[21px] uppercase mb-2.5">NOTRE MAISON</h4>
+        {{#each c_locations}}
+        <h4 class="font-bold text-sm leading-[21px] uppercase mb-2.5">{{c_singletext.[1].text}}</h4>
+        {{/each}}
         <ul class="leading-[21px] text-sm">
-          <li><a href="#" class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">La maison Christofle</a></li>
-          <li><a href="#" class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">Nos valeurs</a></li>
-          <li><a href="#" class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">Haute orfèvrerie</a></li>
-          <li><a href="#" class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">Vintage</a></li>
-          <li><a href="#" class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">Les designers</a></li>
-          <li><a href="#" class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">Les collections</a></li>
-          <li><a href="#" class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">Nos évènements</a></li>
+          {{#each c_locations}}
+          {{#each c_twofooter}}
+          <li><a href="{{cta.link}}"
+              class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">{{cta.label}}</a>
+          </li>
+          {{/each}}
+          {{/each}}
         </ul>
       </div>
       <div class="w-full sm:w-1/2 md:w-1/4 md:px-4 mb-5">
-        <h4 class="font-bold text-sm leading-[21px] uppercase mb-2.5">NOS SERVICES</h4>
+        {{#each c_locations}}
+        <h4 class="font-bold text-sm leading-[21px] uppercase mb-2.5">{{c_singletext.[2].text}}</h4>
+        {{/each}}
         <ul class="leading-[21px] text-sm">
-          <li><a href="#" class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">Contactez-nous</a></li>
-          <li><a href="#" class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">Espace professionnels</a></li>
-          <li><a href="#" class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">Conseils d'entretien</a></li>
-          <li><a href="#" class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">La gravure</a></li>
-          <li><a href="#" class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">Livraisons et retours</a></li>
-          <li><a href="#" class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">Questions fréquentes</a></li>
+          {{#each c_locations}}
+          {{#each c_threefooter}}
+          <li><a href="{{cta.link}}"
+              class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">{{cta.label}}</a>
+          </li>
+          {{/each}}
+          {{/each}}
         </ul>
       </div>
       <div class="w-full sm:w-1/2 md:w-1/4 md:px-4 mb-5">
-        <h4 class="font-bold text-sm leading-[21px] uppercase mb-8"><a href="#"><i
-              class="not-italic before:content-['\004f'] font-chrisfo-icon text-base font-normal mr-2.5 align-middle"
-             ></i> S'inscrire à notre newsletter</a></h4>
-        <h4 class="font-bold text-sm leading-[21px] uppercase mb-2.5">NOS RÉSEAUX SOCIAUX</h4>
+        {{#each c_locations}}
+
+        <h4 class="font-bold text-sm leading-[21px] uppercase mb-8"><a href="#">
+            {{c_singletext.[4].text}}</a></h4>{{/each}}
+
+        {{#each c_locations}}
+        <h4 class="font-bold text-sm leading-[21px] uppercase mb-2.5">{{c_singletext.[3].text}}</h4>
+        {{/each}}
         <ul class="flex items-center">
           <li class="mr-2.5"><a href="#"><i
-                class="not-italic before:content-['\0049'] font-chrisfo-icon text-base font-normal align-middle"
-               ></i></a></li>
+                class="not-italic before:content-['\0049'] font-chrisfo-icon text-base font-normal align-middle"></i></a>
+          </li>
           <li class="mr-2.5"><a href="#"><i
-                class="not-italic before:content-['\004d'] font-chrisfo-icon text-base font-normal align-middle"
-               ></i></a></li>
+                class="not-italic before:content-['\004d'] font-chrisfo-icon text-base font-normal align-middle"></i></a>
+          </li>
           <li class="mr-2.5"><a href="#"><i
-                class="not-italic before:content-['\004a'] font-chrisfo-icon text-base font-normal align-middle"
-               ></i></a></li>
+                class="not-italic before:content-['\004a'] font-chrisfo-icon text-base font-normal align-middle"></i></a>
+          </li>
           <li class="mr-2.5"><a href="#"><i
-                class="not-italic before:content-['\004b'] font-chrisfo-icon text-base font-normal align-middle"
-               ></i></a></li>
+                class="not-italic before:content-['\004b'] font-chrisfo-icon text-base font-normal align-middle"></i></a>
+          </li>
           <li class="mr-2.5"><a href="#"><i
-                class="not-italic before:content-['\004c'] font-chrisfo-icon text-base font-normal align-middle"
-               ></i></a></li>
+                class="not-italic before:content-['\004c'] font-chrisfo-icon text-base font-normal align-middle"></i></a>
+          </li>
           <li class="mr-2.5"><a class="inline-block align-middle" href="#"><i
                 class="not-italic inline-block align-middle w-4 h-4 bg-weibo bg-no-repeat bg-center bg-[length:1rem_1rem]"></i></a>
           </li>
@@ -91,14 +104,7 @@
                 class="not-italic inline-block align-middle w-4 h-4 bg-wechat bg-no-repeat bg-center bg-[length:1rem_1rem]"></i></a>
           </li>
         </ul>
-      </div>
-      <div class="w-full md:px-4 pt-8">
-        <ul class="flex flex-wrap items-center justify-center w-full border-t border-white text-[#757575] text-xs py-2.5">
-          <li class="mr-7"><a class="leading-6 inline-block align-middle relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-[#757575] after:h-px hover:after:w-full" href="#">Les conditions générales de vente</a></li>
-          <li class="mr-7"><a class="leading-6 inline-block align-middle relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-[#757575] after:h-px hover:after:w-full" href="#">Mentions légales</a></li>
-          <li class="mr-7"><a class="leading-6 inline-block align-middle relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-[#757575] after:h-px hover:after:w-full" href="#">Cookies et vie privée</a></li>
-          <li class="leading-6">© 2022 Christofle</li>
-        </ul>
+
       </div>
     </div>
   </div>

@@ -1,36 +1,45 @@
 ---
 {
-    "stream": {
-        "$id": "locator-pages",
-        "source": "knowledgeGraph",
-        "destination": "pages",
-        "filter" : {
-            "entityTypes": [
-                "ce_cristofleLocator"
-            ]
-        }, 
-        "fields": [
-            "id",
-            "c_datashow"
-        ],
-        "localization": {
-            "locales": [
-                "en",
-                "fr",
-                "ja"
-            ]
-        }
-    },
-    "urlFormat" : "{{locale}}/index.html"
+"stream": {
+"$id": "locator-page",
+"source": "knowledgeGraph",
+"destination": "pages",
+"filter" : {
+"entityTypes": [
+"ce_cristofleLocator"
+]
+},
+"fields": [
+"name",
+"slug",
+"c_datashow",
+"c_aboutdatatext",
+"c_locations.name",
+"c_locations.c_singletext.text",
+"c_locations.c_header.cta",
+"c_locations.c_topfooter.text",
+"c_locations.c_onefooter.cta",
+"c_locations.c_twofooter.cta",
+"c_locations.c_threefooter.cta"
+],
+"localization": {
+"locales": ["en","fr","ja"]
+}
+},
+"urlFormat" : "{{locale}}/index.html"
 }
 ---
 <!DOCTYPE html>
 <html lang={{locale}}>
+
 <head>
+
     {{>head }}
     <title class="StoreTitle"></title>
     <link rel="shortcut icon" type="image/jpg" href="/images/yext-favicon.png" />
+
     <script>
+        console.log("defining initMaps Functions");
         var initMapsFunctions = [];
         var initMaps = function (noKey) {
             for (i = 0; i < initMapsFunctions.length; i++) {
@@ -59,7 +68,7 @@
 <body class="font-lato" id="body">
 
     {{>header}}
-    {{!-- <div class="inline-block w-full align-middle">
+    <div class="inline-block w-full align-middle">
         <div class="container" id="countries">
             <ul class="flex leading-5 text-sm text-red py-3.5" id="getvalue">
                 <li class="after:content-['>'] after:mx-2 after:font-bold"><a href="{{c_cTA.uRL}}"
@@ -67,12 +76,12 @@
                 <div class="Store-locator"></div>
             </ul>
         </div>
-    </div> --}}
+    </div>
 
     {{>locator}}
    <h1>{{c_datashow.text}}</h1>
-     <p>{{c_datashow.descriptions}}</p>
-     <p>{{c_datashow.mainphonenumber}}</p>
+    <p>{{c_datashow.descriptions}}</p>
+    <p>{{c_datashow.mainphonenumber}}</p>
 
 
     {{>footer}}

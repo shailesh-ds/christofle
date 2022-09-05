@@ -50,20 +50,28 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
    let FilterBtn = '';
    let StoreTitle = '';
    let ViewMore = '';
+   let frlang = '';
+   let jalang ='';
+   let enlang = '';
   
     title += `<div>${Multilang.Allstore[APIlanguage]}</div>`;
     Store += `<li>${Multilang.Storelocator[APIlanguage]}</li>`
     FilterBtn += `${Multilang.FilterBtn[APIlanguage]}`;
     StoreTitle += `${Multilang.StoreTitle[APIlanguage]}`
     ViewMore += `${Multilang.ViewMore[APIlanguage]}`
-
+    frlang += `${Multilang.frlang[APIlanguage]}`
+    jalang += `${Multilang.jalang[APIlanguage]}`
+    enlang += `${Multilang.enlang[APIlanguage]}`
+  
    $(".LocatorTitle").html(title);
    $(".Store-locator").html(Store);
    $(".Filter").html(FilterBtn);
    $(".StoreTitle").html(StoreTitle);
    $(".ViewMore").html(ViewMore);
+   $(".French").html(frlang);
+   $(".Japanese").html(frlang);
+   $(".English").html(enlang);
   
-// End Here
   const cardTitleValue = getValue(locationOptions.cardTitle);
   const getDirectionsLabelValue = getValue(locationOptions.getDirectionsLabel);
   const viewDetailsLinkTextValue = getValue(
@@ -119,52 +127,20 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
 
 
   function tConvert(time) {
-if(APIlanguage === "en"){
     time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
 
     if (time.length > 1) {
       time = time.slice(1);
 
-      time[5] = +time[0] < 12 ? 'AM' : 'PM';
+      time[5] = +time[0] < 12 ? Multilang.Am[APIlanguage] : Multilang.Pm[APIlanguage];
       time[0] = +time[0] % 12 || 12;
     }
     return time.join('');
-  }
   
-  else if(APIlanguage==="fr"){
-    time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
-
-    if (time.length > 1) {
-      time = time.slice(1);
-
-      time[5] = +time[0] < 12 ? 'UN M' : 'PM';
-      time[0] = +time[0] % 12 || 12;
-    }
-    return time.join('');
-  }
-  else if(APIlanguage==="en"){
-    time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
-
-    if (time.length > 1) {
-      time = time.slice(1);
-
-      time[5] = +time[0] < 12 ? 'UN M' : 'PM';
-      time[0] = +time[0] % 12 || 12;
-    }
-    return time.join('');
-  }
-  else if(APIlanguage==="ja"){
-    time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
-
-    if (time.length > 1) {
-      time = time.slice(1);
-      // console.log(time)
-
-      time[5] = +time[0] < 12 ? '午前' : '午後';
-      time[0] = +time[0] % 12 || 12;
-    }
-    return time.join('');
-  }
+  
+  
+  
+  
   }
   function convertDays(days) {
     const currentDate = new Date();
@@ -192,7 +168,12 @@ if(APIlanguage === "en"){
     html += '<div class="storelocation-openCloseTime" style="display:none;" >';
     html += '<ul id="time-row-main-shop-' + index + '">';
   
-    let dayConvert = languagesData[APIlanguage];
+    let dayConvert = languagesData[APIlanguage]
+
+    
+
+
+
     const days_string = [
       "sunday",
       "monday",
@@ -215,6 +196,8 @@ if(APIlanguage === "en"){
 
     });
 
+    console.log(sort_array);
+
     $.each(sort_array, function (indexh, hour) {
 
       html += '<li class="time-row [&:nth-child(odd)]:bg-black [&:nth-child(odd)]:bg-opacity-5 [&:first-child]:bg-red [&:first-child]:bg-opacity-100 [&:first-child]:text-white px-2 py-1">'
@@ -222,14 +205,21 @@ if(APIlanguage === "en"){
       html += dayConvert[hour[0].toString()] + ' ';
       html += '</strong>';
       if (hour[1].openIntervals) {
+       
         $.each(hour[1].openIntervals, function (op, openInterval) {
+         
           html += tConvert(openInterval.start) +  Multilang.languages[APIlanguage] + tConvert(openInterval.end);
+          
+     
+        
         });
       } else {
         html += '<span class="text-red closed" >'+Multilang.Closelocation[APIlanguage]+'</span>';
+        
       }
       html += '</div>';
       html += '</li>'
+
     });
     html += '</ul>';
 
@@ -252,11 +242,19 @@ if(APIlanguage === "en"){
   html += `<div class="flex flex-col text-center justify-between">
   <div class="mb-1.5">
       <a target="_blank" class="w-full text-sm leading-[22px] py-1.5 font-semibold text-red px-2.5 rounded-sm border border-red inline-flex items-center justify-center transition-all duration-300 group hover:text-white hover:bg-red capitalize" href="https://www.google.com/maps/dir/?api=1&destination=${cordinates.latitude},${cordinates.longitude}"><svg class="fill-red w-4 h-4 mr-2 group-hover:fill-white" xmlns="http://www.w3.org/2000/svg" width="7.954" height="10.606" viewBox="0 0 7.954 10.606"><path data-name="Icon awesome-map-marker-alt" d="M3.568,10.392C.559,6.029,0,5.581,0,3.977a3.977,3.977,0,0,1,7.954,0c0,1.6-.559,2.051-3.568,6.415a.5.5,0,0,1-.817,0Zm.409-4.758A1.657,1.657,0,1,0,2.32,3.977,1.657,1.657,0,0,0,3.977,5.634Z"></path></svg><span class="inline-block">${Multilang.Directiontext[APIlanguage]}</span></a></div>`;
-      
-    html += `<div class=""><a class="w-full text-sm leading-[22px] py-1.5 font-semibold text-white px-2.5 rounded-sm border bg-red border-red inline-flex items-center justify-center transition-all duration-300 group hover:text-red hover:bg-white capitalize" href=' + cardTitleLinkUrlValue + '>${Multilang.DetailPage[APIlanguage]} <svg class="ml-1.5 fill-white group-hover:fill-red" xmlns="http://www.w3.org/2000/svg" width="16.987" height="11.33" viewBox="0 0 16.987 11.33"><path data-name="Icon ionic-ios-arrow-round-forward" d="M18.708,11.469a.771.771,0,0,0-.006,1.086l3.587,3.593H8.636a.767.767,0,0,0,0,1.534H22.284L18.7,21.275a.777.777,0,0,0,.006,1.086.764.764,0,0,0,1.08-.006l4.862-4.9h0a.861.861,0,0,0,.159-.242.732.732,0,0,0,.059-.3.769.769,0,0,0-.218-.537l-4.862-4.9A.752.752,0,0,0,18.708,11.469Z" transform="translate(-7.875 -11.252)"></path></svg></a> </div></div>`;
 
-    return `<div id="result-${index}" class="result mb-5 lg:pr-5"><div class="center-column relative bg-white rounded-tl-2xl rounded-br-2xl flex flex-wrap leading-6 shadow-[4px_8px_6px_rgba(0,0,0,0.10)]">${html}</div></div>`;
+
+    html += `<div class=""><a class="w-full text-sm leading-[22px] py-1.5 font-semibold text-white px-2.5 rounded-sm border bg-red border-red inline-flex items-center justify-center transition-all duration-300 group hover:text-red hover:bg-white capitalize" href=${cardTitleLinkUrlValue}>${Multilang.DetailPage[APIlanguage]} <svg class="ml-1.5 fill-white group-hover:fill-red" xmlns="http://www.w3.org/2000/svg" width="16.987" height="11.33" viewBox="0 0 16.987 11.33"><path data-name="Icon ionic-ios-arrow-round-forward" d="M18.708,11.469a.771.771,0,0,0-.006,1.086l3.587,3.593H8.636a.767.767,0,0,0,0,1.534H22.284L18.7,21.275a.777.777,0,0,0,.006,1.086.764.764,0,0,0,1.08-.006l4.862-4.9h0a.861.861,0,0,0,.159-.242.732.732,0,0,0,.059-.3.769.769,0,0,0-.218-.537l-4.862-4.9A.752.752,0,0,0,18.708,11.469Z" transform="translate(-7.875 -11.252)"></path></svg></a> </div></div>`
+  
+
+  
+  html = `<div class="center-column relative bg-white rounded-tl-2xl rounded-br-2xl flex flex-wrap leading-6 shadow-[4px_8px_6px_rgba(0,0,0,0.10)]">${html}</div>`;
+
+ 
+  return `<div id="result-${index}" class="result mb-5 lg:pr-5">${html}</div>`;
 }
+
+
 
 
 export function renderLocations(locations, append, viewMore) {
@@ -483,7 +481,6 @@ else if (ourURL.includes("/ja")) {
 else if(ourURL.includes("/en")){
   langauage = "en";
 }
-
 export function getLocations(offset) {
   let request_url =
     base_url +
@@ -551,14 +548,13 @@ document.getElementById("viewMoreBtn").addEventListener("click", function () {
   offset = newOffset;
   getLocations(offset);
 });
-
+// End Here
 function ucwords(title) {
   let str = title.toLowerCase();
   str = str.replace(/-/g, ' ');
   str = str.replace(/_/g, ' ');
   return str.replace(/(^([a-zA-Z\p{M}]))|([ -_][a-zA-Z\p{M}])/g, function (s) { return s.toUpperCase(); });
 }
-
 
 
 
@@ -584,9 +580,9 @@ export function getDepartments() {
     savedFilterId +
     "&fields=address" + 
     "&limit=50";
+
   fetch(fullURL).then(response => response.json()).then(result => {
 
-      
     if (!result.errors) {
 
       var url_string = window.location.href;
@@ -598,27 +594,17 @@ export function getDepartments() {
       html += `   <select id="mySelect" class="checkbox_departments appearance-none w-full bg-white py-2 px-3 border-8 border-white text-sm focus:outline-none" aria-label="Default select example">`
       let somecountry = '';
       if (url_string.includes('Country')) {
-        //html += '<option value="" disabled selected>Country'
         somecountry = '<option selected>' + country + '</option>';
       }
+      
       else {
-        if(url_string.includes("/en")){
-        html += `<option value=""disabled selected>${Multilang.Country.en}`
-        }
-        // if(url_string.includes("/")){
-        // html += '<option value=""disabled selected>Country'
-        // }
-       else if(url_string.includes("/fr")){
-          html += `<option value=""disabled selected>${Multilang.Country.fr}`
-          }
-         else if(url_string.includes("/ja")){
-            html +=`<option value=""disabled selected>${Multilang.Country.ja}`
-            }
+        html += `<option value=""disabled selected>${Multilang.Country[langauage]}`
+
+       
+  
         var newBRCC = "";
         var newFRCC = "";
         var newBECC = "";
-        // var newBOCC = "";
-
         var newData = [];
         for (let index = 0; index < result.response.entities.length; index++) {
             const countryCode = result.response.entities[index]['address']['countryCode'];
@@ -630,6 +616,13 @@ export function getDepartments() {
         
       }
 
+      // const regionNames = new Intl.DisplayNames(
+      //   ['en', 'fr', 'ja'], { type: 'region' }
+      // );
+      // //alert(regionNames.of(newBRCC));
+      // somecountry += '<option value="' + newBRCC + '">' + regionNames.of(newBRCC) + '</option>';
+      // somecountry += '<option value="' + newBECC + '">' + regionNames.of(newBECC) + '</option>';
+      // somecountry += '<option value="' + newFRCC + '">' + regionNames.of(newFRCC) + '</option>';
       html += somecountry;
       html += '</select>';
       html += '</div>';
@@ -649,8 +642,7 @@ export function getDepartments() {
   });
 }
 getDepartments();
-//end here
-//city function start here
+
 
 export function getcity(selectcity) {
 
@@ -662,16 +654,12 @@ export function getcity(selectcity) {
 
 
   var ce_departments = [];
-  // $('.checkbox_departments').each(function () {
-  //   if ($(this).is(":selected")) {
+  
   ce_departments.push(queryString);
-  //   }
-  // });
 
-  // if (ce_departments.length > 0) {
+
   filterAnd = { "$and": [{ "address.countryCode": { "$in": ce_departments } }] };
 
-  // }
 
   filterParameters = { ...filterAnd };
   var filterpar = JSON.stringify(filterParameters);
@@ -711,30 +699,11 @@ export function getcity(selectcity) {
       html += `   <select id="mySelect1" class="checkbox_departments1 bg-white w-full appearance-none py-2 px-3 border-8 border-white text-sm focus:outline-none" aria-label="Default select example">`;
       let somechange = '';
       if (url_string.includes('city')) {
-        // html += '<option value="" disabled selected>City'
         somechange = '<option value="' + city + '"selected>' + city + '</option>';
       }
       else {
-        if(url_string.includes("/en")){
-          html += `<option value=""disabled selected>${Multilang.City.en}`;
-          }
-        // if(ourURL ==="/rn/index.html"){
-        //   html += '<option value=""disabled selected>City';
-        //   }
-         else if(url_string.includes("/fr")){
-            html += `<option value=""disabled selected>${Multilang.City.fr}`
-            }
-           else if(url_string.includes("/ja")){
-              html += `<option value=""disabled selected>${Multilang.City.ja}`
-              }
-              var newcitydata = [];
-              for (let index = 0; index < result.response.entities.length; index++) {
-                  const city = result.response.entities[index]['address']['city'];
-                  if(!newcitydata.includes(city)){ 
-                    newcitydata.push(city);
-                    html += '<option value="' + city + '">' + city + '</option>'; 
-                  }
-              }
+          html += `<option value=""disabled selected>${Multilang.City[langauage]}`;
+   
       }
       html += somechange;
       html += '</select>';
@@ -753,10 +722,9 @@ export function getcity(selectcity) {
   });
 }
 getcity("");
-//end here
 
 
-//shop function start here
+
 export function getshop(selectcity) {
   var baseURL = "https://liveapi-sandbox.yext.com/v2/accounts/me/entities?";
   var api_key = "b262ae7768eec3bfa53bfca6d48e4000";
@@ -783,17 +751,9 @@ export function getshop(selectcity) {
       html += '<div class=" department-list1 flex justify-center">';
       html += '  <div class="select-box w-full md:w-auto">';
       html += `   <select id="selectshop" class="checkbox_departments1 appearance-none w-full bg-white py-2 px-3 border-8 border-white text-sm focus:outline-none" aria-label="Default select example">`;
-     if(url_string.includes("/en")){
-      html += `<option value=""disabled selected>${Multilang.Shop.en}`
-     }
-     else if(url_string.includes("/fr")){
-      html += `<option value=""disabled selected>${Multilang.Shop.fr}`
-     }
-    else if(url_string.includes("/ja")){
-      html += `<option value=""disabled selected>${Multilang.Shop.ja}`
-     }
+      html += `<option value=""disabled selected>${Multilang.Shop[langauage]}`
+   
       $.each(result.response.entities, function (index, entity) {
-        // html += '<option value="' + entity.c_textlist1.text[0] + '">' + entity.c_textlist1.text[0]+ '</option>';
         html += '<option value="' + entity.name + '">' + entity.name + '</option>';
       });
       html += '</select>';
@@ -808,7 +768,7 @@ export function getshop(selectcity) {
 getshop("");
 //end here
 
-
+// To get the Location of the system
 export function getUsersLocation() {
   if (navigator.geolocation) {
     startLoading();
@@ -825,6 +785,8 @@ export function getUsersLocation() {
     });
   }
 }
+
+
 
 $("#result").click(function () {
   var $this = $("#result2");
@@ -931,8 +893,6 @@ function getnature(newCity, newCountry) {
 
 }
 
-
-//serach now click function start here
 document.getElementById("data").addEventListener("click", function () {
   var countryElement = document.getElementById("mySelect") as HTMLSelectElement;
   var cityElement = document.getElementById("mySelect1") as HTMLSelectElement;
@@ -1017,7 +977,6 @@ document.getElementById("data").addEventListener("click", function () {
     langauage;
   "&savedFilterIds=" +
     savedFilterId +
-    // alert(request_url);
 
     getRequest(request_url, null);
 
