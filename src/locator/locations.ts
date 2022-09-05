@@ -51,28 +51,12 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
    let StoreTitle = '';
    let ViewMore = '';
   
-   if(APIlanguage === "en"){
-    title += `<div>${Multilang.Allstore.en}</div>`;
-    Store += `<li>${Multilang.Storelocator.en}</li>`
-    FilterBtn += `${Multilang.FilterBtn.en}`;
-    StoreTitle += `${Multilang.StoreTitle.en}`
-    ViewMore += `${Multilang.ViewMore.en}`
-  
-   }
-   if(APIlanguage == "ja"){
-    title += `<div>${Multilang.Allstore.ja}</div>`;
-    Store += `<li>${Multilang.Storelocator.ja}</li>`
-    FilterBtn += `${Multilang.FilterBtn.ja}`;
-    StoreTitle += `${Multilang.StoreTitle.ja}`
-    ViewMore += `${Multilang.ViewMore.ja}`
-   }
-   if(APIlanguage === "fr"){
-    `<div>${Multilang.Allstore.fr}</div>`
-    Store += `<li>${Multilang.Storelocator.fr}</li>`
-    FilterBtn += `${Multilang.FilterBtn.fr}`;
-    StoreTitle += `${Multilang.StoreTitle.fr}`
-    ViewMore += `${Multilang.ViewMore.fr}`
-   }
+    title += `<div>${Multilang.Allstore[APIlanguage]}</div>`;
+    Store += `<li>${Multilang.Storelocator[APIlanguage]}</li>`
+    FilterBtn += `${Multilang.FilterBtn[APIlanguage]}`;
+    StoreTitle += `${Multilang.StoreTitle[APIlanguage]}`
+    ViewMore += `${Multilang.ViewMore[APIlanguage]}`
+
    $(".LocatorTitle").html(title);
    $(".Store-locator").html(Store);
    $(".Filter").html(FilterBtn);
@@ -208,19 +192,7 @@ if(APIlanguage === "en"){
     html += '<div class="storelocation-openCloseTime" style="display:none;" >';
     html += '<ul id="time-row-main-shop-' + index + '">';
   
-    let dayConvert = languagesData.en
-    if(APIlanguage === "fr"){
-      dayConvert = languagesData.fr
-
-    }
-
-    if(APIlanguage === "ja"){
-      dayConvert = languagesData.ja
-    }
-    
-
-
-
+    let dayConvert = languagesData[APIlanguage];
     const days_string = [
       "sunday",
       "monday",
@@ -243,8 +215,6 @@ if(APIlanguage === "en"){
 
     });
 
-    console.log(sort_array);
-
     $.each(sort_array, function (indexh, hour) {
 
       html += '<li class="time-row [&:nth-child(odd)]:bg-black [&:nth-child(odd)]:bg-opacity-5 [&:first-child]:bg-red [&:first-child]:bg-opacity-100 [&:first-child]:text-white px-2 py-1">'
@@ -252,33 +222,14 @@ if(APIlanguage === "en"){
       html += dayConvert[hour[0].toString()] + ' ';
       html += '</strong>';
       if (hour[1].openIntervals) {
-       
         $.each(hour[1].openIntervals, function (op, openInterval) {
-          if(APIlanguage === "en"){
-          html += tConvert(openInterval.start) +  Multilang.languages.en + tConvert(openInterval.end);
-          }
-     
-          else if(APIlanguage === "fr"){
-            html += tConvert(openInterval.start) + Multilang.languages.fr + tConvert(openInterval.end);
-            }
-            else if(APIlanguage === "ja"){
-              html += tConvert(openInterval.start) + Multilang.languages.ja + tConvert(openInterval.end);
-              }
+          html += tConvert(openInterval.start) +  Multilang.languages[APIlanguage] + tConvert(openInterval.end);
         });
       } else {
-        if(APIlanguage === "en"){
-        html += '<span class="text-red closed" >'+Multilang.Closelocation.en+'</span>';
-        }
-        if(APIlanguage === "ja"){
-          html += '<span class="text-red closed" >'+Multilang.Closelocation.ja+'</span>';
-          }
-        if(APIlanguage === "fr"){
-          html += '<span class="text-red closed" >'+Multilang.Closelocation.fr+'</span>';
-          }
+        html += '<span class="text-red closed" >'+Multilang.Closelocation[APIlanguage]+'</span>';
       }
       html += '</div>';
       html += '</li>'
-
     });
     html += '</ul>';
 
@@ -298,44 +249,13 @@ if(APIlanguage === "en"){
     addressValue.region +
     " " +
     addressValue.postalCode;
-  if(APIlanguage === "en"){
   html += `<div class="flex flex-col text-center justify-between">
   <div class="mb-1.5">
-      <a target="_blank" class="w-full text-sm leading-[22px] py-1.5 font-semibold text-red px-2.5 rounded-sm border border-red inline-flex items-center justify-center transition-all duration-300 group hover:text-white hover:bg-red capitalize" href="https://www.google.com/maps/dir/?api=1&destination=${cordinates.latitude},${cordinates.longitude}"><svg class="fill-red w-4 h-4 mr-2 group-hover:fill-white" xmlns="http://www.w3.org/2000/svg" width="7.954" height="10.606" viewBox="0 0 7.954 10.606"><path data-name="Icon awesome-map-marker-alt" d="M3.568,10.392C.559,6.029,0,5.581,0,3.977a3.977,3.977,0,0,1,7.954,0c0,1.6-.559,2.051-3.568,6.415a.5.5,0,0,1-.817,0Zm.409-4.758A1.657,1.657,0,1,0,2.32,3.977,1.657,1.657,0,0,0,3.977,5.634Z"></path></svg><span class="inline-block">${Multilang.Directiontext.en}</span></a></div>`;
-  }
- 
-else if(APIlanguage === "fr"){
-      html += `<div class="flex flex-col text-center justify-between">
-      <div class="mb-1.5">
-          <a target="_blank" class="w-full text-sm leading-[22px] py-1.5 font-semibold text-red px-2.5 rounded-sm border border-red inline-flex items-center justify-center transition-all duration-300 group hover:text-white hover:bg-red capitalize" href="https://www.google.com/maps/dir/?api=1&destination=${cordinates.latitude},${cordinates.longitude}"><svg class="fill-red w-4 h-4 mr-2 group-hover:fill-white" xmlns="http://www.w3.org/2000/svg" width="7.954" height="10.606" viewBox="0 0 7.954 10.606"><path data-name="Icon awesome-map-marker-alt" d="M3.568,10.392C.559,6.029,0,5.581,0,3.977a3.977,3.977,0,0,1,7.954,0c0,1.6-.559,2.051-3.568,6.415a.5.5,0,0,1-.817,0Zm.409-4.758A1.657,1.657,0,1,0,2.32,3.977,1.657,1.657,0,0,0,3.977,5.634Z"></path></svg><span class="inline-block">${Multilang.Directiontext.fr}</span></a></div>`;
-}
+      <a target="_blank" class="w-full text-sm leading-[22px] py-1.5 font-semibold text-red px-2.5 rounded-sm border border-red inline-flex items-center justify-center transition-all duration-300 group hover:text-white hover:bg-red capitalize" href="https://www.google.com/maps/dir/?api=1&destination=${cordinates.latitude},${cordinates.longitude}"><svg class="fill-red w-4 h-4 mr-2 group-hover:fill-white" xmlns="http://www.w3.org/2000/svg" width="7.954" height="10.606" viewBox="0 0 7.954 10.606"><path data-name="Icon awesome-map-marker-alt" d="M3.568,10.392C.559,6.029,0,5.581,0,3.977a3.977,3.977,0,0,1,7.954,0c0,1.6-.559,2.051-3.568,6.415a.5.5,0,0,1-.817,0Zm.409-4.758A1.657,1.657,0,1,0,2.32,3.977,1.657,1.657,0,0,0,3.977,5.634Z"></path></svg><span class="inline-block">${Multilang.Directiontext[APIlanguage]}</span></a></div>`;
+      
+    html += `<div class=""><a class="w-full text-sm leading-[22px] py-1.5 font-semibold text-white px-2.5 rounded-sm border bg-red border-red inline-flex items-center justify-center transition-all duration-300 group hover:text-red hover:bg-white capitalize" href=' + cardTitleLinkUrlValue + '>${Multilang.DetailPage[APIlanguage]} <svg class="ml-1.5 fill-white group-hover:fill-red" xmlns="http://www.w3.org/2000/svg" width="16.987" height="11.33" viewBox="0 0 16.987 11.33"><path data-name="Icon ionic-ios-arrow-round-forward" d="M18.708,11.469a.771.771,0,0,0-.006,1.086l3.587,3.593H8.636a.767.767,0,0,0,0,1.534H22.284L18.7,21.275a.777.777,0,0,0,.006,1.086.764.764,0,0,0,1.08-.006l4.862-4.9h0a.861.861,0,0,0,.159-.242.732.732,0,0,0,.059-.3.769.769,0,0,0-.218-.537l-4.862-4.9A.752.752,0,0,0,18.708,11.469Z" transform="translate(-7.875 -11.252)"></path></svg></a> </div></div>`;
 
-else if(APIlanguage === "ja"){
-  html += `<div class="flex flex-col text-center justify-between">
-  <div class="mb-1.5">
-      <a target="_blank" class="w-full text-sm leading-[22px] py-1.5 font-semibold text-red px-2.5 rounded-sm border border-red inline-flex items-center justify-center transition-all duration-300 group hover:text-white hover:bg-red capitalize" href="https://www.google.com/maps/dir/?api=1&destination=${cordinates.latitude},${cordinates.longitude}"><svg class="fill-red w-4 h-4 mr-2 group-hover:fill-white" xmlns="http://www.w3.org/2000/svg" width="7.954" height="10.606" viewBox="0 0 7.954 10.606"><path data-name="Icon awesome-map-marker-alt" d="M3.568,10.392C.559,6.029,0,5.581,0,3.977a3.977,3.977,0,0,1,7.954,0c0,1.6-.559,2.051-3.568,6.415a.5.5,0,0,1-.817,0Zm.409-4.758A1.657,1.657,0,1,0,2.32,3.977,1.657,1.657,0,0,0,3.977,5.634Z"></path></svg><span class="inline-block">${Multilang.Directiontext.ja}</span></a></div>`;
-}
-
-
-  if (APIlanguage === "en") {
-    html += `<div class=""><a class="w-full text-sm leading-[22px] py-1.5 font-semibold text-white px-2.5 rounded-sm border bg-red border-red inline-flex items-center justify-center transition-all duration-300 group hover:text-red hover:bg-white capitalize" href=' + cardTitleLinkUrlValue + '>${Multilang.DetailPage.en} <svg class="ml-1.5 fill-white group-hover:fill-red" xmlns="http://www.w3.org/2000/svg" width="16.987" height="11.33" viewBox="0 0 16.987 11.33"><path data-name="Icon ionic-ios-arrow-round-forward" d="M18.708,11.469a.771.771,0,0,0-.006,1.086l3.587,3.593H8.636a.767.767,0,0,0,0,1.534H22.284L18.7,21.275a.777.777,0,0,0,.006,1.086.764.764,0,0,0,1.08-.006l4.862-4.9h0a.861.861,0,0,0,.159-.242.732.732,0,0,0,.059-.3.769.769,0,0,0-.218-.537l-4.862-4.9A.752.752,0,0,0,18.708,11.469Z" transform="translate(-7.875 -11.252)"></path></svg></a> </div></div>`
-  }
-
-  else if (APIlanguage === "fr") {
-    html += `<div class=""><a class="w-full text-sm leading-[22px] py-1.5 font-semibold text-white px-2.5 rounded-sm border bg-red border-red inline-flex items-center justify-center transition-all duration-300 group hover:text-red hover:bg-white capitalize" href=' + cardTitleLinkUrlValue + '>${Multilang.DetailPage.fr}<svg class="ml-1.5 fill-white group-hover:fill-red" xmlns="http://www.w3.org/2000/svg" width="16.987" height="11.33" viewBox="0 0 16.987 11.33"><path data-name="Icon ionic-ios-arrow-round-forward" d="M18.708,11.469a.771.771,0,0,0-.006,1.086l3.587,3.593H8.636a.767.767,0,0,0,0,1.534H22.284L18.7,21.275a.777.777,0,0,0,.006,1.086.764.764,0,0,0,1.08-.006l4.862-4.9h0a.861.861,0,0,0,.159-.242.732.732,0,0,0,.059-.3.769.769,0,0,0-.218-.537l-4.862-4.9A.752.752,0,0,0,18.708,11.469Z" transform="translate(-7.875 -11.252)"></path></svg></a> </div></div>`
-  }
-
-
-  else if (APIlanguage === "ja") {
-    html += `<div class=""><a class="w-full text-sm leading-[22px] py-1.5 font-semibold text-white px-2.5 rounded-sm border bg-red border-red inline-flex items-center justify-center transition-all duration-300 group hover:text-red hover:bg-white capitalize" href=' + cardTitleLinkUrlValue + '>${Multilang.DetailPage.ja}<svg class="ml-1.5 fill-white group-hover:fill-red" xmlns="http://www.w3.org/2000/svg" width="16.987" height="11.33" viewBox="0 0 16.987 11.33"><path data-name="Icon ionic-ios-arrow-round-forward" d="M18.708,11.469a.771.771,0,0,0-.006,1.086l3.587,3.593H8.636a.767.767,0,0,0,0,1.534H22.284L18.7,21.275a.777.777,0,0,0,.006,1.086.764.764,0,0,0,1.08-.006l4.862-4.9h0a.861.861,0,0,0,.159-.242.732.732,0,0,0,.059-.3.769.769,0,0,0-.218-.537l-4.862-4.9A.752.752,0,0,0,18.708,11.469Z" transform="translate(-7.875 -11.252)"></path>sds</svg></a> </div></div>`
-  }
-
-
-  
-  html = `<div class="center-column relative bg-white rounded-tl-2xl rounded-br-2xl flex flex-wrap leading-6 shadow-[4px_8px_6px_rgba(0,0,0,0.10)]">${html}</div>`;
-
- 
-  return `<div id="result-${index}" class="result mb-5 lg:pr-5">${html}</div>`;
+    return `<div id="result-${index}" class="result mb-5 lg:pr-5"><div class="center-column relative bg-white rounded-tl-2xl rounded-br-2xl flex flex-wrap leading-6 shadow-[4px_8px_6px_rgba(0,0,0,0.10)]">${html}</div></div>`;
 }
 
 
@@ -710,13 +630,6 @@ export function getDepartments() {
         
       }
 
-      // const regionNames = new Intl.DisplayNames(
-      //   ['en', 'fr', 'ja'], { type: 'region' }
-      // );
-      // //alert(regionNames.of(newBRCC));
-      // somecountry += '<option value="' + newBRCC + '">' + regionNames.of(newBRCC) + '</option>';
-      // somecountry += '<option value="' + newBECC + '">' + regionNames.of(newBECC) + '</option>';
-      // somecountry += '<option value="' + newFRCC + '">' + regionNames.of(newFRCC) + '</option>';
       html += somecountry;
       html += '</select>';
       html += '</div>';
