@@ -1,3 +1,5 @@
+
+import { locationJSONtoHTML } from "./locations";
 export function formatOpenNowString(hoursData, utcOffset) {
   const now = getYextTimeWithUtcOffset(utcOffset);
 
@@ -89,24 +91,24 @@ export function formatOpenNowString(hoursData, utcOffset) {
         nextInterval.start == "00:00" &&
         currentInterval.end == "23:59"
       ) {
-        hoursString +=
-          "<strong class='font-bold'>Open</strong>  Closes at [closingTime] tomorrow";
+        hoursString +=  "<strong class='font-bold'>Open</strong>  Closes at [closingTime] tomorrow";
+         
         hoursString = hoursString.replace(
           "[closingTime]",
           formatTime(currentInterval.end)
         );
       } else {
-        var ourURL1  = window.location.pathname;
+        var ourURL1  = window.location.href;
         
-        if(ourURL1 == "/ja/index.html"){
+        if(ourURL1.includes("/ja")){
           hoursString += "<strong class='font-bold'>  開いた</strong>  <strong class='font-bold'>  で閉まります  [closingTime]</strong>";
         
         }
-        if(ourURL1 == "/fr/index.html"){
+        if(ourURL1.includes("/fr")){
           hoursString += "<strong class='font-bold'> ouverte </strong>  <strong class='font-bold'> ferme à [closingTime]</strong>";
         
         }
-        if(ourURL1 == "/"){
+        if(ourURL1.includes("/en")){
           hoursString += "<strong class='font-bold'> Open </strong>  <strong class='font-bold'> Closes At [closingTime]</strong>";
         }
 
@@ -119,6 +121,7 @@ export function formatOpenNowString(hoursData, utcOffset) {
       if (nextIsTomorrow) {
         hoursString +=
           "<strong class='font-bold'>Closed Opens at [openingTime] tomorrow</strong>";
+         
         hoursString = hoursString.replace(
           "[openingTime]",
           formatTime(nextInterval.start)

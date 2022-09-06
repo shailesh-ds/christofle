@@ -50,9 +50,7 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
    let FilterBtn = '';
    let StoreTitle = '';
    let ViewMore = '';
-   let frlang = '';
-   let jalang ='';
-   let enlang = '';
+
   //  let getDirection = '';
   
     title += `<div>${Multilang.Allstore[APIlanguage]}</div>`;
@@ -60,9 +58,7 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
     FilterBtn += `${Multilang.FilterBtn[APIlanguage]}`;
     StoreTitle += `${Multilang.StoreTitle[APIlanguage]}`
     ViewMore += `${Multilang.ViewMore[APIlanguage]}`
-    frlang += `${Multilang.frlang[APIlanguage]}`
-    jalang += `${Multilang.jalang[APIlanguage]}`
-    enlang += `${Multilang.enlang[APIlanguage]}`
+   
     // getDirection += `${Multilang.getDirection[APIlanguage]}`
   
    $(".LocatorTitle").html(title);
@@ -70,9 +66,7 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
    $(".Filter").html(FilterBtn);
    $(".StoreTitle").html(StoreTitle);
    $(".ViewMore").html(ViewMore);
-   $(".French").html(frlang);
-   $(".Japanese").html(jalang);
-   $(".English").html(enlang);
+
   //  $(".Getdirectionslug").html(getDirection);
   
   const cardTitleValue = getValue(locationOptions.cardTitle);
