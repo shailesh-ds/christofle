@@ -136,7 +136,7 @@ export function addMarkersToMap(locations) {
           lng: coordinatesValue.longitude,
         },
         map: map,
-        icon: marker_icon,
+        //icon: marker_icon,
        
         optimized: false,
       });
@@ -146,7 +146,7 @@ export function addMarkersToMap(locations) {
           lng: coordinatesValue.longitude,
         },
         map: map,
-        icon: selected_marker_icon,
+        //icon: selected_marker_icon,
        
         optimized: false,
       });
