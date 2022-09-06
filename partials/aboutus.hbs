@@ -3,11 +3,13 @@
         <img class="w-full rounded-tl-3xl rounded-br-3xl shadow-[4px_8px_6px_rgba(0,0,0,0.10)] transition-all duration-500 transform hover:scale-105" src="{{c_photo.url}}"/>
     </div>
     <div class="px-4 w-full lg:w-1/2 pt-5 lg:pt-0 text-center lg:text-left">
-        {{#each c_aboutch }}
+      
         <div class="mb-6 last:mb-0">
-            <h3 class="text-xl md:text-3xl font-semibold leading-tight mb-3 ">{{title}}</h3>
-            <div class=""> {{convertRTFToHTML description}}</div>
+            <h3 class="text-xl md:text-3xl font-semibold leading-tight mb-3 ">{{c_aboutch.[0].title}}</h3>
+            <div class=""> {{c_aboutch.[0].description}}</div>
+            <a href="{{c_ctabtn1.link}}"
+                        class="inline-block p-2 bg-black text-white font-bold">{{c_ctabtn1.label}}</a>
         </div>
-        {{/each}}
+        
     </div>
 </div>

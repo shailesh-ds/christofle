@@ -53,6 +53,7 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
    let frlang = '';
    let jalang ='';
    let enlang = '';
+  //  let getDirection = '';
   
     title += `<div>${Multilang.Allstore[APIlanguage]}</div>`;
     Store += `<li>${Multilang.Storelocator[APIlanguage]}</li>`
@@ -62,6 +63,7 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
     frlang += `${Multilang.frlang[APIlanguage]}`
     jalang += `${Multilang.jalang[APIlanguage]}`
     enlang += `${Multilang.enlang[APIlanguage]}`
+    // getDirection += `${Multilang.getDirection[APIlanguage]}`
   
    $(".LocatorTitle").html(title);
    $(".Store-locator").html(Store);
@@ -71,6 +73,7 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
    $(".French").html(frlang);
    $(".Japanese").html(jalang);
    $(".English").html(enlang);
+  //  $(".Getdirectionslug").html(getDirection);
   
   const cardTitleValue = getValue(locationOptions.cardTitle);
   const getDirectionsLabelValue = getValue(locationOptions.getDirectionsLabel);

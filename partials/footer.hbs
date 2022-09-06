@@ -4,7 +4,9 @@
      
       <div class="w-full md:w-1/2 lg:w-1/4 flex items-center lg:justify-center text-left p-2.5">
         <span class="before:content-['\006c'] font-chrisfo-icon text-2xl mr-3"></span>
+        {{#if c_locations}}
          {{#each c_locations}} <p>{{c_topfooter.[0].text}}</p>   {{/each}}
+        {{/if}} 
       </div>
    
       <div class="w-full md:w-1/2 lg:w-1/4 flex items-center lg:justify-center text-left p-2.5">

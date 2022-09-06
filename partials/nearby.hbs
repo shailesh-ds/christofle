@@ -1,7 +1,8 @@
 <div class="inline-block w-full align-middle bg-[#0C0C0C] pt-10 pb-10 lg:pb-20">
   <div class="container">
     <div class="max-w-[800px] mx-auto text-white text-center mb-10">
-      <h2 class="text-xl md:text-3xl font-semibold leading-tight mb-3 text-white uppercase">near by store</h2>
+      <h2 class="text-xl md:text-3xl font-semibold leading-tight mb-3 text-white uppercase Nearbylocation" id="Nearby">
+      </h2>
       {{convertRTFToHTML c_abbotttext}}
     </div>
     <div class="location-data w-full grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-9"> </div>
@@ -21,19 +22,28 @@
       afterSelected: afterSelected
     };
   }
-let path=window.location.href;
- let days_string =['Sunday','Monday','Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    
-       if(path.includes("/fr")){
-      days_string=['dimanche','lundi','mardi', 'mercredi','jeudi','vendredi','samedi']
-    }    
+  let Nearbylocation = 'Nearby Location';
+  let path = window.location.href;
+  let days_string = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-       if(path.includes("/ja")){
-      days_string=['日曜日','月曜日','火曜日', '水曜日','木曜日','金曜日','土曜日']
- 
-    } 
-  
-  let BaseURL  = window.location.href;
+  if (path.includes("/fr")) {
+    days_string = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+    Nearbylocation = "À proximité de l'emplacement"
+  }
+
+  if (path.includes("/ja")) {
+    days_string = ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'];
+    Nearbylocation = "近くの場所"
+
+  }
+
+  // Near by location data
+
+
+
+
+  document.getElementById('Nearby').innerHTML = Nearbylocation;
+
 
 
 
@@ -86,6 +96,9 @@ let path=window.location.href;
   window.dayName = function (currentDate) {
     return days[currentDate.getDay()];
   };
+
+  //Multi location data
+
 </script>
 <script>
 
@@ -147,7 +160,7 @@ let path=window.location.href;
       const month = date.getMonth() + 1;
       const year = date.getFullYear();
       const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
-      
+
       const dateString = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
       const dayOfWeekString = days[date.getDay()];
       // Check for holiday
@@ -247,16 +260,56 @@ let path=window.location.href;
     if (openRightNow) {
       if (currentInterval.start === "00:00" && currentInterval.end === "23:59") {
         message = 'Open 24 Hours';
+        if (path.includes("/fr")) {
+           message = "Ouvert 24 heures"
+   
+          }
+
+       if (path.includes("/ja")) {
+   
+          message = "２４時間営業"
+        }
       } else {
         message = 'Open · Closes at [closingTime]';
+        if (path.includes("/fr")) {
+   
+             message = 'Ouvert · Ferme à [closingTime]';
+          }
+
+       if (path.includes("/ja")) {
+   
+          message = '開店・閉店時間 [closingTime]';
+
+        }
         message = message.replace("[closingTime]", formatTime(currentInterval.end));
       }
     } else if (nextInterval) {
       if (nextIsTomorrow) {
+         
         message = 'Closed · Opens at [openingTime] tomorrow';
+        if (path.includes("/fr")) {
+   
+             message = 'Fermé · Ouvre à[closingTime] demain';
+          }
+
+       if (path.includes("/ja")) {
+   
+          message = '休館日・開館時間 [closingTime] 明日';
+
+        }
         message = message.replace("[openingTime]", formatTime(nextInterval.start));
       } else {
         message = 'Closed · Opens at [openingTime]';
+        if (path.includes("/fr")) {
+   
+             message = 'Fermé · Ouvre à[openingTime]';
+          }
+
+       if (path.includes("/ja")) {
+   
+          message = '休館日・開館時間 [openingTime]';
+
+        }
         message = message.replace("[openingTime]", formatTime(nextInterval.start));
       }
     }
@@ -266,6 +319,17 @@ let path=window.location.href;
 </script>
 
 <script>
+  var ourURL = window.location.href;
+  var langauage = "";
+  if (ourURL.includes("/fr")) {
+    langauage = "fr";
+  }
+  else if (ourURL.includes("/ja")) {
+    langauage = "ja";
+  }
+  else if (ourURL.includes("/en")) {
+    langauage = "en";
+  }
 
   document.addEventListener("DOMContentLoaded", function () {
     var baseURL = "https://liveapi-sandbox.yext.com/v2/accounts/me/entities/geosearch?";
@@ -279,7 +343,6 @@ let path=window.location.href;
     var savedFilterId = "982931142";
     var entityTypes = "location";
     // var languages = ["fr","ja","en"];
-
     var fields = "name,slug,hours,neighborhood,address,mainPhone,timeZoneUtcOffset,c_photoGallery2";
     const savedSearchIdString = "";
 
@@ -297,12 +360,13 @@ let path=window.location.href;
       radius +
       "&entityTypes=" +
       entityTypes +
+      "&languages=" +
+      langauage +
       "&savedFilterIds=" +
       savedFilterId +
       "&fields=" +
+
       fields +
-      // "&languages=" +
-      //languages +
       "&resolvePlaceholders=true";
     [].slice
       .call(document.querySelectorAll(".location-data") || [])
@@ -325,7 +389,16 @@ let path=window.location.href;
         [].slice
           .call(document.querySelectorAll(".location-data") || [])
           .forEach(function (el) {
-            el.innerHTML = '<div class="col-span-2 text-center text-2xl mt-10 opacity-70 text-white">No Locations Found</div>';
+            let parseerrors = "No Location Found"
+            if (ourURL.includes("/ja")) {
+              parseerrors = "場所が見つかりません"
+            }
+            else if (ourURL.includes("/fr")) {
+            parseerrors = "AUCUN emplacement trouvé"
+
+            }
+
+            el.innerHTML = '<div class="col-span-2 text-center text-2xl mt-10 opacity-70 text-white">' + parseerrors + '</div>';
           });
       }
       for (var i = 1; i < entities.length; i++) {
@@ -337,7 +410,7 @@ let path=window.location.href;
         if (true) {
 
           locationHTML =
-            '<div class="location bg-white rounded-tl-2xl rounded-br-2xl flex flex-wrap overflow-hidden leading-6"><div class="w-full sm:w-1/3 rounded-tl-2xl rounded-br-2xl relative overflow-hidden pt-[57%] sm:pt-0"><img src="' + location.c_photoGallery2[0].image.url + '" class="rounded-tl-2xl rounded-br-2xl w-full h-full absolute top-0 left-0 object-cover transition-all duration-500 transform hover:scale-105"/></div><div class="w-full sm:w-2/3 p-3 pb-11 text-sm relative"><h3 class="text-base font-bold mb-2.5"><a class="transition-all duration-300 hover:text-red" href="' + location.slug + '">' + ucwords(location.name) + '</a></h3><div class="address leading-6 relative pl-6 mb-3.5"><svg class="bg-red rounded-full fill-white absolute top-0.5 left-0 w-5 h-5 p-1 mr-2" xmlns="http://www.w3.org/2000/svg"width="7.954" height="10.606" viewBox="0 0 7.954 10.606"> <path data-name="Icon awesome-map-marker-alt"d="M3.568,10.392C.559,6.029,0,5.581,0,3.977a3.977,3.977,0,0,1,7.954,0c0,1.6-.559,2.051-3.568,6.415a.5.5,0,0,1-.817,0Zm.409-4.758A1.657,1.657,0,1,0,2.32,3.977,1.657,1.657,0,0,0,3.977,5.634Z" /> </svg><div class="">' + ucwords(location.address.line1) + '</div><div class="">' + ucwords(location.address.city) + ', ' + location.address.postalCode + '</div></div><div class="relative pl-6 mb-3.5"><svg class="bg-red rounded-full fill-white absolute top-0.5 left-0 w-5 h-5 p-1 mr-2" xmlns="http://www.w3.org/2000/svg"width="7.955" height="7.955" viewBox="0 0 7.955 7.955"> <path  data-name="Icon awesome-phone-alt"d="M7.728,5.621l-1.74-.746a.373.373,0,0,0-.435.107l-.771.942A5.759,5.759,0,0,1,2.029,3.172L2.971,2.4a.372.372,0,0,0,.107-.435L2.332.226A.375.375,0,0,0,1.9.01L.289.383A.373.373,0,0,0,0,.746,7.208,7.208,0,0,0,7.209,7.955a.373.373,0,0,0,.364-.289L7.945,6.05a.377.377,0,0,0-.218-.429Z"transform="translate(0 0)" /> </svg><a class="phone inline-block align-middle leading-6 transition-all duration-300 hover:text-red" href="tel:' + location.mainPhone + '">' + location.mainPhone + '</a></div><div class="open-close-time font-semibold">' + window.getOpenNowString(location.hours, parsedOffset) + '</div><a class="text-sm leading-[22px] py-1.5 font-semibold text-white px-6 border border-red bg-red inline-flex items-center rounded-br-2xl absolute bottom-0 right-0 transition-all duration-300 hover:opacity-90" href="https://www.google.com/maps/dir/?api=1&destination=' + ucwords(location.address.line1) + '" target="_blank">Get Direction <svg class="ml-1.5 fill-white" xmlns="http://www.w3.org/2000/svg" width="16.987" height="11.33" viewBox="0 0 16.987 11.33"><path id = "Icon_ionic-ios-arrow-round-forward" data-name="Icon ionic-ios-arrow-round-forward" d = "M18.708,11.469a.771.771,0,0,0-.006,1.086l3.587,3.593H8.636a.767.767,0,0,0,0,1.534H22.284L18.7,21.275a.777.777,0,0,0,.006,1.086.764.764,0,0,0,1.08-.006l4.862-4.9h0a.861.861,0,0,0,.159-.242.732.732,0,0,0,.059-.3.769.769,0,0,0-.218-.537l-4.862-4.9A.752.752,0,0,0,18.708,11.469Z" transform = "translate(-7.875 -11.252)" /></svg ></a ></div ></div > ';
+            '<div class="location bg-white rounded-tl-2xl rounded-br-2xl flex flex-wrap overflow-hidden leading-6"><div class="w-full sm:w-1/3 rounded-tl-2xl rounded-br-2xl relative overflow-hidden pt-[57%] sm:pt-0"><img src="' + location.c_photoGallery2[0].image.url + '" class="rounded-tl-2xl rounded-br-2xl w-full h-full absolute top-0 left-0 object-cover transition-all duration-500 transform hover:scale-105"/></div><div class="w-full sm:w-2/3 p-3 pb-11 text-sm relative"><h3 class="text-base font-bold mb-2.5"><a class="transition-all duration-300 hover:text-red" href="' + location.slug + '">' + ucwords(location.name) + '</a></h3><div class="address leading-6 relative pl-6 mb-3.5"><svg class="bg-red rounded-full fill-white absolute top-0.5 left-0 w-5 h-5 p-1 mr-2" xmlns="http://www.w3.org/2000/svg"width="7.954" height="10.606" viewBox="0 0 7.954 10.606"> <path data-name="Icon awesome-map-marker-alt"d="M3.568,10.392C.559,6.029,0,5.581,0,3.977a3.977,3.977,0,0,1,7.954,0c0,1.6-.559,2.051-3.568,6.415a.5.5,0,0,1-.817,0Zm.409-4.758A1.657,1.657,0,1,0,2.32,3.977,1.657,1.657,0,0,0,3.977,5.634Z" /> </svg><div class="">' + ucwords(location.address.line1) + '</div><div class="">' + ucwords(location.address.city) + ', ' + location.address.postalCode + '</div></div><div class="relative pl-6 mb-3.5"><svg class="bg-red rounded-full fill-white absolute top-0.5 left-0 w-5 h-5 p-1 mr-2" xmlns="http://www.w3.org/2000/svg"width="7.955" height="7.955" viewBox="0 0 7.955 7.955"> <path  data-name="Icon awesome-phone-alt"d="M7.728,5.621l-1.74-.746a.373.373,0,0,0-.435.107l-.771.942A5.759,5.759,0,0,1,2.029,3.172L2.971,2.4a.372.372,0,0,0,.107-.435L2.332.226A.375.375,0,0,0,1.9.01L.289.383A.373.373,0,0,0,0,.746,7.208,7.208,0,0,0,7.209,7.955a.373.373,0,0,0,.364-.289L7.945,6.05a.377.377,0,0,0-.218-.429Z"transform="translate(0 0)" /> </svg><a class="phone inline-block align-middle leading-6 transition-all duration-300 hover:text-red" href="tel:' + location.mainPhone + '">' + location.mainPhone + '</a></div><div class="open-close-time font-semibold">' + window.getOpenNowString(location.hours, parsedOffset) + '</div><a class="getDirection text-sm leading-[22px] py-1.5 font-semibold text-white px-6 border border-red bg-red inline-flex items-center rounded-br-2xl absolute bottom-0 right-0 transition-all duration-300 hover:opacity-90" href="https://www.google.com/maps/dir/?api=1&destination=' + ucwords(location.address.line1) + '" target="_blank"><div class="getslug"></div> <svg class="ml-1.5 fill-white" xmlns="http://www.w3.org/2000/svg" width="16.987" height="11.33" viewBox="0 0 16.987 11.33"><path id = "Icon_ionic-ios-arrow-round-forward" data-name="Icon ionic-ios-arrow-round-forward" d = "M18.708,11.469a.771.771,0,0,0-.006,1.086l3.587,3.593H8.636a.767.767,0,0,0,0,1.534H22.284L18.7,21.275a.777.777,0,0,0,.006,1.086.764.764,0,0,0,1.08-.006l4.862-4.9h0a.861.861,0,0,0,.159-.242.732.732,0,0,0,.059-.3.769.769,0,0,0-.218-.537l-4.862-4.9A.752.752,0,0,0,18.708,11.469Z" transform = "translate(-7.875 -11.252)" /></svg ></a ></div ></div > ';
           //console.log(locationHTML);
           [].slice
             .call(document.querySelectorAll(".location-data") || [])

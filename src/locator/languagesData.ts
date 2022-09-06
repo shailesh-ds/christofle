@@ -136,6 +136,11 @@ export const languagesData = {
                ja: "フランス語",
                fr: " Français"
            },
+           getDirection:{
+            en: "Get Direction",
+            fr: "Obtenir l'itinéraire",
+            ja: "方向を取得"
+           }
            
    
        }   
