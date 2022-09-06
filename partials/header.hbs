@@ -2,18 +2,12 @@
 
     <div class="flex p-6">
                 <h1 class="LanguageTitle"></h1>
-                <a class="m-2" href="/en/index.html">English</a>
-                <a class="m-2" href="/fr/index.html">Français</a>
-                <a class="m-2" href="/ja/index.html">日本</a>
+                <a class="m-2 langSwitcher" onclick="langSwitcher('en');" href="javascript:void(0);">English</a>
+                <a class="m-2 langSwitcher" onclick="langSwitcher('fr');" href="javascript:void(0);">Français</a>
+                <a class="m-2 langSwitcher" onclick="langSwitcher('ja');" href="javascript:void(0);">日本</a>
         </div>
 
     <div class="relative bg-cover bg-center bg-no-repeat bg-white">
-        <div class="flex p-6">
-                <h1 class="LanguageTitle"></h1>
-                <a class="French m-2"  id="French" href="https://master-violet--basics--casually-sbx-pgsdemo-com.sbx.preview.pagescdn.com/en/index.html"></a>
-                <a class="Japanese m-2" id="japanese" href="https://master-violet--basics--casually-sbx-pgsdemo-com.sbx.preview.pagescdn.com/fr/index.html"></a>
-                <a class="English m-2" id="English" href="https://master-violet--basics--casually-sbx-pgsdemo-com.sbx.preview.pagescdn.com/ja/index.html"></a>
-        </div>
         <div class="container px-4 flex flex-wrap p-0 items-center justify-between lg:justify-around bg-white relative z-40">
             <a href="/" class="text-center">
                 <img class="w-[150px] md:w-[243px]"
@@ -46,7 +40,11 @@
 
 <script>
 document.getElementById("menu-btn").onclick = function () { myFunction() };
-
+function langSwitcher(lang){
+    let currentUrl = window.location.href;
+    let newUrl = currentUrl.replace("/{{locale}}/","/"+lang+"/");
+    if(newUrl != currentUrl) window.location.href = newUrl;
+}
 function myFunction() {
         document.getElementById("navigation").classList.toggle("translate-x-0");
         document.getElementById("body").classList.toggle("overflow-hidden");
