@@ -1,45 +1,54 @@
 ---
 {
-    "stream": {
-        "$id": "location-detail-pages",
-        "source": "knowledgeGraph",
-        "destination": "pages",
-        "filter" : {
-            "entityTypes": [
-                "location"
-            ],
-            "savedFilterIds":[
-                "982931142"
-            ]
-        },
-        "fields": [
-            "id",
-            "uid",
-            "meta",
-            "name",
-            "address",
-            "description",
-            "hours",
-            "emails",
-            "mainPhone",
-            "photoGallery",
-            "slug",
-            "c_abbotttext",
-            "c_aboutch.title",
-            "c_aboutch.description",
-            "geocodedCoordinate",
-            "neighborhood",
-            "paymentOptions",
-            "c_cTA",
-            "c_description1",
-            "c_photo"
-            
-        ],
-        "localization": {
-            "locales": ["en","fr","ja"]
-        }
-    },
-    "urlFormat": "{{slug}}"
+"stream": {
+"$id": "location-detail-pages",
+"source": "knowledgeGraph",
+"destination": "pages",
+"filter" : {
+"entityTypes": [
+"location"
+],
+"savedFilterIds":[
+"982931142"
+]
+},
+"fields": [
+"id",
+"uid",
+"meta",
+"name",
+"address",
+"description",
+"hours",
+"emails",
+"mainPhone",
+"photoGallery",
+"slug",
+"c_abbotttext",
+"c_aboutch.title",
+"c_aboutch.description",
+"geocodedCoordinate",
+"neighborhood",
+"paymentOptions",
+"c_cTA",
+"c_description1",
+"c_photo",
+"c_locations.name",
+"c_ctabtn1.label",
+"c_ctabtn1.link",
+"c_locations.c_singletext.text",
+"c_locations.c_header.cta",
+"c_locations.c_topfooter.text",
+"c_locations.c_onefooter.cta",
+"c_locations.c_twofooter.cta",
+"c_locations.c_threefooter.cta"
+
+],
+"localization": {
+"locales": ["en","fr","ja"]
+}
+},
+"urlFormat": "{{slug}}"
 }
 ---
 <!DOCTYPE html>
@@ -109,17 +118,7 @@
             {{>locationdetails}}
         </div>
     </div>
-    {{#if c_description1}}
-    <div class="inline-block align-middle w-full pt-10 lg:pt-20">
-        <div class="container max-w-[980px]">
-            <div class="w-full text-center">
-                <h2 class="text-xl md:text-3xl font-semibold leading-tight mb-5 uppercase">About Boutique Christofle
-                </h2>
-                {{convertRTFToHTML c_description1}}
-            </div>
-        </div>
-    </div>
-    {{/if}}
+    
 
     <div
         class="inline-block align-middle w-full py-10 lg:py-20 relative z-0 overflow-hidden after:content-[''] after:absolute after:-bottom-[210px] after:-right-[138px] after:w-[370px] after:h-[370px] after:border-[41px] after:border-[#DC1D1D] after:rounded-full after:-z-[1] after:opacity-[0.03]">
@@ -134,7 +133,7 @@
 
     {{>photos}}
 
- 
+
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
