@@ -69,7 +69,7 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
    $(".StoreTitle").html(StoreTitle);
    $(".ViewMore").html(ViewMore);
    $(".French").html(frlang);
-   $(".Japanese").html(frlang);
+   $(".Japanese").html(jalang);
    $(".English").html(enlang);
   
   const cardTitleValue = getValue(locationOptions.cardTitle);
