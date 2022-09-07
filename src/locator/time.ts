@@ -1,5 +1,10 @@
 
 import { locationJSONtoHTML } from "./locations";
+// import { Multilang } from "./languagesData";
+import { multilangData } from "./MultiLangData";
+
+
+
 export function formatOpenNowString(hoursData, utcOffset) {
   const now = getYextTimeWithUtcOffset(utcOffset);
 
@@ -13,6 +18,17 @@ export function formatOpenNowString(hoursData, utcOffset) {
   let openRightNow = false;
   let currentInterval = null;
   let nextInterval = null;
+  var pathName = window.location.href;
+
+
+  var language = "en";
+  if(pathName.includes("/ja")){
+    language = "ja"
+  }
+  else if(pathName.includes("/fr")){
+    language = "fr"
+  }
+
 
   if (intervalsYesterday) {
     for (let i = 0; i < intervalsYesterday.length; i++) {
@@ -86,12 +102,12 @@ export function formatOpenNowString(hoursData, utcOffset) {
     if (openRightNow) {
       // Check first for a 24-hour interval, then check for open past midnight
       if (currentInterval.start == "00:00" && currentInterval.end == "23:59") {
-        hoursString += "<strong class='font-bold'>Open 24 hours</strong>";
+        hoursString += `<strong class='font-bold'>${multilangData[language].openAlltime}</strong>`;
       } else if (
         nextInterval.start == "00:00" &&
         currentInterval.end == "23:59"
       ) {
-        hoursString +=  "<strong class='font-bold'>Open</strong>  Closes at [closingTime] tomorrow";
+        hoursString +=  `<strong class='font-bold'>${multilangData[language].Open}</strong>${multilangData[language].Close}[closingTime]${multilangData[language].tomorrow}`;
          
         hoursString = hoursString.replace(
           "[closingTime]",
@@ -99,18 +115,10 @@ export function formatOpenNowString(hoursData, utcOffset) {
         );
       } else {
         var ourURL1  = window.location.href;
-        
-        if(ourURL1.includes("/ja")){
-          hoursString += "<strong class='font-bold'>  開いた</strong>  <strong class='font-bold'>  で閉まります  [closingTime]</strong>";
-        
-        }
-        if(ourURL1.includes("/fr")){
-          hoursString += "<strong class='font-bold'> ouverte </strong>  <strong class='font-bold'> ferme à [closingTime]</strong>";
-        
-        }
-        if(ourURL1.includes("/en")){
-          hoursString += "<strong class='font-bold'> Open </strong>  <strong class='font-bold'> Closes At [closingTime]</strong>";
-        }
+
+       
+
+          hoursString += `<strong class='font-bold'>${multilangData[language].Open} </strong>  <strong class='font-bold'>${multilangData[language].Close}[closingTime]</strong>`;
 
         hoursString = hoursString.replace(
           "[closingTime]",
@@ -120,14 +128,14 @@ export function formatOpenNowString(hoursData, utcOffset) {
     } else {
       if (nextIsTomorrow) {
         hoursString +=
-          "<strong class='font-bold'>Closed Opens at [openingTime] tomorrow</strong>";
+          `<strong class='font-bold'>${multilangData[language].tmClosed}[openingTime]${multilangData[language].tomorrow}</strong>`;
          
         hoursString = hoursString.replace(
           "[openingTime]",
           formatTime(nextInterval.start)
         );
       } else {
-        hoursString += "<strong class='font-bold'>Closed</strong>&nbsp-&nbspOpens at [openingTime]";
+        hoursString += `<strong class='font-bold'>${multilangData[language].Closed}</strong>&nbsp-&nbsp${multilangData[language].openAt}[openingTime]`;
         hoursString = hoursString.replace(
           "[openingTime]",
           formatTime(nextInterval.start)

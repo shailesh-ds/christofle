@@ -23,7 +23,9 @@ import {
   liveAPIKey,
 } from "./constants";
 
-import { languagesData, Multilang } from "./languagesData";
+// import { multilangData, multilangData } from "./multilangData";
+import { multilangData, Days } from "./MultiLangData";
+
 import { getRequest, startLoading, stopLoading } from "./loader";
 import RtfConverter from "@yext/rtf-converter";
 import { highlightLocation } from "./map";
@@ -53,13 +55,13 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
 
   //  let getDirection = '';
   
-    title += `<div>${Multilang.Allstore[APIlanguage]}</div>`;
-    Store += `<li>${Multilang.Storelocator[APIlanguage]}</li>`
-    FilterBtn += `${Multilang.FilterBtn[APIlanguage]}`;
-    StoreTitle += `${Multilang.StoreTitle[APIlanguage]}`
-    ViewMore += `${Multilang.ViewMore[APIlanguage]}`
+    title += `<div>${multilangData[APIlanguage].allStore}</div>`;
+    Store += `<li>${multilangData[APIlanguage].storeLocator}</li>`
+    FilterBtn += `${multilangData[APIlanguage].filter}`;
+    StoreTitle += `${multilangData[APIlanguage].storeLocator}`
+    ViewMore += `${multilangData[APIlanguage].viewMore}`
    
-    // getDirection += `${Multilang.getDirection[APIlanguage]}`
+    // getDirection += `${multilangData.getDirection[APIlanguage]}`
   
    $(".LocatorTitle").html(title);
    $(".Store-locator").html(Store);
@@ -129,7 +131,7 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
     if (time.length > 1) {
       time = time.slice(1);
 
-      time[5] = +time[0] < 12 ? Multilang.Am[APIlanguage] : Multilang.Pm[APIlanguage];
+      time[5] = +time[0] < 12 ? multilangData[APIlanguage].Am : multilangData[APIlanguage].Pm;
       time[0] = +time[0] % 12 || 12;
     }
     return time.join('');
@@ -165,7 +167,7 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
     html += '<div class="storelocation-openCloseTime" style="display:none;" >';
     html += '<ul id="time-row-main-shop-' + index + '">';
   
-    let dayConvert = languagesData[APIlanguage]
+    let dayConvert = Days[APIlanguage];
 
     
 
@@ -205,13 +207,13 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
        
         $.each(hour[1].openIntervals, function (op, openInterval) {
          
-          html += tConvert(openInterval.start) +  Multilang.languages[APIlanguage] + tConvert(openInterval.end);
+          html += tConvert(openInterval.start) +  multilangData[APIlanguage].To + tConvert(openInterval.end);
           
      
         
         });
       } else {
-        html += '<span class="text-red closed" >'+Multilang.Closelocation[APIlanguage]+'</span>';
+        html += '<span class="text-red closed" >'+multilangData[APIlanguage].closed+'</span>';
         
       }
       html += '</div>';
@@ -238,10 +240,10 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
     addressValue.postalCode;
   html += `<div class="flex flex-col text-center justify-between">
   <div class="mb-1.5">
-      <a target="_blank" class="w-full text-sm leading-[22px] py-1.5 font-semibold text-red px-2.5 rounded-sm border border-red inline-flex items-center justify-center transition-all duration-300 group hover:text-white hover:bg-red capitalize" href="https://www.google.com/maps/dir/?api=1&destination=${cordinates.latitude},${cordinates.longitude}"><svg class="fill-red w-4 h-4 mr-2 group-hover:fill-white" xmlns="http://www.w3.org/2000/svg" width="7.954" height="10.606" viewBox="0 0 7.954 10.606"><path data-name="Icon awesome-map-marker-alt" d="M3.568,10.392C.559,6.029,0,5.581,0,3.977a3.977,3.977,0,0,1,7.954,0c0,1.6-.559,2.051-3.568,6.415a.5.5,0,0,1-.817,0Zm.409-4.758A1.657,1.657,0,1,0,2.32,3.977,1.657,1.657,0,0,0,3.977,5.634Z"></path></svg><span class="inline-block">${Multilang.Directiontext[APIlanguage]}</span></a></div>`;
+      <a target="_blank" class="w-full text-sm leading-[22px] py-1.5 font-semibold text-red px-2.5 rounded-sm border border-red inline-flex items-center justify-center transition-all duration-300 group hover:text-white hover:bg-red capitalize" href="https://www.google.com/maps/dir/?api=1&destination=${cordinates.latitude},${cordinates.longitude}"><svg class="fill-red w-4 h-4 mr-2 group-hover:fill-white" xmlns="http://www.w3.org/2000/svg" width="7.954" height="10.606" viewBox="0 0 7.954 10.606"><path data-name="Icon awesome-map-marker-alt" d="M3.568,10.392C.559,6.029,0,5.581,0,3.977a3.977,3.977,0,0,1,7.954,0c0,1.6-.559,2.051-3.568,6.415a.5.5,0,0,1-.817,0Zm.409-4.758A1.657,1.657,0,1,0,2.32,3.977,1.657,1.657,0,0,0,3.977,5.634Z"></path></svg><span class="inline-block">${multilangData[APIlanguage].getDirection}</span></a></div>`;
 
 
-    html += `<div class=""><a class="w-full text-sm leading-[22px] py-1.5 font-semibold text-white px-2.5 rounded-sm border bg-red border-red inline-flex items-center justify-center transition-all duration-300 group hover:text-red hover:bg-white capitalize" href="/${cardTitleLinkUrlValue}">${Multilang.DetailPage[APIlanguage]} <svg class="ml-1.5 fill-white group-hover:fill-red" xmlns="http://www.w3.org/2000/svg" width="16.987" height="11.33" viewBox="0 0 16.987 11.33"><path data-name="Icon ionic-ios-arrow-round-forward" d="M18.708,11.469a.771.771,0,0,0-.006,1.086l3.587,3.593H8.636a.767.767,0,0,0,0,1.534H22.284L18.7,21.275a.777.777,0,0,0,.006,1.086.764.764,0,0,0,1.08-.006l4.862-4.9h0a.861.861,0,0,0,.159-.242.732.732,0,0,0,.059-.3.769.769,0,0,0-.218-.537l-4.862-4.9A.752.752,0,0,0,18.708,11.469Z" transform="translate(-7.875 -11.252)"></path></svg></a> </div></div>`
+    html += `<div class=""><a class="w-full text-sm leading-[22px] py-1.5 font-semibold text-white px-2.5 rounded-sm border bg-red border-red inline-flex items-center justify-center transition-all duration-300 group hover:text-red hover:bg-white capitalize" href="/${cardTitleLinkUrlValue}">${multilangData[APIlanguage].detailPage} <svg class="ml-1.5 fill-white group-hover:fill-red" xmlns="http://www.w3.org/2000/svg" width="16.987" height="11.33" viewBox="0 0 16.987 11.33"><path data-name="Icon ionic-ios-arrow-round-forward" d="M18.708,11.469a.771.771,0,0,0-.006,1.086l3.587,3.593H8.636a.767.767,0,0,0,0,1.534H22.284L18.7,21.275a.777.777,0,0,0,.006,1.086.764.764,0,0,0,1.08-.006l4.862-4.9h0a.861.861,0,0,0,.159-.242.732.732,0,0,0,.059-.3.769.769,0,0,0-.218-.537l-4.862-4.9A.752.752,0,0,0,18.708,11.469Z" transform="translate(-7.875 -11.252)"></path></svg></a> </div></div>`
   
 
   
@@ -594,28 +596,24 @@ export function getDepartments() {
         somecountry = '<option selected>' + country + '</option>';
       }
       
+    
       else {
-        html += `<option value=""disabled selected>${Multilang.Country[langauage]}`
-
-       
-  
-        var newBRCC = "";
-        var newFRCC = "";
-        var newBECC = "";
+        const regionNames = new Intl.DisplayNames(
+          ['en', 'fr', 'ja'], { type: 'region' }
+        );
+        html += `<option value=""disabled selected>${multilangData[langauage].Country}`
         var newData = [];
         for (let index = 0; index < result.response.entities.length; index++) {
             const countryCode = result.response.entities[index]['address']['countryCode'];
             if(!newData.includes(countryCode)){ 
               newData.push(countryCode);
-              html += '<option value="' + countryCode + '">' + countryCode + '</option>'; 
+              html += '<option value="' + countryCode + '">' + regionNames.of(countryCode) + '</option>'; 
             }
         }
         
       }
 
-      // const regionNames = new Intl.DisplayNames(
-      //   ['en', 'fr', 'ja'], { type: 'region' }
-      // );
+   
       // //alert(regionNames.of(newBRCC));
       // somecountry += '<option value="' + newBRCC + '">' + regionNames.of(newBRCC) + '</option>';
       // somecountry += '<option value="' + newBECC + '">' + regionNames.of(newBECC) + '</option>';
@@ -651,12 +649,16 @@ export function getcity(selectcity) {
 
 
   var ce_departments = [];
-  
+  // $('.checkbox_departments').each(function () {
+  //   if ($(this).is(":selected")) {
   ce_departments.push(queryString);
+  //   }
+  // });
 
-
+  // if (ce_departments.length > 0) {
   filterAnd = { "$and": [{ "address.countryCode": { "$in": ce_departments } }] };
 
+  // }
 
   filterParameters = { ...filterAnd };
   var filterpar = JSON.stringify(filterParameters);
@@ -696,11 +698,25 @@ export function getcity(selectcity) {
       html += `   <select id="mySelect1" class="checkbox_departments1 bg-white w-full appearance-none py-2 px-3 border-8 border-white text-sm focus:outline-none" aria-label="Default select example">`;
       let somechange = '';
       if (url_string.includes('city')) {
+        // html += '<option value="" disabled selected>City'
         somechange = '<option value="' + city + '"selected>' + city + '</option>';
       }
       else {
-          html += `<option value=""disabled selected>${Multilang.City[langauage]}`;
-   
+       
+        var newcity = [];
+              html += `<option value=""disabled selected>${multilangData[langauage].City}`
+              for (let index = 0; index < result.response.entities.length; index++) {
+                const city = result.response.entities[index]['address']['city'];
+                if(!newcity.includes(city)){ 
+                  newcity.push(city);
+                  html += '<option value="' + city + '">' + city + '</option>'; 
+                }
+            }
+        
+        // $.each(result.response.entities, function (index, entity) {
+        //   //console.log(entity);
+        //   somechange += '<option value="' + entity.address.city + '">' + entity.address.city + '</option>';
+        // })
       }
       html += somechange;
       html += '</select>';
@@ -719,7 +735,6 @@ export function getcity(selectcity) {
   });
 }
 getcity("");
-
 
 
 export function getshop(selectcity) {
@@ -748,7 +763,7 @@ export function getshop(selectcity) {
       html += '<div class=" department-list1 flex justify-center">';
       html += '  <div class="select-box w-full md:w-auto">';
       html += `   <select id="selectshop" class="checkbox_departments1 appearance-none w-full bg-white py-2 px-3 border-8 border-white text-sm focus:outline-none" aria-label="Default select example">`;
-      html += `<option value=""disabled selected>${Multilang.Shop[langauage]}`
+      html += `<option value=""disabled selected>${multilangData[langauage].Shop}`
    
       $.each(result.response.entities, function (index, entity) {
         html += '<option value="' + entity.name + '">' + entity.name + '</option>';
