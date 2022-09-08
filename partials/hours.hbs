@@ -6,7 +6,7 @@
           <strong class="font-normal">{{this.displayDay}}</strong>
         </div>
         <div class="w-[calc(100%_-_112px)] {{#if this.isClosed}}text-red closed{{/if}}">
-          {{#if this.isClosed}}Closed{{/if}}
+          {{#if this.isClosed}}<div class="Closed"></div>{{/if}}
           {{#if this.is247}}Open 24/7{{/if}}
           {{#each this.openIntervals}}
             {{this.start}}-{{this.end}}
@@ -16,3 +16,16 @@
       {{/each}}
   {{/with}}
 </div>
+
+
+<script>
+  let pathName = window.location.href;
+  let Closed = "Closed"
+  if(pathName.includes("/fr")){
+    Closed = "fermee";
+  }
+  if(pathName.includes("/ja")){
+    Closed = "閉まっている"
+  }
+  $(".Closed").html(Closed)
+</script>

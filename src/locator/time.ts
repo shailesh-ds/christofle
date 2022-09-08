@@ -86,7 +86,6 @@ export function formatOpenNowString(hoursData, utcOffset) {
 
   let nextIsTomorrow = false;
 
-  // If no more intervals in the day
   if (nextInterval == null) {
     if (intervalsTomorrow) {
       if (intervalsTomorrow.length > 0) {
@@ -100,7 +99,6 @@ export function formatOpenNowString(hoursData, utcOffset) {
 
   if (nextInterval) {
     if (openRightNow) {
-      // Check first for a 24-hour interval, then check for open past midnight
       if (currentInterval.start == "00:00" && currentInterval.end == "23:59") {
         hoursString += `<strong class='font-bold'>${multilangData[language].openAlltime}</strong>`;
       } else if (

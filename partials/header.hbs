@@ -6,14 +6,15 @@
         <a class="m-2 langSwitcher" onclick="langSwitcher('ja');" href="javascript:void(0);">日本</a>
     </div>
 
-    <div class="relative bg-cover bg-center bg-no-repeat bg-white">      
-        <div class="text-xs bg-black fixed top-0 left-0 bottom-0 lg:static transform transform -translate-x-full lg:translate-x-0 lg:block z-30 w-full pt-14 lg:pt-0 overflow-x-hidden overflow-y-auto lg:overflow-auto transition-all duration-300" id="navigation">
+    <div class="relative bg-cover bg-center bg-no-repeat bg-white">
+        <div class="text-xs bg-black fixed top-0 left-0 bottom-0 lg:static transform transform -translate-x-full lg:translate-x-0 lg:block z-30 w-full pt-14 lg:pt-0 overflow-x-hidden overflow-y-auto lg:overflow-auto transition-all duration-300"
+            id="navigation">
             <div class="container max-w-7xl">
                 <ul class="flex flex-col lg:flex-row justify-center text-white text-base lg:text-xs w-full">
                     {{#each c_locations}}{{#each c_header}}
                     <li class="px-3 xl:px-5">
-                        <a href="{{cta.link}}" class="py-3 relative leading-[26px] inline-block align-bottom after:content-[''] after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-white after:h-1 hover:after:w-full uppercase">{{cta.label}}</a>
-                    </li>
+                        <a href="{{cta.link}}"
+                            class="py-3 relative leading-[26px] inline-block align-bottom after:content-[''] after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-white after:h-1 hover:after:w-full uppercase">{{cta.label}}</a></li>
                     {{/each}}{{/each}}
                 </ul>
             </div>
@@ -21,14 +22,14 @@
     </div>
 </header>
 <script>
-document.getElementById("menu-btn").onclick = function () { myFunction() };
-function langSwitcher(lang){
-    let currentUrl = window.location.href;
-    let newUrl = currentUrl.replace("/{{locale}}/","/"+lang+"/");
-    if(newUrl != currentUrl) window.location.href = newUrl;
-}
-function myFunction() {
+    document.getElementById("menu-btn").onclick = function () { myFunction() };
+    function langSwitcher(lang) {
+        let currentUrl = window.location.href;
+        let newUrl = currentUrl.replace("/{{locale}}/", "/" + lang + "/");
+        if (newUrl != currentUrl) window.location.href = newUrl;
+    }
+    function myFunction() {
         document.getElementById("navigation").classList.toggle("translate-x-0");
         document.getElementById("body").classList.toggle("overflow-hidden");
-}
+    }
 </script>

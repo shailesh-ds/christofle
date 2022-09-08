@@ -47,7 +47,7 @@ export let multilangData ={
         getDirection: "Get Direction",
         detailPage: "Detailed Shop Sheet",
         Country: "Country",
-        city: "City",
+        City: "City",
         Shop: "Shop",
         allStore: "All Store",
         photoGallery: "Photo Gallery",
@@ -62,9 +62,16 @@ export let multilangData ={
         tomorrow: "Tommorrow",
         Closed: "Closed",
         openAt: "Opens at",
-        openAlltime: "Open 24 Hours"
+        openAlltime: "Open 24 Hours",
+        Home: 'Home'
         
     },
+
+
+
+
+
+
     fr:{
         Days: {
             "monday": "月曜日",
@@ -95,11 +102,20 @@ export let multilangData ={
         tomorrow: "demain",
         Closed : "fermee",
         openAt: "ouvert à",
-        openAlltime: "Ouvert 24 heures"
+        openAlltime: "Ouvert 24 heures",
+        Home: "Maison"
        
 
 
     },
+
+
+
+
+
+
+
+
     ja:{
 
 
@@ -132,7 +148,8 @@ export let multilangData ={
         tomorrow: "明日",
         Closed: "閉まっている",
         openAt: "で開く",
-        openAlltime: "２４時間営業"
+        openAlltime: "２４時間営業",
+        Home: "家"
       
     }
 }

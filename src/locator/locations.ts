@@ -31,7 +31,18 @@ import RtfConverter from "@yext/rtf-converter";
 import { highlightLocation } from "./map";
 export let currentLatitude = 0;
 export let currentLongitude = 0;
-
+var ourURL = window.location.href;
+export let offset = 0;
+var langauage = "";
+if (ourURL.includes("/fr")) {
+  langauage = "fr";
+}
+else if (ourURL.includes("/ja")) {
+  langauage = "ja";
+}
+else if(ourURL.includes("/en")){
+  langauage = "en";
+}
 export function locationJSONtoHTML(entityProfile, index, locationOptions) {
   let APIlanguage = entityProfile.meta.language
   const getValue = (opt: locationOption) => {
@@ -52,6 +63,8 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
    let FilterBtn = '';
    let StoreTitle = '';
    let ViewMore = '';
+   let home = '';
+
 
   //  let getDirection = '';
   
@@ -60,6 +73,8 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
     FilterBtn += `${multilangData[APIlanguage].filter}`;
     StoreTitle += `${multilangData[APIlanguage].storeLocator}`
     ViewMore += `${multilangData[APIlanguage].viewMore}`
+    home += `${multilangData[APIlanguage].Home}`
+    
    
     // getDirection += `${multilangData.getDirection[APIlanguage]}`
   
@@ -68,6 +83,8 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
    $(".Filter").html(FilterBtn);
    $(".StoreTitle").html(StoreTitle);
    $(".ViewMore").html(ViewMore);
+   $(".home").html(home);
+
 
   //  $(".Getdirectionslug").html(getDirection);
   
@@ -169,9 +186,6 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
   
     let dayConvert = Days[APIlanguage];
 
-    
-
-
 
     const days_string = [
       "sunday",
@@ -241,7 +255,6 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
   html += `<div class="flex flex-col text-center justify-between">
   <div class="mb-1.5">
       <a target="_blank" class="w-full text-sm leading-[22px] py-1.5 font-semibold text-red px-2.5 rounded-sm border border-red inline-flex items-center justify-center transition-all duration-300 group hover:text-white hover:bg-red capitalize" href="https://www.google.com/maps/dir/?api=1&destination=${cordinates.latitude},${cordinates.longitude}"><svg class="fill-red w-4 h-4 mr-2 group-hover:fill-white" xmlns="http://www.w3.org/2000/svg" width="7.954" height="10.606" viewBox="0 0 7.954 10.606"><path data-name="Icon awesome-map-marker-alt" d="M3.568,10.392C.559,6.029,0,5.581,0,3.977a3.977,3.977,0,0,1,7.954,0c0,1.6-.559,2.051-3.568,6.415a.5.5,0,0,1-.817,0Zm.409-4.758A1.657,1.657,0,1,0,2.32,3.977,1.657,1.657,0,0,0,3.977,5.634Z"></path></svg><span class="inline-block">${multilangData[APIlanguage].getDirection}</span></a></div>`;
-
 
     html += `<div class=""><a class="w-full text-sm leading-[22px] py-1.5 font-semibold text-white px-2.5 rounded-sm border bg-red border-red inline-flex items-center justify-center transition-all duration-300 group hover:text-red hover:bg-white capitalize" href="/${cardTitleLinkUrlValue}">${multilangData[APIlanguage].detailPage} <svg class="ml-1.5 fill-white group-hover:fill-red" xmlns="http://www.w3.org/2000/svg" width="16.987" height="11.33" viewBox="0 0 16.987 11.33"><path data-name="Icon ionic-ios-arrow-round-forward" d="M18.708,11.469a.771.771,0,0,0-.006,1.086l3.587,3.593H8.636a.767.767,0,0,0,0,1.534H22.284L18.7,21.275a.777.777,0,0,0,.006,1.086.764.764,0,0,0,1.08-.006l4.862-4.9h0a.861.861,0,0,0,.159-.242.732.732,0,0,0,.059-.3.769.769,0,0,0-.218-.537l-4.862-4.9A.752.752,0,0,0,18.708,11.469Z" transform="translate(-7.875 -11.252)"></path></svg></a> </div></div>`
   
@@ -468,18 +481,7 @@ function getNearestLatLng(position) {
 }
 
 
-var ourURL = window.location.href;
-export let offset = 0;
-var langauage = "";
-if (ourURL.includes("/fr")) {
-  langauage = "fr";
-}
-else if (ourURL.includes("/ja")) {
-  langauage = "ja";
-}
-else if(ourURL.includes("/en")){
-  langauage = "en";
-}
+
 export function getLocations(offset) {
   let request_url =
     base_url +
