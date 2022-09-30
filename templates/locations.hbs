@@ -1,57 +1,57 @@
 ---
 {
-"stream": {
-"$id": "location-detail-pages",
-"source": "knowledgeGraph",
-"destination": "pages",
-"filter" : {
-"entityTypes": [
-"location"
-],
-"savedFilterIds":[
-"982931142"
-]
-},
-"fields": [
-"id",
-"uid",
-"meta",
-"name",
-"address",
-"description",
-"hours",
-"emails",
-"mainPhone",
-"photoGallery",
-"slug",
-"c_abbotttext",
-"c_aboutch.title",
-"c_aboutch.description",
-"geocodedCoordinate",
-"neighborhood",
-"paymentOptions",
-"c_cTA",
-"c_description1",
-"c_photo",
-"c_bannerTitle",
-"c_nature",
-"phoneticName",
-"c_locations.name",
-"c_ctabtn1.label",
-"c_ctabtn1.link",
-"c_locations.c_singletext.text",
-"c_locations.c_header.cta",
-"c_locations.c_topfooter.text",
-"c_locations.c_onefooter.cta",
-"c_locations.c_twofooter.cta",
-"c_locations.c_threefooter.cta"
-
-],
-"localization": {
-"locales": ["en","fr","ja"]
-}
-},
-"urlFormat": "{{slug}}"
+    "stream": {
+        "$id": "location-detail-pages",
+        "source": "knowledgeGraph",
+        "destination": "pages",
+        "filter" : {
+            "entityTypes": ["location"],    
+            "savedFilterIds":["982931142"]
+        },
+        "fields": [
+            "id",
+            "uid",
+            "meta",
+            "name",
+            "address",
+            "description",
+            "hours",
+            "emails",
+            "mainPhone",
+            "photoGallery",
+            "slug",
+            "c_abbotttext",
+            "c_aboutch.title",
+            "c_aboutch.description",
+            "geocodedCoordinate",
+            "neighborhood",
+            "paymentOptions",
+            "c_cTA",
+            "c_description1",
+            "c_photo",
+            "c_bannerTitle",
+            "c_nature",
+            "phoneticName",
+            "c_locations.name",
+            "c_ctabtn1.label",
+            "c_ctabtn1.link",
+            "c_locations.c_singletext.text",
+            "c_locations.c_header.cta",
+            "c_locations.c_topfooter.text",
+            "c_locations.c_onefooter.cta",
+            "c_locations.c_twofooter.cta",
+            "c_locations.c_threefooter.cta"
+        ],
+        "localization": {
+            "locales": ["en","fr","ja"],
+            "fallback":  {
+              "fr": ["en"],
+              "ja" : ["en"],
+              "en" : ["fr"]
+            },
+        }
+    },
+    "urlFormat": "{{slug}}"
 }
 ---
 <!DOCTYPE html>
