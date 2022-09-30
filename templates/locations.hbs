@@ -20,6 +20,7 @@
             "mainPhone",
             "photoGallery",
             "slug",
+            "c_slug",
             "c_abbotttext",
             "c_aboutch.title",
             "c_aboutch.description",
@@ -46,7 +47,7 @@
             "locales": ["en","fr","ja"]
         }
     },
-    "urlFormat": "{{slug}}"
+    "urlFormat": "{{#if slug}}{{slug}}{{else}}{{name}}{{/if}}"
 }
 ---
 <!DOCTYPE html>
