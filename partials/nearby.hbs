@@ -284,34 +284,22 @@
     var lng = "{{longitude}}";
     var location = lat + "," + lng;
     var limit = 3;
-    var radius = 300;
+    var radius = 1500;
     var savedFilterId = "982931142";
     var entityTypes = "location";
     // var languages = ["fr","ja","en"];
-    var fields = "name,slug,hours,phoneticName,neighborhood,address,mainPhone,timeZoneUtcOffset,c_photoGallery2";
+    var fields = "name,slug,hours,phoneticName,neighborhood,address,mainPhone,timeZoneUtcOffset,c_photoGallery2,hours";
     const savedSearchIdString = "";
 
-    var fullURL =
-      baseURL +
-      "api_key=" +
-      api_key +
-      "&v=" +
-      vparam +
-      "&location=" +
-      location +
-      "&limit=" +
-      (limit + 1) +
-      "&radius=" +
-      radius +
-      "&entityTypes=" +
-      entityTypes +
-      "&languages=" +
-      langauage +
-      "&savedFilterIds=" +
-      savedFilterId +
-      "&fields=" +
-
-      fields +
+    var fullURL = baseURL + "api_key=" + api_key +
+      "&v=" + vparam +
+      "&location=" + location +
+      "&limit=" + (limit + 1) + 
+      "&radius=" + radius + 
+      "&entityTypes=" + entityTypes + 
+      "&languages=" + langauage +
+      "&savedFilterIds=" + savedFilterId +
+      "&fields=" + fields +
       "&resolvePlaceholders=true";
     [].slice
       .call(document.querySelectorAll(".location-data") || [])
@@ -377,16 +365,13 @@
 
     var entURL = "https://liveapi-sandbox.yext.com/v2/accounts/me/entities/" + entityId + '?';
 
-    var fullURL =
-      entURL +
-      "api_key=" +
-      api_key +
-      "&v=" +
-      vparam +
-      "&limit=" +
-      limit +
-      "&entityTypes=" +
-      entityTypes;
+    var fullURL = entURL +
+      "api_key=" + api_key +
+      "&v=" + vparam +
+      "&limit=" + limit +
+      "&languages=" + langauage +
+      "&savedFilterIds=" + savedFilterId +
+      "&entityTypes=" + entityTypes;
 
     fetch(fullURL).then(response => response.json()).then(result => {
       if (!result.errors) {

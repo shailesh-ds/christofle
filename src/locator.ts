@@ -86,7 +86,7 @@ let querySearch = document.getElementById("query-search");
 //var matchList = document.getElementById('result');
 
 var searchStates = async searchText => {
-  var res = await fetch('https://liveapi.yext.com/v2/accounts/me/entities?&sortBy=[{%22name%22:%22ASCENDING%22}]&filter={}&api_key=308d4d3f6ae747ccda5a5c0bbb8249a6&v=20181201&resolvePlaceholders=true&entityTypes=location&savedFilterIds=1160385474&limit=50');
+  var res = await fetch('https://liveapi.yext.com/v2/accounts/me/entities?&sortBy=[{%22name%22:%22ASCENDING%22}]&filter={}&api_key=308d4d3f6ae747ccda5a5c0bbb8249a6&v=20181201&resolvePlaceholders=true&entityTypes=location&savedFilterIds=982931142&limit=50');
 
   var states = await res.json();
   const searchres = states.response.entities;

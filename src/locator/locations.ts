@@ -671,22 +671,14 @@ export function getcity(selectcity) {
   var entityTypes = "location";
   var savedFilterId = "982931142";
 
-  var requesturls =
-    baseURL +
-    "api_key=" +
-    api_key +
-    "&v=" +
-    vparam +
+  var requesturls = baseURL +
+    "api_key=" + api_key +
+    "&v=" + vparam +
     "&resolvePlaceholders=true" +
-    "&filter=" +
-    filter +
-  "&entityTypes=" +
-    entityTypes +
-    "&languages=" +
-    langauage +
-    "&savedFilterIds=" +
-    savedFilterId;
-
+    "&filter=" + filter +
+    "&entityTypes=" + entityTypes +
+    "&languages=" + langauage +
+    "&savedFilterIds=" + savedFilterId;
 
   fetch(requesturls).then(response => response.json()).then(result => {
 
@@ -746,15 +738,11 @@ export function getshop(selectcity) {
   var entityTypes = "ce_christofleshop";
   var requesturl =
     baseURL +
-    "api_key=" +
-    api_key +
-     "&v=" +
-     vparam +
+    "api_key=" + api_key +
+     "&v=" + vparam +
     "&resolvePlaceholders=true" +
-    "&entityTypes=" +
-    entityTypes +
-    "&languages=" +
-    langauage;
+    "&entityTypes=" + entityTypes +
+    "&languages=" +langauage;
   //alert(requesturl)
 
   fetch(requesturl).then(response => response.json()).then(result => {
@@ -800,8 +788,6 @@ export function getUsersLocation() {
   }
 }
 
-
-
 $("#result").click(function () {
   var $this = $("#result2");
   //  var location_name = $this.data('name');            
@@ -840,11 +826,11 @@ if (url_string.includes('city')) {
   getnature(city, country2);
 }
 
-
 function getnature(newCity, newCountry) {
-
   let newfilterParameters = {};
-  let newfilterAnd = {};
+  let newfilterAnd = {
+
+  };
   if (newCountry && newCity) {
     newfilterAnd = {
       "$and":
@@ -854,30 +840,26 @@ function getnature(newCity, newCountry) {
           },
           {
             "address.city": { "$contains": newCity }
-
+          },
+          {
+            "closed": { "$neq": true }
+          },
+          {
+            "slug": { "$neq": null }
           }
-
-
         ],
-
-
     };
   }
-
   else {
     newfilterAnd = {
       "$or": [
         {
           "address.countryCode": { "$contains": newCountry },
           "address.city": { "$contains": newCity }
-
         },
       ]
     };
-
   }
-
-
 
   newfilterParameters = { ...newfilterAnd };
   var filterpar = JSON.stringify(newfilterParameters);
@@ -890,19 +872,13 @@ function getnature(newCity, newCountry) {
   var entityTypes = "location";
   var savedFilterId = "982931142";
 
-  var request_url =
-    baseURL +
-    "api_key=" +
-    api_key +
-    "&filter=" +
-    filter +
-    "&entityTypes=" +
-    entityTypes +
-    "&languages=" +
-    langauage;
-  "&savedFilterIds=" +
-    savedFilterId +
-
+  var request_url = baseURL +
+    "api_key=" + api_key +
+    "&filter=" + filter +
+    "&entityTypes=" + entityTypes +
+    "&savedFilterIds=" + savedFilterId +
+    "&languages=" + langauage;
+    
     getRequest(request_url, null);
 
 }
@@ -943,16 +919,10 @@ document.getElementById("data").addEventListener("click", function () {
           },
           {
             "c_christfleshop": { "$contains": newshop }
-
           }
-
-
         ],
-
-
     };
   }
-
   else {
     newfilterAnd = {
       "$or": [
@@ -966,12 +936,9 @@ document.getElementById("data").addEventListener("click", function () {
 
   }
 
-
-
   newfilterParameters = { ...newfilterAnd };
   var filterpar = JSON.stringify(newfilterParameters);
   var filter = encodeURI(filterpar);
-
 
   var baseURL = "https://liveapi-sandbox.yext.com/v2/accounts/me/entities?";
   var api_key = "b262ae7768eec3bfa53bfca6d48e4000";
@@ -979,18 +946,11 @@ document.getElementById("data").addEventListener("click", function () {
   var entityTypes = "location";
   var savedFilterId = "982931142";
 
-  var request_url =
-    baseURL +
-    "api_key=" +
-    api_key +
-    "&filter=" +
-    filter +
-    "&entityTypes=" +
-    entityTypes +
-    "&languages=" +
-    langauage;
-  "&savedFilterIds=" +
-    savedFilterId +
+  var request_url = baseURL + "api_key=" + api_key +
+    "&filter=" + filter +
+    "&entityTypes=" + entityTypes +
+    "&savedFilterIds=" + savedFilterId +
+    "&languages=" + langauage;
 
     getRequest(request_url, null);
 
