@@ -19,7 +19,7 @@
             "emails",
             "mainPhone",
             "photoGallery",
-            "c_slug",
+            "slug",
             "c_abbotttext",
             "c_aboutch.title",
             "c_aboutch.description",
@@ -43,10 +43,13 @@
             "c_locations.c_threefooter.cta"
         ],
         "localization": {
-            "locales": ["en","fr","ja"]
+            "locales": ["en","fr","ja"],
+            "fallback":  {
+              "en": ["fr","ja"]
+            }
         }
     },
-    "urlFormat": "{{c_slug}}"
+    "urlFormat": "{{slug}}"
 }
 ---
 <!DOCTYPE html>
