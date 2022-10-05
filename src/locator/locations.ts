@@ -501,11 +501,11 @@ export function getLocations(offset) {
   let filterOr = {};
 
   const queryString = locationInput.value;
-  filterOr ={
-    "$or":[
-      {"closed" : {"$eq" : false}}
-    ]
-  }
+  // filterOr ={
+  //   "$or":[
+  //     {"closed" : {"$eq" : false}}
+  //   ]
+  // }
   if (queryString) {
 
     filterOr = {
