@@ -7,24 +7,33 @@ import {
   useMyLocation,
   researchButton
 } from "./locator/constants";
-import { getLocations, getNearestLocationsByString, getUsersLocation } from "./locator/locations";
+import { getLocations, getNearestLocationsByString, getUsersLocation, getDepartments, getcity, getshop } from "./locator/locations";
 import { getQueryParamsFromUrl } from "./locator/utils";
 import { isLoading } from "./locator/loader";
 // @ts-ignore
 import google from "google";
 
 researchButton.addEventListener("click", function () {
-  // $('#offset').val(0);	
- getLocations(0);
-});
-searchButton.addEventListener("click", function () {
-   // $('#offset').val(0);	
-  getNearestLocationsByString();
+	// $('#offset').val(0);
+	if(locationInput.value !== ''){   
+		getLocations(0);
+	}
 });
 
+
+searchButton.addEventListener("click", function () {
+   if(locationInput.value !== ''){   
+		getLocations(0);
+   }
+});
+
+
+
+/*
 useMyLocation.addEventListener("click", function () {
   getUsersLocation();
 });
+*/
 
 window.addEventListener("popstate", function (e) {
   if (e.state && e.state.queryString) {
@@ -41,14 +50,42 @@ window.addEventListener("load", function () {
 });
 
 
-locationInput.addEventListener("keyup", function (e) {
-  if (e.key === "Enter"&&locationInput.value!="") {
-   getNearestLocationsByString();
-  }
+locationInput.addEventListener("keydown", function (e) { 
+  if(locationInput.value.trim() != "" && ( e.key=="Enter" )){    
+    getLocations(0);
+  }  
+}, {passive: true} ); 
+
+let keyup_loading = false;
+locationInput.addEventListener("keyup", function (e) {  
+		
+	if(locationInput.value.trim() != "" ){
+      keyup_loading=true; 
+    }
+	keyup_loading=true; 	
+	if( locationInput.value.trim() == "" && (e.key === "Delete" || e.key === "Backspace" || e.key=="x") && keyup_loading ){	  
+	  getLocations(0);	
+	  keyup_loading=false;	
+    }
 });
+locationInput.addEventListener("selected", function (e) {  
+	
+	if(locationInput.value.trim() != "" ){
+      keyup_loading = true; 
+    }
+	if(locationInput.value.trim() == "" && keyup_loading){	    
+	  getLocations(0);	
+	  keyup_loading=false;	
+    }
+	
+});
+
 
 if (loadLocationsOnLoad) {
   getLocations(0);
+  // getDepartments();
+  getcity("");
+  getshop("");
 }
 
 if (enableAutocomplete) {
@@ -56,14 +93,14 @@ if (enableAutocomplete) {
     document.getElementById("location-input"),
     {
       options: {
-        //types: ["(regions)"],
-        componentRestrictions: {'country': "us"}
+        // types: ["(regions)"],
+        // componentRestrictions: {'country': "us"}
       },
     }
   );
   autocomplete.addListener("place_changed", () => {
     if (!isLoading) {
-        getNearestLocationsByString();
+        getLocations(0);
     }
   });
 }

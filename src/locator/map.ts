@@ -257,16 +257,17 @@ if (typeof offset === 'undefined'){
 let markerLabel = Number(selectedLocationIndex + 1) ;
 
   
-
-  selectedMarker.setLabel({
-   
-  });
-  selectedMarker.setZIndex(999);
-
-  if (shouldCenterMap) {
-    map.setCenter(marker.position);
-  }
-
+	if(selectedMarker){
+		 /* selectedMarker.setLabel({
+		   
+		  }); */
+		  selectedMarker.setZIndex(999);
+	}
+	if(typeof marker !== 'undefined'){
+		if (shouldCenterMap) {
+			map.setCenter(marker.position);
+		}
+	}
   
   if(infoWindow){   
    

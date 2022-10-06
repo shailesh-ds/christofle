@@ -510,12 +510,12 @@ export function getLocations(offset) {
 
     filterOr = {
       "$or": [
-        { "address.line1": { "$eq": queryString } },
-        { "address.city": { "$eq": queryString } },
-        { "address.region": { "$eq": queryString } },
-        { "address.countryCode": { "$eq": queryString } },
-        { "address.postalCode": { "$eq": queryString } },
-        { "name": { "$eq": queryString } }
+        { "address.line1": { "$contains": queryString } },
+        { "address.city": { "$contains": queryString } },
+        { "address.region": { "$contains": queryString } },
+        { "address.countryCode": { "$contains": queryString } },
+        { "address.postalCode": { "$contains": queryString } },
+        { "name": { "$contains": queryString } }
       ]
     };
   }
@@ -544,17 +544,14 @@ export function getLocations(offset) {
   getRequest(request_url, null);
 
 }
-getLocations(0);
-
-
-
-
+// getLocations(0);
 
 document.getElementById("viewMoreBtn").addEventListener("click", function () {
   let newOffset = offset + limit;
   offset = newOffset;
   getLocations(offset);
 });
+
 // End Here
 function ucwords(title) {
   let str = title.toLowerCase();
@@ -621,11 +618,6 @@ export function getDepartments() {
         
       }
 
-   
-      // //alert(regionNames.of(newBRCC));
-      // somecountry += '<option value="' + newBRCC + '">' + regionNames.of(newBRCC) + '</option>';
-      // somecountry += '<option value="' + newBECC + '">' + regionNames.of(newBECC) + '</option>';
-      // somecountry += '<option value="' + newFRCC + '">' + regionNames.of(newFRCC) + '</option>';
       html += somecountry;
       html += '</select>';
       html += '</div>';
@@ -635,7 +627,7 @@ export function getDepartments() {
       $(".checkbox_departments").change(function () {
         var element = document.getElementById("mySelect") as HTMLSelectElement;
         var x = element !== null ? element.selectedIndex : '';
-        let selectcity = document.getElementsByTagName("option")[x].value;
+        let selectcity = document.getElementsByTagName("option")[x].value; 
         getcity(selectcity);
       });
     } else {
@@ -644,7 +636,53 @@ export function getDepartments() {
 
   });
 }
-getDepartments();
+
+export function getCountry(entities) {
+  
+
+      var url_string = window.location.href;
+      var url = new URL(url_string);
+      var country = url.searchParams.get("Country");
+      var html = '';
+      html += '<div class=" department-list flex justify-center">';
+      html += '  <div class="select-box w-full md:w-auto">';
+      html += `   <select id="mySelect" class="checkbox_departments appearance-none w-full bg-white py-2 px-3 border-8 border-white text-sm focus:outline-none" aria-label="Default select example">`
+      let somecountry = '';
+      if (url_string.includes('Country')) {
+        somecountry = '<option selected>' + country + '</option>';
+      }else {
+        const regionNames = new Intl.DisplayNames(
+          ['en', 'fr', 'ja'], { type: 'region' }
+        );
+        html += `<option value=""disabled selected>${multilangData[langauage].Country}`
+        var newData = [];
+        for (let index = 0; index < entities.length; index++) {
+            const countryCode = entities[index]['address']['countryCode'];
+            if(!newData.includes(countryCode)){ 
+              newData.push(countryCode);
+              html += '<option value="' + countryCode + '">' + regionNames.of(countryCode) + '</option>'; 
+            }
+        }
+        
+      }
+
+      html += somecountry;
+      html += '</select>';
+      html += '</div>';
+      html += '</div>';
+      $(".filtering").html(html);
+
+      $(".checkbox_departments").change(function () {
+        var element = document.getElementById("mySelect") as HTMLSelectElement;
+        var x = element !== null ? element.selectedIndex : '';
+        let selectcity = document.getElementsByTagName("option")[x].value; 
+        getcity(selectcity);
+      });
+   
+
+  });
+}
+
 
 
 export function getcity(selectcity) {
@@ -734,7 +772,7 @@ export function getcity(selectcity) {
 
   });
 }
-getcity("");
+
 
 
 export function getshop(selectcity) {
@@ -773,7 +811,7 @@ export function getshop(selectcity) {
     }
   })
 }
-getshop("");
+
 //end here
 
 // To get the Location of the system

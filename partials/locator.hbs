@@ -7,6 +7,14 @@
         id="full-details"></div>
       <div class="panel w-full lg:w-[480px] xl:w-[540px] h-full lg:pr-2.5 order-3 lg:order-1 mt-5 lg:mt-0">
         <div class="header-section relative">
+		   <div class="input-group flex items-stretch lg:pr-0">
+            <input class="search_key flex-[1] !pr-11" type="text" id="location-input" placeholder="Eg. EC2A 1RS"
+              aria-label="Eg. EC2A 1RS" autocomplete="off" />
+            <button
+              class="search-bar-icon -ml-10 md:-ml-14 bg-searchIcon bg-no-repeat w-10 md:w-14 h-10 md:h-14 bg-center bg-[length:20px_20px] md:bg-[length:30px_30px]" 
+              aria-label="Search bar icon" id="search-location-button" type="submit" onclick="this.blur();" data-yext-analytics="searchStore" >
+            </button>
+          </div> 	
           <div class="flex flex-row text-lg uppercase font-bold text-dark_grey pb-3 border-b border-dark_grey leading-tight mb-5">
             <img
               src="https://www.christofle.com/fstrz/r/s/www.christofle.com/static/version1655714884/frontend/Christofle/luma/fr_FR/images/icons/pin-boutique.svg?frz-v=4825"
@@ -14,7 +22,7 @@
               data-frz-src="https://www.christofle.com/fstrz/r/s/www.christofle.com/static/version1655714884/frontend/Christofle/luma/fr_FR/images/icons/pin-boutique.svg?frz-v=4825">
             <h4 class="ml-2.5 leading-8 LocatorTitle"></h4>
           </div>
-          <div class="directions "></div>
+          <div class="directions "></div>		 
           <div class="error-text "></div>
         </div>
         <div class="spinner" style="display: none;">

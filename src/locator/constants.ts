@@ -16,8 +16,8 @@ var script_tag = document.getElementById('js-locator');
 export const liveAPIKey = script_tag.getAttribute('data');
 export const savedFilterId = "982931142";
 export const entityTypes = "location";
-export const loadLocationsOnLoad = false;
-export const enableAutocomplete =false;
+export const loadLocationsOnLoad = true;
+export const enableAutocomplete = true;
 export const base_url = "https://liveapi-sandbox.yext.com/v2/accounts/me/";
 export const useMiles = true;
 

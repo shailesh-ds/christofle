@@ -30,6 +30,7 @@ module.exports = {
         },
         extend: {
             backgroundImage: {
+				'searchIcon': "url('images/search.svg')",
                 'weibo': "url('images/weibo.png')",
                 'wechat': "url('images/wechat.png')",
             }

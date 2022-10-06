@@ -6,7 +6,7 @@ import {
   limit,
 } from "./constants";
 import { scrollToRow  } from "./utils";
-import { renderLocations, renderSearchDetail,getLocations,offset } from "./locations";
+import { renderLocations, renderSearchDetail,getLocations,offset, getCountry } from "./locations";
 import { addMarkersToMap, centerOnGeo } from "./map";
 console.log(liveAPIKey);
 
@@ -102,17 +102,21 @@ export function getRequest(request_url, queryString) {
     .then((res) => res.json())
     .then(function (data) {
      
-      if (data.meta.errors && data.meta.errors.length > 0) {
-        alert(data.meta.errors[0]["message"]);
-      }
-      for (let i = 0; i < data.response.entities.length; i++) {
-        const location = data.response.entities[i];
+      if (data.meta.errors && data.meta.errors.length == 0) {
+		  
+		  // alert(data.meta.errors[0]["message"]);
+      	  
+		  for (let i = 0; i < data.response.entities.length; i++) {
+			const location = data.response.entities[i];
 
-        if (data.response.distances) {
-          location.__distance = data.response.distances[i];
-        }
-        locations.push(location);
-      }
+			if (data.response.distances) {
+			  location.__distance = data.response.distances[i];
+			}
+			locations.push(location);
+		  }
+	  
+	  }
+	  
       renderLocations(locations, false, false);
       renderSearchDetail(
         data.response.geo,
@@ -123,23 +127,30 @@ export function getRequest(request_url, queryString) {
       $('#totalCount').val(data.response.count);
 	  
       let rowCount = offset + limit;
-      
-      
+          
       
       if (rowCount >= data.response.count) {
-      $('.viewMoreBtnDiv').css("display", "none");
+		$('.viewMoreBtnDiv').css("display", "none");
       } else {
-      $('.viewMoreBtnDiv').css("display", "block");		 
+		$('.viewMoreBtnDiv').css("display", "block");		 
       }
           
-        $('#offset').val(offset);
-
-        scrollToRow(offset);
+      $('#offset').val(offset);
+		
+      // scrollToRow(offset);
       addMarkersToMap(locations);
+	  
+	  
+	  if(typeof locations !== 'undefined'){
+		 getCountry(locations); 
+	  }
 
       if (locations.length == 0) {
         centerOnGeo(data.response.geo);
+		$(".result-list-inner").html(`<div id="result-0" class="result !pl-4 text-center"><div class="center-column">Data not found.</div></div>`);
+		
       }
+	  
       [].slice
         .call(document.querySelectorAll(".error-text") || [])
         .forEach(function (el) {
@@ -149,16 +160,11 @@ export function getRequest(request_url, queryString) {
 
     $(".open-now-string").click(function () { 
       var closeThis = $(this);
-      closeThis.parents('.lp-param-results').find(".storelocation-openCloseTime").slideToggle( function() {
-        //  if($(this).is(':visible')){
-        //   closeThis.html('-');
-        // }else{
-        //   closeThis.html('+');
-        // } 
-      });
-
+      closeThis.parents('.lp-param-results').find(".storelocation-openCloseTime").slideToggle();
     });
-  }).catch((err) => {
+	
+  }).catch((err) => { 
+	  console.log(err);
       $(".viewMoreBtnDiv").hide();
       $(".custom-pagination-links").html("");
       $(".result-list-inner").html(`<div id="result-0" class="result !pl-4 text-center"><div class="center-column">Something went wrong. Re-try after some time.</div></div>`);
