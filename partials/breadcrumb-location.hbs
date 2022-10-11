@@ -1,0 +1,19 @@
+<div class="breadcrumb">
+    <div class="container" id="countries">
+        <ul class="breadcrumb-nav" id="getvalue">
+            <li class="nav-item">
+                <a href="/{{meta.locale}}/index.html{{!-- c_cTA.uRL --}}" class="inline-block font-bold">{{formatOption
+                    c_cTA.primaryCTA}}</a>
+            </li>
+            <li class="nav-item">
+                <a href="/{{meta.locale}}/index.html?Country={{address.countryCode}}"
+                    class="inline-block font-bold">{{formatOption address.countryCode}}</a>
+            </li>
+            <li class="nav-item">
+                <a href="/{{meta.locale}}/index.html?city={{address.city}}&Country={{address.countryCode}}"
+                    class="inline-block font-bold">{{formatOption address.city}}</a>
+            </li>
+            <li class="nav-item inline-block">{{formatOption name}}</li>
+        </ul>
+    </div>
+</div>

@@ -12,6 +12,7 @@
 "fields": [
 "name",
 "slug",
+"meta",
 "c_datashow",
 "c_aboutdatatext",
 "c_locations.name",
@@ -34,7 +35,7 @@
 <html lang={{locale}}>
 
 <head>
-
+    {{!-- "locales": ["en","fr","ja"] --}}
     {{>head }}
     <title class="StoreTitle"></title>
     <meta name="robots" content="INDEX,FOLLOW" />
@@ -66,20 +67,78 @@
     </script>
 </head>
 
-<body class="font-lato" id="body">
+<body id="body">
+    <div class="icons text-4xl hidden">
+        <span class="icon icon-arrow-bottom"></span>
+        <span class="icon icon-arrow-left"></span>
+        <span class="icon icon-arrow-right"></span>
+        <span class="icon icon-arrow-top"></span>
+        <span class="icon icon-arrow-thick-bottom"></span>
+        <span class="icon icon-arrow-thick-left"></span>
+        <span class="icon icon-arrow-thick-right"></span>
+        <span class="icon icon-arrow-thick-top"></span>
+        <span class="icon icon-facebook"></span>
+        <span class="icon icon-instagram"></span>
+        <span class="icon icon-pinterest"></span>
+        <span class="icon icon-youtube"></span>
+        <span class="icon icon-linkedin"></span>
+        <span class="icon icon-filtre"></span>
+        <span class="icon icon-mail"></span>
+        <span class="icon icon-cart"></span>
+        <span class="icon icon-phone"></span>
+        <span class="icon icon-position"></span>
+        <span class="icon icon-search"></span>
+        <span class="icon icon-user"></span>
+        <span class="icon icon-wishlist-off"></span>
+        <span class="icon icon-wishlist-on"></span>
+        <span class="icon icon-close"></span>
+        <span class="icon icon-longarrow-down"></span>
+        <span class="icon icon-longarrow-left"></span>
+        <span class="icon icon-longarrow-right"></span>
+        <span class="icon icon-longarrow-up"></span>
+        <span class="icon icon-eye"></span>
+        <span class="icon icon-circleless"></span>
+        <span class="icon icon-circlemore"></span>
+        <span class="icon icon-thick-check"></span>
+        <span class="icon icon-thick-less"></span>
+        <span class="icon icon-thick-more"></span>
+        <span class="icon icon-thin-check"></span>
+        <span class="icon icon-thin-close"></span>
+        <span class="icon icon-cadenas"></span>
+        <span class="icon icon-click-and-collect"></span>
+        <span class="icon icon-delivery"></span>
+        <span class="icon icon-free-return"></span>
+        <span class="icon icon-couronne"></span>
+        <span class="icon icon-diametre"></span>
+        <span class="icon icon-direction"></span>
+        <span class="icon icon-edit"></span>
+        <span class="icon icon-hauteur"></span>
+        <span class="icon icon-mail-on"></span>
+        <span class="icon icon-localize-me"></span>
+        <span class="icon icon-share"></span>
+        <span class="icon icon-shop"></span>
+        <span class="icon icon-silvercare"></span>
+        <span class="icon icon-ruler"></span>
+        <span class="icon icon-pin"></span>
+        <span class="icon icon-textfield-grabber"></span>
+        <span class="icon icon-timer"></span>
+        <span class="icon icon-home"></span>
+        <span class="icon icon-commandes"></span>
+        <span class="icon icon-logout"></span>
+        <span class="icon icon-personal-infos"></span>
+        <span class="icon icon-retours"></span>
+        <span class="icon icon-trash"></span>
+        <span class="icon icon-wishlist-add"></span>
+    </div>
     {{>header}}
-    
-    <div class="inline-block w-full align-middle">
-        <div class="container" id="countries">
-            <ul class="flex leading-5 text-sm text-red py-3.5" id="getvalue">
-                <div class="home"></div>
-                <li class="after:content-['>'] after:mx-2 after:font-bold"><a href="{{c_cTA.uRL}}"
-                        class="inline-block font-bold">{{formatOption c_cTA.primaryCTA}}</a></li>
-                        
-                <div class="Store-locator"></div>
-            </ul>
+    {{>breadcrumb}}
+    <div class="page-title">
+        <div class="container">
+            <h1>BOUTIQUES</h1>
         </div>
     </div>
+
+    
 
     {{>locator}}
    <h1>{{c_datashow.text}}</h1>
@@ -99,16 +158,23 @@
 
                 $(".result .storelocation-name").on("click", function () {
                     var findChild = $(this).closest('.center-column').html();
+                    var getHeight = $(this).closest('.center-column').outerHeight();
+
+                    $('.location').removeClass('active');
+                    $(this).closest('.location').addClass('active');
                     $('#full-details').empty();
-                    $('#full-details').append(findChild).prepend('<a href="javascript:void(0);" class="back mb-5 text-sm leading-[22px] py-1.5 font-semibold text-white px-6 rounded-sm border bg-red border-red inline-flex items-center transition-all duration-300 group hover:text-red hover:bg-white"><svg class="mr-1.5 fill-white group-hover:fill-red transform  rotate-180" xmlns="http://www.w3.org/2000/svg" width="16.987" height="11.33" viewBox="0 0 16.987 11.33"><path data-name="Icon ionic-ios-arrow-round-forward" d="M18.708,11.469a.771.771,0,0,0-.006,1.086l3.587,3.593H8.636a.767.767,0,0,0,0,1.534H22.284L18.7,21.275a.777.777,0,0,0,.006,1.086.764.764,0,0,0,1.08-.006l4.862-4.9h0a.861.861,0,0,0,.159-.242.732.732,0,0,0,.059-.3.769.769,0,0,0-.218-.537l-4.862-4.9A.752.752,0,0,0,18.708,11.469Z" transform="translate(-7.875 -11.252)"></path></svg></a>');
-                    $('#full-details').removeClass('-translate-x-full').addClass('translate-x-0');
-                    $('#full-details').removeClass('-translate-x-full').addClass('translate-x-0');
+                    $('#full-details').append(findChild).prepend('<a href="javascript:void(0);" class="back"><span class="icon font-chrisfo-icon">i</span></a><span class="space"></span>');
+                    $('#full-details').addClass('active-detail');
+                    $('#full-details .space').css('height', getHeight);
+
                     $('#full-details *').removeAttr('id');
+                    
                 });
 
                 $(".back").on("click", function () {
                     $('#full-details').empty();
-                    $('#full-details').removeClass('translate-x-0').addClass('-translate-x-full');
+                    $('.location').removeClass('active');
+                    $('#full-details').removeClass('active-detail');
                 });
             }, 1000);
         };

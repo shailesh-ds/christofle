@@ -28,21 +28,21 @@ import { multilangData, Days } from "./MultiLangData";
 
 import { getRequest, startLoading, stopLoading } from "./loader";
 import RtfConverter from "@yext/rtf-converter";
-import { highlightLocation } from "./map";
+import { highlightLocation, geoCorder } from "./map";
 export let currentLatitude = 0;
 export let currentLongitude = 0;
 var ourURL = window.location.href;
 export let offset = 0;
-var langauage = "";
-if (ourURL.includes("/fr")) {
-  langauage = "fr";
+// var langauage = `{{meta.language}}`;
+// var langauage = ;?
+let langauage = "en"
+if(ourURL.includes("/fr")){
+  langauage = "fr"
 }
-else if (ourURL.includes("/ja")) {
-  langauage = "ja";
+if(ourURL.includes("/ja")){
+  langauage = "ja"
 }
-else if(ourURL.includes("/en")){
-  langauage = "en";
-}
+
 export function locationJSONtoHTML(entityProfile, index, locationOptions) {
   let APIlanguage = entityProfile.meta.language
   const getValue = (opt: locationOption) => {
@@ -58,36 +58,36 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
 
   // Locator page Static data
 
-   let title = '';
-   let Store = '';
-   let FilterBtn = '';
-   let StoreTitle = '';
-   let ViewMore = '';
-   let home = '';
+  let title = '';
+  let Store = '';
+  let FilterBtn = '';
+  let StoreTitle = '';
+  let ViewMore = '';
+  let home = '';
 
 
   //  let getDirection = '';
-  
-    title += `<div>${multilangData[APIlanguage].allStore}</div>`;
-    Store += `<li>${multilangData[APIlanguage].storeLocator}</li>`
-    FilterBtn += `${multilangData[APIlanguage].filter}`;
-    StoreTitle += `${multilangData[APIlanguage].storeLocator}`
-    ViewMore += `${multilangData[APIlanguage].viewMore}`
-    home += `${multilangData[APIlanguage].Home}`
-    
-   
-    // getDirection += `${multilangData.getDirection[APIlanguage]}`
-  
-   $(".LocatorTitle").html(title);
-   $(".Store-locator").html(Store);
-   $(".Filter").html(FilterBtn);
-   $(".StoreTitle").html(StoreTitle);
-   $(".ViewMore").html(ViewMore);
-   $(".home").html(home);
+
+  title += `<div>${multilangData[APIlanguage].allStore}</div>`;
+  Store += `${multilangData[APIlanguage].storeLocator}`
+  FilterBtn += `${multilangData[APIlanguage].filter}`;
+  StoreTitle += `${multilangData[APIlanguage].storeLocator}`
+  ViewMore += `${multilangData[APIlanguage].viewMore}`
+  home += `${multilangData[APIlanguage].Home}`
+
+
+  // getDirection += `${multilangData.getDirection[APIlanguage]}`
+
+  $(".LocatorTitle").html(title);
+  $(".Store-locator").html(Store);
+  $(".Filter").html(FilterBtn);
+  $(".StoreTitle").html(StoreTitle);
+  $(".ViewMore").html(ViewMore);
+  $(".home").html(home);
 
 
   //  $(".Getdirectionslug").html(getDirection);
-  
+
   const cardTitleValue = getValue(locationOptions.cardTitle);
   const getDirectionsLabelValue = getValue(locationOptions.getDirectionsLabel);
   const viewDetailsLinkTextValue = getValue(
@@ -106,40 +106,42 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
   const detailShop = getValue(locationOptions.detailShop);
   const phoneNumberValue = phone.toString();
   let viewDetailsLinkUrlValue = getValue(locationOptions.viewDetailsLinkUrl);
-  let html =
-    '<div class="lp-param-results lp-subparam-cardTitle lp-subparam-cardTitleLinkUrl">';
-  
-  if (cardTitleLinkUrlValue && cardTitleValue) {
+  let html = '';
+  // '<div class="lp-param-results lp-subparam-cardTitle lp-subparam-cardTitleLinkUrl">';
 
-    if (cardTitleLinkUrlValue["url"]) {
-      cardTitleLinkUrlValue = cardTitleLinkUrlValue["url"];
+  // if (cardTitleLinkUrlValue && cardTitleValue) {
 
-    }
+  //   if (cardTitleLinkUrlValue["url"]) {
+  //     cardTitleLinkUrlValue = cardTitleLinkUrlValue["url"];
 
-  }
-  else if (cardTitleValue) {
-    html += `<button id ="result1" class="name hover:underline hover:font-semibold text-ll-red " >
-      ${cardTitleValue}
-    </button>`;
-  }
-  let slugValue = '';
-  if(cardTitleLinkUrlValue){slugValue=cardTitleLinkUrlValue}else{slugValue= cardTitleValue}
-  html += "</div>";
+  //   }
 
-  html += '<div class="result-img w-2/5 rounded-tl-2xl rounded-br-2xl relative overflow-hidden"><img src="'+photoGallery2[0].image.url+'" class="rounded-tl-2xl rounded-br-2xl w-full h-full absolute top-0 left-0 object-cover transition-all duration-500 transform hover:scale-105"/></div>';
-  html += '<div class="result-content w-3/5 p-3 text-sm relative text-dark_grey"><h4 class="mb-2.5"><a href="javascript:void(0);" class="storelocation-name details text-base font-bold inline-block text-black hover:text-red">' + ucwords(cardTitleValue) + '</a> </h4>';
+  // }
+  // else if (cardTitleValue) {
+  //   html += `<button id ="result1" class="name hover:underline hover:font-semibold text-ll-red " >
+  //     ${cardTitleValue}
+  //   </button>`;
+  // }
+  // html += "</div>";
 
-  html += '<div class="address mb-1.5 text-sm leading-6 relative pl-6"><svg class="bg-red rounded-full fill-white absolute top-0.5 left-0 w-5 h-5 p-1 mr-2" xmlns="http://www.w3.org/2000/svg"width="7.954" height="10.606" viewBox="0 0 7.954 10.606"> <path id="Icon_awesome-map-marker-alt" data-name="Icon awesome-map-marker-alt"d="M3.568,10.392C.559,6.029,0,5.581,0,3.977a3.977,3.977,0,0,1,7.954,0c0,1.6-.559,2.051-3.568,6.415a.5.5,0,0,1-.817,0Zm.409-4.758A1.657,1.657,0,1,0,2.32,3.977,1.657,1.657,0,0,0,3.977,5.634Z" /> </svg>';
+  const regionNames = new Intl.DisplayNames(
+    ['en', 'fr', 'ja'], { type: 'region' }
+  );
 
-  html += ucwords(addressValue.line1) + ', ' + ucwords(addressValue.city) + ', ' + ucwords(addressValue.postalCode) + ', ' + ucwords(addressValue.countryCode) + '<br>' + "</div>";
+  html += '<h2 class="location-name"><a href="javascript:void(0);" class="storelocation-name details">' + ucwords(cardTitleValue) + '</a></h2><div class="shop-type"><span class="miles">0.5 Miles</span><img src="/images/green_pin.png" alt=""/></div><div class="result-img"><img src="' + photoGallery2[0].image.url + '"/></div>';
+  html += '<div class="result-content">';
+
+  html += '<div class="info-row address-info"><span class="icon font-chrisfo-icon">R</span><address class="info-row-content">';
+
+  html += ucwords(addressValue.line1) + ', '+ '<br>' + ucwords(addressValue.city) + ', ' + ucwords(addressValue.postalCode) + ', ' + '<br>' + ucwords(regionNames.of(addressValue.countryCode)) + "</address></div>";
   //end
-  
+
   //phone number start here
-  html += '<a href=" tel:'+ phone+ '" class="phone mb-1.5 text-sm leading-6 relative pl-6"><svg class="bg-red rounded-full fill-white absolute top-0.5 left-0 w-5 h-5 p-1 mr-2" xmlns="http://www.w3.org/2000/svg"width="7.955" height="7.955" viewBox="0 0 7.955 7.955"> <path id="Icon_awesome-phone-alt" data-name="Icon awesome-phone-alt"d="M7.728,5.621l-1.74-.746a.373.373,0,0,0-.435.107l-.771.942A5.759,5.759,0,0,1,2.029,3.172L2.971,2.4a.372.372,0,0,0,.107-.435L2.332.226A.375.375,0,0,0,1.9.01L.289.383A.373.373,0,0,0,0,.746,7.208,7.208,0,0,0,7.209,7.955a.373.373,0,0,0,.364-.289L7.945,6.05a.377.377,0,0,0-.218-.429Z"transform="translate(0 0)" /> </svg>' + phone + "</a>";
+  html += '<div class="info-row"><span class="icon font-chrisfo-icon">Q</span><a class="info-row-content" href="tel:' + phone + '">' + phone + "</a></div>";
   if (phoneno) {
-    html += '<a href="  tel:'+ phoneno+'" class="phone mb-1.5 text-sm leading-6 relative pl-6"><svg class="bg-red rounded-full fill-white absolute top-0.5 left-0 w-5 h-5 p-1 mr-2" xmlns="http://www.w3.org/2000/svg"width="7.955" height="7.955" viewBox="0 0 7.955 7.955"> <path id="Icon_awesome-phone-alt" data-name="Icon awesome-phone-alt"d="M7.728,5.621l-1.74-.746a.373.373,0,0,0-.435.107l-.771.942A5.759,5.759,0,0,1,2.029,3.172L2.971,2.4a.372.372,0,0,0,.107-.435L2.332.226A.375.375,0,0,0,1.9.01L.289.383A.373.373,0,0,0,0,.746,7.208,7.208,0,0,0,7.209,7.955a.373.373,0,0,0,.364-.289L7.945,6.05a.377.377,0,0,0-.218-.429Z"transform="translate(0 0)" /> </svg>' + phoneno + "</a>";
+    html += '<div class="info-row"><span class="icon font-chrisfo-icon">Q</span><a class="info-row-content" href="tel:' + phoneno + '">' + phoneno + "</a></div>";
   }
-  html += '<div class="phone mb-1.5 text-sm leading-6 relative pl-6">' + Email + "</div>";
+  html += '<div class="info-row"><span class="icon font-chrisfo-icon">O</span><a href="mailto:' + Email + '" class="info-row-content">' + Email + "</a></div>";
 
   //end
 
@@ -154,11 +156,11 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
       time[0] = +time[0] % 12 || 12;
     }
     return time.join('');
-  
-  
-  
-  
-  
+
+
+
+
+
   }
   function convertDays(days) {
     const currentDate = new Date();
@@ -177,15 +179,14 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
   if (hoursValue) {
     const offset = getValueFromPath(entityProfile, "timeZoneUtcOffset");
     const parsedOffset = parseTimeZoneUtcOffset(offset);
-    html += '<div class="lp-param-results lp-subparam-hours relative">';
     html +=
-      '<div class="open-now-string text-black" data-id="main-shop-' + index + '">' +
+      '<div class="info-row currentStatus" data-id="main-shop-' + index + '"><span class="icon font-chrisfo-icon">0</span><span class="info-row-content">' +
       formatOpenNowString(hoursValue, parsedOffset) +
-      "</div>";
+      "</span></div>";
 
-    html += '<div class="storelocation-openCloseTime" style="display:none;" >';
-    html += '<ul id="time-row-main-shop-' + index + '">';
-  
+    html += '</div><div class="storelocation-openCloseTime"><div class="info-row"><span class="icon font-chrisfo-icon">0</span><span class="info-row-content">Horaires</span></div>';
+    html += '<ul class="hours" id="time-row-main-shop-' + index + '">';
+
     let dayConvert = Days[APIlanguage];
 
 
@@ -212,37 +213,39 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
     });
 
     console.log(sort_array);
-
+    let closedclass = "";
     $.each(sort_array, function (indexh, hour) {
 
-      html += '<li class="time-row [&:nth-child(odd)]:bg-black [&:nth-child(odd)]:bg-opacity-5 [&:first-child]:bg-red [&:first-child]:bg-opacity-100 [&:first-child]:text-white px-2 py-1">'
-      html += '<div><strong class="daydiv days_values font-bold w-20 inline-block" >';
+      html += '<li class="time-row '+ closedclass +' ">'
+      html += '<strong class="daydiv days_values" >';
       html += dayConvert[hour[0].toString()] + ' ';
       html += '</strong>';
       if (hour[1].openIntervals) {
-       
+        html += '<span>'
+
         $.each(hour[1].openIntervals, function (op, openInterval) {
-         
-          html += tConvert(openInterval.start) +  multilangData[APIlanguage].To + tConvert(openInterval.end);
-          
-     
-        
+
+          html += tConvert(openInterval.start) +' &nbsp; '+ multilangData[APIlanguage].To +' &nbsp; ' + tConvert(openInterval.end);
+
         });
+        html += '</span>'
+        closedclass = "";
       } else {
-        html += '<span class="text-red closed" >'+multilangData[APIlanguage].closed+'</span>';
-        
+
+        html += '<span class="closed" >' + multilangData[APIlanguage].closed + '</span>';
+        closedclass = "closed";
+
       }
-      html += '</div>';
       html += '</li>'
 
     });
     html += '</ul>';
 
-    html += "</div></div>";
+    html += "</div>";
   }
-  
+
   console.log(entityProfile.meta.language, 'check locale value')
-  
+
   const singleLineAddress =
     entityProfile.name +
     " " +
@@ -254,18 +257,17 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
     addressValue.region +
     " " +
     addressValue.postalCode;
-  html += `<div class="flex flex-col text-center justify-between">
-  <div class="mb-1.5">
-      <a target="_blank" class="w-full text-sm leading-[22px] py-1.5 font-semibold text-red px-2.5 rounded-sm border border-red inline-flex items-center justify-center transition-all duration-300 group hover:text-white hover:bg-red capitalize" href="https://www.google.com/maps/dir/?api=1&destination=${cordinates.latitude},${cordinates.longitude}"><svg class="fill-red w-4 h-4 mr-2 group-hover:fill-white" xmlns="http://www.w3.org/2000/svg" width="7.954" height="10.606" viewBox="0 0 7.954 10.606"><path data-name="Icon awesome-map-marker-alt" d="M3.568,10.392C.559,6.029,0,5.581,0,3.977a3.977,3.977,0,0,1,7.954,0c0,1.6-.559,2.051-3.568,6.415a.5.5,0,0,1-.817,0Zm.409-4.758A1.657,1.657,0,1,0,2.32,3.977,1.657,1.657,0,0,0,3.977,5.634Z"></path></svg><span class="inline-block">${multilangData[APIlanguage].getDirection}</span></a></div>`;
+  html += `<div class="location-action">
+      <a target="_blank" class="ghost-btn" href="https://www.google.com/maps/dir/?api=1&destination=${cordinates.latitude},${cordinates.longitude}"><span class="icon font-chrisfo-icon">p</span> ${multilangData[APIlanguage].getDirection}</a>`;
 
-    html += `<div class=""><a class="w-full text-sm leading-[22px] py-1.5 font-semibold text-white px-2.5 rounded-sm border bg-red border-red inline-flex items-center justify-center transition-all duration-300 group hover:text-red hover:bg-white capitalize" href="/${slugValue}">${multilangData[APIlanguage].detailPage} <svg class="ml-1.5 fill-white group-hover:fill-red" xmlns="http://www.w3.org/2000/svg" width="16.987" height="11.33" viewBox="0 0 16.987 11.33"><path data-name="Icon ionic-ios-arrow-round-forward" d="M18.708,11.469a.771.771,0,0,0-.006,1.086l3.587,3.593H8.636a.767.767,0,0,0,0,1.534H22.284L18.7,21.275a.777.777,0,0,0,.006,1.086.764.764,0,0,0,1.08-.006l4.862-4.9h0a.861.861,0,0,0,.159-.242.732.732,0,0,0,.059-.3.769.769,0,0,0-.218-.537l-4.862-4.9A.752.752,0,0,0,18.708,11.469Z" transform="translate(-7.875 -11.252)"></path></svg></a> </div></div>`
-  
+  html += `<a class="ghost-btn" href="/${cardTitleLinkUrlValue}"><span class="icon font-chrisfo-icon">b</span> ${multilangData[APIlanguage].detailPage}</a> </div>`
 
-  
-  html = `<div class="center-column relative bg-white rounded-tl-2xl rounded-br-2xl flex flex-wrap leading-6 shadow-[4px_8px_6px_rgba(0,0,0,0.10)]">${html}</div>`;
 
- 
-  return `<div id="result-${index}" class="result mb-5 lg:pr-5">${html}</div>`;
+
+  html = `<div class="center-column">${html}</div>`;
+
+
+  return `<div id="result-${index}" class="result location">${html}</div>`;
 }
 
 
@@ -280,7 +282,7 @@ export function renderLocations(locations, append, viewMore) {
       });
   }
 
-  
+
   locations.forEach((location, index) => {
     [].slice
       .call(document.querySelectorAll(".result-list-inner") || [])
@@ -334,7 +336,7 @@ function searchDetailMessageNoGeo(total) {
   }
 }
 export function renderSearchDetail(geo, visible, total, queryString) {
-  
+
 
   let locationType = locationNoun;
   if (total === 0 || total > 1) {
@@ -405,16 +407,24 @@ export function renderSearchDetail(geo, visible, total, queryString) {
 
 export function getNearestLocationsByString() {
   const queryString = locationInput.value;
-  if (queryString.trim() !== "") {
-
-    let request_url =
-      base_url +
-      "entities" +
-      "?limit=" +
-      limit +
-      "&offset=" +
-      offset +
-      '&sortBy=[{"name":"ASCENDING"}]';
+  
+    // let request_url =
+    //   base_url +
+    //   "entities" +
+    //   "?limit=" +
+    //   limit +
+    //   "&offset=" +
+    //   offset +
+    //   '&sortBy=[{"name":"ASCENDING"}]';
+	  
+	  var request_url = base_url + "entities/geosearch";
+	// var request_url = base_url + "entities?";	
+	request_url += "?radius=" + radius;	
+	request_url += "&location="+queryString;
+  limit +
+  "&offset=" +
+  offset +
+  '&sortBy=[{"name":"ASCENDING"}]';
 
     let filterParameters = {};
     let filterAnd = {};
@@ -422,7 +432,7 @@ export function getNearestLocationsByString() {
 
     if (queryString) {
 
-      filterOr = {
+      /* filterOr = {
         "$or": [
           { "address.line1": { "$contains": queryString } },
           { "address.city": { "$contains": queryString } },
@@ -432,7 +442,7 @@ export function getNearestLocationsByString() {
           { "name": { "$contains": queryString } },
           { "mainPhone": { "$contains": queryString } }
         ]
-      };
+      }; */
 
     }
 
@@ -458,10 +468,7 @@ export function getNearestLocationsByString() {
 
 
     getRequest(request_url, queryString);
-  }
-  var url = window.location.href;
-  var myStorage = window.sessionStorage;
-  sessionStorage.setItem('query', url);
+  
 
 }
 
@@ -472,14 +479,91 @@ function getNearestLatLng(position) {
     .forEach(function (el) {
       el.textContent = "";
     });
+  $('#offset').val(0);
   currentLatitude = position.coords.latitude;
   currentLongitude = position.coords.longitude;
-  let request_url = base_url + "entities?entities/geosearch";
-  request_url += "?radius=" + radius;
-  request_url +=
-    "&location=" + position.coords.latitude + ", " + position.coords.longitude;
-  request_url += "&limit=" + limit;
-  getRequest(request_url, null);
+  // setCookie("user_latitude", currentLatitude, 1);
+  // setCookie("user_longitude", currentLongitude, 1);
+  
+  geoCorder.geocode({ location: {lat: currentLatitude,lng: currentLongitude}})
+	.then((response) => {
+	  if (response.results[0]) {
+		locationInput.value = response.results[0].formatted_address;
+		let address_components = response.results[0].address_components;
+		let addressParameters = [];
+		let param = {};
+		let addressLine = '';
+		let filter = '';
+		// console.log(address_components);
+		for (let i = 0; i < address_components.length; i++) {
+			let type =  address_components[i].types[0];
+			switch(type){
+				case 'street_number':{
+					if(addressLine){
+						addressLine += " " + address_components[i].long_name;
+					}else{
+						addressLine = address_components[i].long_name;
+					}
+					break;
+				}
+				case 'route':{
+					if(addressLine){
+						addressLine += " " + address_components[i].long_name;
+					}else{
+						addressLine = address_components[i].long_name;
+					}
+					break;
+				}
+				case 'postal_town': {
+					addressParameters.push( {"address.region": {"$eq": address_components[i].long_name}});
+					break;
+				}
+				case 'locality':
+				case 'administrative_area_level_2':
+				{
+					addressParameters.push( {"address.city": {"$eq": address_components[i].long_name}});
+					break;
+				}
+				case 'administrative_area_level_1':
+				{
+					addressParameters.push( {"address.region": {"$eq": address_components[i].long_name}});
+					break;
+				}
+				case 'country':{
+					addressParameters.push( {"address.countryCode": {"$eq": address_components[i].short_name}});
+					break;
+				}
+				case 'postal_code':{
+					addressParameters.push( {"address.postalCode": {"$eq": address_components[i].short_name}});
+					break;
+				}
+				default:{}
+			}
+		} 
+		let addressParametersString = JSON.stringify(address_components);		
+		$('#user_address_parameters').val(addressParametersString); 
+		let request_url = base_url + "entities/geosearch";
+			request_url += "?radius=" + radius;
+			request_url +=
+			"&location=" + currentLatitude + ", " + currentLongitude;
+			let filterParameters = {};
+				let filterAnd = {};
+				let filterOr = {};
+				const queryString = locationInput.value;
+				if (queryString) {					
+					filterOr = { "$or": addressParameters}; 
+				}
+				
+				filterParameters = {...filterOr,...filterAnd};
+				filter = JSON.stringify(filterParameters);
+				if(filter){
+					request_url += "&filter=" + filter;
+				}
+				request_url += "&limit=" + limit;
+				getRequest(request_url, null);
+	  } 
+	})
+	.catch((e) => {});
 }
 
 
@@ -491,7 +575,7 @@ export function getLocations(offset) {
     "?limit=" +
     limit +
     "&offset=" +
-     offset +
+    offset +
     "&languages=" +
     langauage +
     '&sortBy=[{"name":"ASCENDING"}]';
@@ -501,21 +585,17 @@ export function getLocations(offset) {
   let filterOr = {};
 
   const queryString = locationInput.value;
-  // filterOr ={
-  //   "$or":[
-  //     {"closed" : {"$eq" : false}}
-  //   ]
-  // }
+
   if (queryString) {
 
     filterOr = {
       "$or": [
-        { "address.line1": { "$contains": queryString } },
-        { "address.city": { "$contains": queryString } },
-        { "address.region": { "$contains": queryString } },
-        { "address.countryCode": { "$contains": queryString } },
-        { "address.postalCode": { "$contains": queryString } },
-        { "name": { "$contains": queryString } }
+        { "address.line1": { "$eq": queryString } },
+        { "address.city": { "$eq": queryString } },
+        { "address.region": { "$eq": queryString } },
+        { "address.countryCode": { "$eq": queryString } },
+        { "address.postalCode": { "$eq": queryString } },
+        { "name": { "$eq": queryString } }
       ]
     };
   }
@@ -540,18 +620,18 @@ export function getLocations(offset) {
     request_url += "&filter=" + filter;
   }
 
-  
+
   getRequest(request_url, null);
 
 }
 // getLocations(0);
+
 
 document.getElementById("viewMoreBtn").addEventListener("click", function () {
   let newOffset = offset + limit;
   offset = newOffset;
   getLocations(offset);
 });
-
 // End Here
 function ucwords(title) {
   let str = title.toLowerCase();
@@ -561,15 +641,13 @@ function ucwords(title) {
 }
 
 
-
-
 export function getDepartments() {
   var baseURL = "https://liveapi-sandbox.yext.com/v2/accounts/me/entities?";
   var api_key = "b262ae7768eec3bfa53bfca6d48e4000";
   var vparam = "20161012";
   var entityTypes = "location";
   var savedFilterId = "982931142";
-   var fullURL =
+  var fullURL =
     baseURL +
     "api_key=" +
     api_key +
@@ -582,7 +660,7 @@ export function getDepartments() {
     entityTypes +
     "&savedFilterIds=" +
     savedFilterId +
-    "&fields=address" + 
+    "&fields=address" +
     "&limit=50";
 
   fetch(fullURL).then(response => response.json()).then(result => {
@@ -600,24 +678,30 @@ export function getDepartments() {
       if (url_string.includes('Country')) {
         somecountry = '<option selected>' + country + '</option>';
       }
-      
-    
+
+
       else {
         const regionNames = new Intl.DisplayNames(
           ['en', 'fr', 'ja'], { type: 'region' }
         );
+        console.log(langauage, "languagehhhh")
         html += `<option value=""disabled selected>${multilangData[langauage].Country}`
         var newData = [];
         for (let index = 0; index < result.response.entities.length; index++) {
-            const countryCode = result.response.entities[index]['address']['countryCode'];
-            if(!newData.includes(countryCode)){ 
-              newData.push(countryCode);
-              html += '<option value="' + countryCode + '">' + regionNames.of(countryCode) + '</option>'; 
-            }
+          const countryCode = result.response.entities[index]['address']['countryCode'];
+          if (!newData.includes(countryCode)) {
+            newData.push(countryCode);
+            html += '<option value="' + countryCode + '">' + regionNames.of(countryCode) + '</option>';
+          }
         }
-        
+
       }
 
+
+      // //alert(regionNames.of(newBRCC));
+      // somecountry += '<option value="' + newBRCC + '">' + regionNames.of(newBRCC) + '</option>';
+      // somecountry += '<option value="' + newBECC + '">' + regionNames.of(newBECC) + '</option>';
+      // somecountry += '<option value="' + newFRCC + '">' + regionNames.of(newFRCC) + '</option>';
       html += somecountry;
       html += '</select>';
       html += '</div>';
@@ -627,7 +711,7 @@ export function getDepartments() {
       $(".checkbox_departments").change(function () {
         var element = document.getElementById("mySelect") as HTMLSelectElement;
         var x = element !== null ? element.selectedIndex : '';
-        let selectcity = document.getElementsByTagName("option")[x].value; 
+        let selectcity = document.getElementsByTagName("option")[x].value;
         getcity(selectcity);
       });
     } else {
@@ -636,10 +720,8 @@ export function getDepartments() {
 
   });
 }
-
 export function getCountry(entities) {
   
-
       var url_string = window.location.href;
       var url = new URL(url_string);
       var country = url.searchParams.get("Country");
@@ -680,9 +762,7 @@ export function getCountry(entities) {
       });
    
 
-  });
 }
-
 
 
 export function getcity(selectcity) {
@@ -715,14 +795,22 @@ export function getcity(selectcity) {
   var entityTypes = "location";
   var savedFilterId = "982931142";
 
-  var requesturls = baseURL +
-    "api_key=" + api_key +
-    "&v=" + vparam +
+  var requesturls =
+    baseURL +
+    "api_key=" +
+    api_key +
+    "&v=" +
+    vparam +
     "&resolvePlaceholders=true" +
-    "&filter=" + filter +
-    "&entityTypes=" + entityTypes +
-    "&languages=" + langauage +
-    "&savedFilterIds=" + savedFilterId;
+    "&filter=" +
+    filter +
+    "&entityTypes=" +
+    entityTypes +
+    "&languages=" +
+    langauage +
+    "&savedFilterIds=" +
+    savedFilterId;
+
 
   fetch(requesturls).then(response => response.json()).then(result => {
 
@@ -740,17 +828,17 @@ export function getcity(selectcity) {
         somechange = '<option value="' + city + '"selected>' + city + '</option>';
       }
       else {
-       
+
         var newcity = [];
-              html += `<option value=""disabled selected>${multilangData[langauage].City}`
-              for (let index = 0; index < result.response.entities.length; index++) {
-                const city = result.response.entities[index]['address']['city'];
-                if(!newcity.includes(city)){ 
-                  newcity.push(city);
-                  html += '<option value="' + city + '">' + city + '</option>'; 
-                }
-            }
-        
+        html += `<option value=""disabled selected>${multilangData[langauage].City}`
+        for (let index = 0; index < result.response.entities.length; index++) {
+          const city = result.response.entities[index]['address']['city'];
+          if (!newcity.includes(city)) {
+            newcity.push(city);
+            html += '<option value="' + city + '">' + city + '</option>';
+          }
+        }
+
         // $.each(result.response.entities, function (index, entity) {
         //   //console.log(entity);
         //   somechange += '<option value="' + entity.address.city + '">' + entity.address.city + '</option>';
@@ -772,21 +860,25 @@ export function getcity(selectcity) {
 
   });
 }
-
+// getcity("");
 
 
 export function getshop(selectcity) {
   var baseURL = "https://liveapi-sandbox.yext.com/v2/accounts/me/entities?";
   var api_key = "b262ae7768eec3bfa53bfca6d48e4000";
-   var vparam = "20161012";
+  var vparam = "20161012";
   var entityTypes = "ce_christofleshop";
   var requesturl =
     baseURL +
-    "api_key=" + api_key +
-     "&v=" + vparam +
+    "api_key=" +
+    api_key +
+    "&v=" +
+    vparam +
     "&resolvePlaceholders=true" +
-    "&entityTypes=" + entityTypes +
-    "&languages=" +langauage;
+    "&entityTypes=" +
+    entityTypes +
+    "&languages=" +
+    langauage;
   //alert(requesturl)
 
   fetch(requesturl).then(response => response.json()).then(result => {
@@ -798,7 +890,7 @@ export function getshop(selectcity) {
       html += '  <div class="select-box w-full md:w-auto">';
       html += `   <select id="selectshop" class="checkbox_departments1 appearance-none w-full bg-white py-2 px-3 border-8 border-white text-sm focus:outline-none" aria-label="Default select example">`;
       html += `<option value=""disabled selected>${multilangData[langauage].Shop}`
-   
+
       $.each(result.response.entities, function (index, entity) {
         html += '<option value="' + entity.name + '">' + entity.name + '</option>';
       });
@@ -811,7 +903,7 @@ export function getshop(selectcity) {
     }
   })
 }
-
+// getshop("");
 //end here
 
 // To get the Location of the system
@@ -831,6 +923,8 @@ export function getUsersLocation() {
     });
   }
 }
+
+
 
 $("#result").click(function () {
   var $this = $("#result2");
@@ -870,11 +964,11 @@ if (url_string.includes('city')) {
   getnature(city, country2);
 }
 
-function getnature(newCity, newCountry) {
-  let newfilterParameters = {};
-  let newfilterAnd = {
 
-  };
+function getnature(newCity, newCountry) {
+
+  let newfilterParameters = {};
+  let newfilterAnd = {};
   if (newCountry && newCity) {
     newfilterAnd = {
       "$and":
@@ -884,21 +978,30 @@ function getnature(newCity, newCountry) {
           },
           {
             "address.city": { "$contains": newCity }
-          },
-         
+
+          }
+
+
         ],
+
+
     };
   }
+
   else {
     newfilterAnd = {
       "$or": [
         {
           "address.countryCode": { "$contains": newCountry },
           "address.city": { "$contains": newCity }
+
         },
       ]
     };
+
   }
+
+
 
   newfilterParameters = { ...newfilterAnd };
   var filterpar = JSON.stringify(newfilterParameters);
@@ -911,13 +1014,19 @@ function getnature(newCity, newCountry) {
   var entityTypes = "location";
   var savedFilterId = "982931142";
 
-  var request_url = baseURL +
-    "api_key=" + api_key +
-    "&filter=" + filter +
-    "&entityTypes=" + entityTypes +
-    "&savedFilterIds=" + savedFilterId +
-    "&languages=" + langauage;
-    
+  var request_url =
+    baseURL +
+    "api_key=" +
+    api_key +
+    "&filter=" +
+    filter +
+    "&entityTypes=" +
+    entityTypes +
+    "&languages=" +
+    langauage;
+  "&savedFilterIds=" +
+    savedFilterId +
+
     getRequest(request_url, null);
 
 }
@@ -958,10 +1067,16 @@ document.getElementById("data").addEventListener("click", function () {
           },
           {
             "c_christfleshop": { "$contains": newshop }
+
           }
+
+
         ],
+
+
     };
   }
+
   else {
     newfilterAnd = {
       "$or": [
@@ -975,9 +1090,12 @@ document.getElementById("data").addEventListener("click", function () {
 
   }
 
+
+
   newfilterParameters = { ...newfilterAnd };
   var filterpar = JSON.stringify(newfilterParameters);
   var filter = encodeURI(filterpar);
+
 
   var baseURL = "https://liveapi-sandbox.yext.com/v2/accounts/me/entities?";
   var api_key = "b262ae7768eec3bfa53bfca6d48e4000";
@@ -985,11 +1103,18 @@ document.getElementById("data").addEventListener("click", function () {
   var entityTypes = "location";
   var savedFilterId = "982931142";
 
-  var request_url = baseURL + "api_key=" + api_key +
-    "&filter=" + filter +
-    "&entityTypes=" + entityTypes +
-    "&savedFilterIds=" + savedFilterId +
-    "&languages=" + langauage;
+  var request_url =
+    baseURL +
+    "api_key=" +
+    api_key +
+    "&filter=" +
+    filter +
+    "&entityTypes=" +
+    entityTypes +
+    "&languages=" +
+    langauage;
+  "&savedFilterIds=" +
+    savedFilterId +
 
     getRequest(request_url, null);
 

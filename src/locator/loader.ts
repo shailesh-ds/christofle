@@ -142,7 +142,7 @@ export function getRequest(request_url, queryString) {
 	  
 	  
 	  if(typeof locations !== 'undefined'){
-		 getCountry(locations); 
+		 // getCountry(locations); 
 	  }
 
       if (locations.length == 0) {

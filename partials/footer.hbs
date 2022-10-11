@@ -1,109 +1,109 @@
-<footer class="">
-  <div class="bg-black text-white text-sm py-2.5">
+<footer class="site-footer">
+  <div class="footer-top">
     <div class="container flex flex-wrap max-w-7xl">
      
-      <div class="w-full md:w-1/2 lg:w-1/4 flex items-center lg:justify-center text-left p-2.5">
+      <div class="block">
         <span class="before:content-['\006c'] font-chrisfo-icon text-2xl mr-3"></span>
         {{#if c_locations}}
          {{#each c_locations}} <p>{{c_topfooter.[0].text}}</p>   {{/each}}
         {{/if}} 
       </div>
    
-      <div class="w-full md:w-1/2 lg:w-1/4 flex items-center lg:justify-center text-left p-2.5">
+      <div class="block">
         <span class="before:content-['\006b'] font-chrisfo-icon text-2xl mr-3"></span>
        {{#each c_locations}} <p>{{c_topfooter.[1].text}}</p>   {{/each}}
       </div>
-      <div class="w-full md:w-1/2 lg:w-1/4 flex items-center lg:justify-center text-left p-2.5">
+      <div class="block">
         <span class="before:content-['\006a'] font-chrisfo-icon text-2xl mr-3"></span>
          {{#each c_locations}} <p>{{c_topfooter.[2].text}}</p>   {{/each}}
       </div>
-      <div class="w-full md:w-1/2 lg:w-1/4 flex items-center lg:justify-center text-left p-2.5">
+      <div class="block">
         <span class="before:content-['\006d'] font-chrisfo-icon text-2xl mr-3"></span>
          {{#each c_locations}} <p>{{c_topfooter.[3].text}}</p>   {{/each}}
       </div>
     </div>
   </div>
-  <div class="bg-[#f6f6f4]">
+  <div class="footer-main">
     <div class="container flex flex-wrap">
-      <div class="w-full px-4 text-center">
+      <div class="footer-logo">
         <a href="/" class="inline-block items-center">
           <img class="w-[243px]"
             src="https://www.christofle.com/fstrz/r/s/c/www.christofle.com/media/logo/default/logo_christofle.png.avif?frz-v=4837"
             alt="">
         </a>
       </div>
-      <div class="w-full sm:w-1/2 md:w-1/4 md:px-4 mb-5">
+      <div class="footer-block">
         {{#each c_locations}}
-        <h4 class="font-bold text-sm leading-[21px] uppercase mb-2.5">{{c_singletext.[0].text}}</h4>
+        <h4>{{c_singletext.[0].text}}</h4>
         {{/each}}
-        <ul class="leading-[21px] text-sm">
+        <ul class="footer-links">
           {{#each c_locations}}
           {{#each c_onefooter}}
           <li><a href="{{cta.link}}"
-              class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">{{cta.label}}</a>
+              class="nav-item">{{cta.label}}</a>
           </li>
           {{/each}}
           {{/each}}
         </ul>
       </div>
-      <div class="w-full sm:w-1/2 md:w-1/4 md:px-4 mb-5">
+      <div class="footer-block">
         {{#each c_locations}}
-        <h4 class="font-bold text-sm leading-[21px] uppercase mb-2.5">{{c_singletext.[1].text}}</h4>
+        <h4>{{c_singletext.[1].text}}</h4>
         {{/each}}
-        <ul class="leading-[21px] text-sm">
+        <ul class="footer-links">
           {{#each c_locations}}
           {{#each c_twofooter}}
           <li><a href="{{cta.link}}"
-              class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">{{cta.label}}</a>
+              class="nav-item">{{cta.label}}</a>
           </li>
           {{/each}}
           {{/each}}
         </ul>
       </div>
-      <div class="w-full sm:w-1/2 md:w-1/4 md:px-4 mb-5">
+      <div class="footer-block">
         {{#each c_locations}}
-        <h4 class="font-bold text-sm leading-[21px] uppercase mb-2.5">{{c_singletext.[2].text}}</h4>
+        <h4>{{c_singletext.[2].text}}</h4>
         {{/each}}
-        <ul class="leading-[21px] text-sm">
+        <ul class="footer-links">
           {{#each c_locations}}
           {{#each c_threefooter}}
           <li><a href="{{cta.link}}"
-              class="leading-6 inline-block relative after:content after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-500 after:w-0 after:bg-black after:h-px hover:after:w-full">{{cta.label}}</a>
+              class="nav-item">{{cta.label}}</a>
           </li>
           {{/each}}
           {{/each}}
         </ul>
       </div>
-      <div class="w-full sm:w-1/2 md:w-1/4 md:px-4 mb-5">
+      <div class="footer-block">
         {{#each c_locations}}
 
         <h4 class="font-bold text-sm leading-[21px] uppercase mb-8"><a href="#">
             {{c_singletext.[4].text}}</a></h4>{{/each}}
 
         {{#each c_locations}}
-        <h4 class="font-bold text-sm leading-[21px] uppercase mb-2.5">{{c_singletext.[3].text}}</h4>
+        <h4>{{c_singletext.[3].text}}</h4>
         {{/each}}
-        <ul class="flex items-center">
-          <li class="mr-2.5"><a href="#"><i
-                class="not-italic before:content-['\0049'] font-chrisfo-icon text-base font-normal align-middle"></i></a>
+        <ul class="social-icons">
+          <li class=""><a href="#"><i
+                class="before:content-['\0049']"></i></a>
           </li>
-          <li class="mr-2.5"><a href="#"><i
-                class="not-italic before:content-['\004d'] font-chrisfo-icon text-base font-normal align-middle"></i></a>
+          <li class=""><a href="#"><i
+                class="before:content-['\004d']"></i></a>
           </li>
-          <li class="mr-2.5"><a href="#"><i
-                class="not-italic before:content-['\004a'] font-chrisfo-icon text-base font-normal align-middle"></i></a>
+          <li class=""><a href="#"><i
+                class="before:content-['\004a']"></i></a>
           </li>
-          <li class="mr-2.5"><a href="#"><i
-                class="not-italic before:content-['\004b'] font-chrisfo-icon text-base font-normal align-middle"></i></a>
+          <li class=""><a href="#"><i
+                class="before:content-['\004b']"></i></a>
           </li>
-          <li class="mr-2.5"><a href="#"><i
-                class="not-italic before:content-['\004c'] font-chrisfo-icon text-base font-normal align-middle"></i></a>
+          <li class=""><a href="#"><i
+                class="before:content-['\004c']"></i></a>
           </li>
-          <li class="mr-2.5"><a class="inline-block align-middle" href="#"><i
-                class="not-italic inline-block align-middle w-4 h-4 bg-weibo bg-no-repeat bg-center bg-[length:1rem_1rem]"></i></a>
+          <li class=""><a href="#"><i
+                class="img-icon bg-weibo"></i></a>
           </li>
-          <li class="mr-2.5"><a class="inline-block align-middle" href="#"><i
-                class="not-italic inline-block align-middle w-4 h-4 bg-wechat bg-no-repeat bg-center bg-[length:1rem_1rem]"></i></a>
+          <li class=""><a href="#"><i
+                class="img-icon bg-wechat"></i></a>
           </li>
         </ul>
 

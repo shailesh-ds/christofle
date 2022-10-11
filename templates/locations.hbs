@@ -1,53 +1,58 @@
 ---
 {
-    "stream": {
-        "$id": "location-detail-pages",
-        "source": "knowledgeGraph",
-        "destination": "pages",
-        "filter" : {
-            "entityTypes": ["location"],    
-            "savedFilterIds":["982931142"]
-        },
-        "fields": [
-            "id",
-            "uid",
-            "meta",
-            "name",
-            "address",
-            "description",
-            "hours",
-            "emails",
-            "mainPhone",
-            "photoGallery",
-            "slug",
-            "c_slug",
-            "c_abbotttext",
-            "c_aboutch.title",
-            "c_aboutch.description",
-            "geocodedCoordinate",
-            "neighborhood",
-            "paymentOptions",
-            "c_cTA",
-            "c_description1",
-            "c_photo",
-            "c_bannerTitle",
-            "c_nature",
-            "phoneticName",
-            "c_locations.name",
-            "c_ctabtn1.label",
-            "c_ctabtn1.link",
-            "c_locations.c_singletext.text",
-            "c_locations.c_header.cta",
-            "c_locations.c_topfooter.text",
-            "c_locations.c_onefooter.cta",
-            "c_locations.c_twofooter.cta",
-            "c_locations.c_threefooter.cta"
-        ],
-        "localization": {
-            "locales": ["en","fr","ja"]
-        }
-    },
-    "urlFormat": "{{#if slug}}{{slug}}{{else}}{{locale}}/{{name}}{{/if}}"
+"stream": {
+"$id": "christofle-locationpage",
+"source": "knowledgeGraph",
+"destination": "pages",
+"filter" : {
+"entityTypes": [
+"location"
+],
+"savedFilterIds":[
+"982931142"
+]
+},
+"fields": [
+"id",
+"uid",
+"meta",
+"name",
+"address",
+"description",
+"hours",
+"emails",
+"mainPhone",
+"photoGallery",
+"slug",
+"c_slug",
+"c_abbotttext",
+"c_aboutch.title",
+"c_aboutch.description",
+"geocodedCoordinate",
+"neighborhood",
+"paymentOptions",
+"c_cTA",
+"c_description1",
+"c_photo",
+"c_bannerTitle",
+"c_nature",
+"phoneticName",
+"c_locations.name",
+"c_ctabtn1.label",
+"c_ctabtn1.link",
+"c_locations.c_singletext.text",
+"c_locations.c_header.cta",
+"c_locations.c_topfooter.text",
+"c_locations.c_onefooter.cta",
+"c_locations.c_twofooter.cta",
+"c_locations.c_threefooter.cta"
+
+],
+"localization": {
+"locales": ["en", "fr", "ja"]
+}
+},
+"urlFormat": "{{#if slug}}{{slug}}{{else}}{{locale}}/{{name}}{{/if}}"
 }
 ---
 <!DOCTYPE html>
@@ -87,57 +92,50 @@
 
 <body class="font-lato" id="body">
     {{>header}}
-    <div class="inline-block w-full align-middle">
+    <div class="breadcrumb">
         <div class="container" id="countries">
-            <ul class="flex leading-5 text-sm text-red py-3.5" id="getvalue">
-                {{!-- {{#each c_cTAbutton}} --}}
-                <li class="after:content-['>'] after:mx-2 after:font-bold"><a href="/{{meta.locale}}/index.html{{!-- c_cTA.uRL --}}"
-                        class="inline-block font-bold">{{formatOption c_cTA.primaryCTA}}</a></li>
-                {{!-- {{/each}} --}}
-                <li class="after:content-['>'] after:mx-2 after:font-bold"><a href="/{{meta.locale}}/index.html?Country={{address.countryCode}}"
-                        class="inline-block font-bold">{{formatOption address.countryCode}}</a></li>
-                <li class="after:content-['>'] after:mx-2 after:font-bold"><a
+            <ul class="breadcrumb-nav" id="getvalue">
+                <li class="nav-item"><a href="/{{meta.locale}}/index.html{{!-- c_cTA.uRL --}}" class="">{{formatOption
+                        c_cTA.primaryCTA}}</a></li>
+                <li class="nav-item"><a href="/{{meta.locale}}/index.html?Country={{address.countryCode}}"
+                        class="">{{formatOption address.countryCode}}</a></li>
+                <li class="nav-item"><a
                         href="/{{meta.locale}}/index.html?city={{address.city}}&Country={{address.countryCode}}"
-                        class="inline-block font-bold">{{formatOption address.city}}</a></li>
-                <li class="inline-block">{{formatOption name}}</li>
+                        class="">{{formatOption address.city}}</a></li>
+                <li class="nav-item">{{formatOption name}}</li>
             </ul>
         </div>
     </div>
 
-    <div class="inline-block bg-grey w-full align-middle py-5 md:py-8 lg:py-12">
+    <div class="page-title">
         <div class="container">
-            <h1 class="text-2xl md:text-4xl text-center font-semibold leading-tight uppercase">{{formatOption name}}
-            </h1>
+            <h1>{{formatOption name}}</h1>
         </div>
     </div>
 
+    {{>locationdetails}}
 
-    <div class="inline-block w-full align-middle relative z-0">
-        <img class="w-full absolute top-0 left-0 -z-[1]" src="/images/grid.svg" alt="grid" />
-        <div class="container">
-            {{>locationdetails}}
-        </div>
-    </div>
-    
-
-    <div
-        class="inline-block align-middle w-full py-10 lg:py-20 relative z-0 overflow-hidden after:content-[''] after:absolute after:-bottom-[210px] after:-right-[138px] after:w-[370px] after:h-[370px] after:border-[41px] after:border-[#DC1D1D] after:rounded-full after:-z-[1] after:opacity-[0.03]">
-        <div class="container">
-            {{>aboutus}}
-        </div>
-    </div>
+    {{>aboutus}}
 
 
-    {{>nearby geocodedCoordinate}}
+    {{>nearby}}
 
 
-    {{>photos}}
+    {{!-- {{>photos}} --}}
 
 
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"
+        integrity="sha512-UTNP5BXLIptsaj5WdKFrkFov94lDx+eBvbKyoe1YAfjeRPC+gT5kyZ10kOHCfNZqEui1sxmqvodNUx3KbuYI/A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+        integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
     <script>
         window.onload = function () {
             setInterval(function () {
@@ -150,7 +148,30 @@
             }, 1000);
         };
 
+        $('.product-slider').owlCarousel({
+            loop: false,
+            margin: 30,
+            nav: true,
+            dots: true,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1,
+                },
+                600: {
+                    items: 2,
+                },
+                1000: {
+                    items: 3,
+                }, 
+                1280: {
+                    items: 4,
+                }
+            }
+        })
+
     </script>
+
 
 </body>
 

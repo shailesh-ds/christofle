@@ -16,24 +16,22 @@ import google from "google";
 researchButton.addEventListener("click", function () {
 	// $('#offset').val(0);
 	if(locationInput.value !== ''){   
-		getLocations(0);
+		getNearestLocationsByString();
 	}
 });
 
 
 searchButton.addEventListener("click", function () {
    if(locationInput.value !== ''){   
-		getLocations(0);
+		getNearestLocationsByString();
    }
 });
 
 
-
-/*
 useMyLocation.addEventListener("click", function () {
-  getUsersLocation();
+  getUsersLocation();  
 });
-*/
+
 
 window.addEventListener("popstate", function (e) {
   if (e.state && e.state.queryString) {
@@ -83,7 +81,7 @@ locationInput.addEventListener("selected", function (e) {
 
 if (loadLocationsOnLoad) {
   getLocations(0);
-  // getDepartments();
+  getDepartments();
   getcity("");
   getshop("");
 }
@@ -114,7 +112,7 @@ if (enableAutocomplete) {
   
 // });
 // qurey suggestion starts here
-
+/*
 let locationInp = locationInput;
 
 
@@ -175,3 +173,4 @@ locationInp.addEventListener('input', () => searchStates(locationInp.value));
 $('#query-search').click(function () {
   $("#query-search").empty();
 });
+*/

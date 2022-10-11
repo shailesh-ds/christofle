@@ -1,8 +1,8 @@
 // @ts-ignore
 import google from "google";
 import { getValueFromPath, scrollToRow } from "./utils";
-import { currentLatitude, currentLongitude,} from "./locations";
-import { locationOptions,limit,locationInput } from "./constants";
+import { currentLatitude, currentLongitude, } from "./locations";
+import { locationOptions, limit, locationInput } from "./constants";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 let zoom = 12;
 let pinStyles;
@@ -20,6 +20,175 @@ export const map = new google.maps.Map(document.getElementById("map"), {
   center: { lat: 40.693807, lng: 73.9917 },
   zoom: zoom,
   styles: [
+    {
+      "featureType": "all",
+      "elementType": "geometry.fill",
+      "stylers": [
+        {
+          "weight": "2.00"
+        }
+      ]
+    },
+    {
+      "featureType": "all",
+      "elementType": "geometry.stroke",
+      "stylers": [
+        {
+          "color": "#9c9c9c"
+        }
+      ]
+    },
+    {
+      "featureType": "all",
+      "elementType": "labels.text",
+      "stylers": [
+        {
+          "visibility": "on"
+        }
+      ]
+    },
+    {
+      "featureType": "landscape",
+      "elementType": "all",
+      "stylers": [
+        {
+          "color": "#f2f2f2"
+        }
+      ]
+    },
+    {
+      "featureType": "landscape",
+      "elementType": "geometry.fill",
+      "stylers": [
+        {
+          "color": "#ffffff"
+        }
+      ]
+    },
+    {
+      "featureType": "landscape.man_made",
+      "elementType": "geometry.fill",
+      "stylers": [
+        {
+          "color": "#ffffff"
+        }
+      ]
+    },
+    {
+      "featureType": "poi",
+      "elementType": "all",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "all",
+      "stylers": [
+        {
+          "saturation": -100
+        },
+        {
+          "lightness": 45
+        }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "geometry.fill",
+      "stylers": [
+        {
+          "color": "#eeeeee"
+        }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#7b7b7b"
+        }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "labels.text.stroke",
+      "stylers": [
+        {
+          "color": "#ffffff"
+        }
+      ]
+    },
+    {
+      "featureType": "road.highway",
+      "elementType": "all",
+      "stylers": [
+        {
+          "visibility": "simplified"
+        }
+      ]
+    },
+    {
+      "featureType": "road.arterial",
+      "elementType": "labels.icon",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "transit",
+      "elementType": "all",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "all",
+      "stylers": [
+        {
+          "color": "#46bcec"
+        },
+        {
+          "visibility": "on"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "geometry.fill",
+      "stylers": [
+        {
+          "color": "#c8d7d4"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#070707"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "labels.text.stroke",
+      "stylers": [
+        {
+          "color": "#ffffff"
+        }
+      ]
+    }
+
 
   ],
   mapTypeControl: false,
@@ -83,61 +252,64 @@ export function addMarkersToMap(locations) {
     contentSource: "FIELD",
   };
   pinStyles = {
-    fill: "#000", 
+    fill: "#000",
     stroke: "#000",
     text: "white",
     fill_selected: "#ac4639",
     stroke_selected: "#ac4639",
     text_selected: "white",
   };
-  
 
 
-  let offset = Number($('#offset').val());  
 
-  try{if
-    (mapMarkerClusterer){mapMarkerClusterer.clearMarkers();
-    }}catch(e){}
+  let offset = Number($('#offset').val());
+
+  try {
+    if
+      (mapMarkerClusterer) {
+        mapMarkerClusterer.clearMarkers();
+    }
+  } catch (e) { }
   for (let index = 0; index < locations.length; index++) {
     const location = locations[index];
     let coordinatesValue = coordinates["value"];
-    
-	
-	coordinatesValue = getValueFromPath(
+
+
+    coordinatesValue = getValueFromPath(
       location,
       locationOptions.coordinates.value
     );
-	
-	coordinatesValue = coordinatesValue || getValueFromPath(
-        location,
-        locationOptions.coordinates.value
+
+    coordinatesValue = coordinatesValue || getValueFromPath(
+      location,
+      locationOptions.coordinates.value
     );
     let markerLabel = Number(index + 1);
-    if(location.c_christoflecountry == "all-shopes,seller-shopes"){
-     
-      marker_icon =  "/images/map-pin.png";
-      selected_marker_icon =  "/images/map-pin.png";
-    }else if(location.c_christoflecountry == "all-shopes,reseller-shop"){
-     
-      marker_icon =  "/images/green_pin.png";
-      selected_marker_icon =  "/images/green_pin.png";
+    if (location.c_christoflecountry == "all-shopes,seller-shopes") {
+
+      marker_icon = "/images/map-pin.png";
+      selected_marker_icon = "/images/map-pin.png";
+    } else if (location.c_christoflecountry == "all-shopes,reseller-shop") {
+
+      marker_icon = "/images/green_pin.png";
+      selected_marker_icon = "/images/green_pin.png";
     }
 
-   
+
 
     var html = '';
 
-	
-     if (coordinatesValue) {
+
+    if (coordinatesValue) {
       marker = new google.maps.Marker({
-        title : location.name.toString(),
+        title: location.name.toString(),
         position: {
           lat: coordinatesValue.latitude,
           lng: coordinatesValue.longitude,
         },
         map: map,
         //icon: marker_icon,
-       
+
         optimized: false,
       });
       const selected_marker = new google.maps.Marker({
@@ -147,29 +319,29 @@ export function addMarkersToMap(locations) {
         },
         map: map,
         //icon: selected_marker_icon,
-       
+
         optimized: false,
       });
 
       selected_marker.setVisible(false);
 
       bounds.extend(marker.position);
-	    var infoWindow = new google.maps.InfoWindow();
-			google.maps.event.addListener(selected_marker, "click", function () { 
-				highlightLocation(index, true, true, selected_marker, bounds);
-			});
+      var infoWindow = new google.maps.InfoWindow();
+      google.maps.event.addListener(selected_marker, "click", function () {
+        highlightLocation(index, true, true, selected_marker, bounds);
+      });
 
-			google.maps.event.addListener(marker, "click", function () {
-			highlightLocation(index, false, false, marker, bounds);					 
-			});
-			
-			
+      google.maps.event.addListener(marker, "click", function () {
+        highlightLocation(index, false, false, marker, bounds);
+      });
+
+
       markers.push(marker);
     }
   }
-     if(markers.length > 0){
+  if (markers.length > 0) {
     mapMarkerClusterer = new MarkerClusterer({ markers, map });
-  } 
+  }
   map.fitBounds(bounds);
 
 }
@@ -180,83 +352,93 @@ export function highlightLocation(
   shouldCenterMap,
   marker = null,
   infoWindow = null,
-  bounds = null  
+  bounds = null
 ) {
   if (!marker) {
     marker = markers[index];
   }
-  if (selectedLocationIndex == index) { 
+  if (selectedLocationIndex == index) {
 
-  if(infoWindow){   
- 
-    var fullcontent = $('#result-'+index).html();
-    $('#full-details').empty();
-    $('#full-details').append(fullcontent).prepend('<a href="javascript:void(0);" class="back mb-5 text-sm leading-[22px] py-1.5 font-semibold text-white px-6 rounded-sm border bg-red border-red inline-flex items-center transition-all duration-300 group hover:text-red hover:bg-white"><svg class="mr-1.5 fill-white group-hover:fill-red transform  rotate-180" xmlns="http://www.w3.org/2000/svg" width="16.987" height="11.33" viewBox="0 0 16.987 11.33"><path data-name="Icon ionic-ios-arrow-round-forward" d="M18.708,11.469a.771.771,0,0,0-.006,1.086l3.587,3.593H8.636a.767.767,0,0,0,0,1.534H22.284L18.7,21.275a.777.777,0,0,0,.006,1.086.764.764,0,0,0,1.08-.006l4.862-4.9h0a.861.861,0,0,0,.159-.242.732.732,0,0,0,.059-.3.769.769,0,0,0-.218-.537l-4.862-4.9A.752.752,0,0,0,18.708,11.469Z" transform="translate(-7.875 -11.252)"></path></svg></a>');
-    $('#full-details').removeClass('-translate-x-full').addClass('translate-x-0');
-    $('#full-details').removeClass('-translate-x-full').addClass('translate-x-0');
-    $('#full-details *').removeAttr('id');
+    if (infoWindow) {
 
-    // console.log(markerContent);
-      
-    var mapZoom  = map.getZoom();
-    var mapCenter  = map.getCenter();
-    
+      // var findChild = $(this).closest('.center-column').html();
+      // var getHeight = $(this).closest('.center-column').outerHeight();
+
+      // $('.location').removeClass('active');
+      // $(this).closest('.location').addClass('active');
+      // $('#full-details').empty();
+      // $('#full-details').append(findChild).prepend('<a href="javascript:void(0);" class="back"><span class="icon icon-thin-close"></span></a><span class="space"></span>');
+      // $('#full-details').addClass('active-detail');
+      // $('#full-details .space').css('height', getHeight);
+
+      var fullcontent = $('#result-' + index).html();
+      $('#full-details').empty();
+      $('#full-details').append(fullcontent).prepend('<a href="javascript:void(0);" class="back"><span class="icon font-chrisfo-icon">i</span></a><span class="space"></span>');
+      $('#full-details').addClass('active-detail');
+      $('#full-details *').removeAttr('id');
+
+      // console.log(markerContent);
+
+      var mapZoom = map.getZoom();
+      var mapCenter = map.getCenter();
+
       marker.addListener("click", () => {
-      if(!openInfoWindow){
-        openMapZoom = map.getZoom(5);
-        openMapCenter = map.getCenter();
-      }
-      document.querySelectorAll(".full-details")[index].classList.add("active");
-      
-      map.setZoom(12);  
-      map.setCenter(marker.getPosition());        
-      infoWindow.setContent(fullcontent);
-      infoWindow.open(map, marker);   
-      openInfoWindow = true;      
-    });
-    
-   
-  }
+        if (!openInfoWindow) {
+          openMapZoom = map.getZoom(5);
+          openMapCenter = map.getCenter();
+        }
+        document.querySelectorAll(".full-details")[index].classList.add("active");
 
-}else {
+        map.setZoom(12);
+        map.setCenter(marker.getPosition());
+        infoWindow.setContent(fullcontent);
+        infoWindow.open(map, marker);
+        openInfoWindow = true;
+      });
 
-  const prevIndex = selectedLocationIndex;
-  selectedLocationIndex = index;
 
-  [].slice
-    .call(document.querySelectorAll(".result") || [])
-    .forEach(function (el) {
-      el.classList.remove("selected");
-    });
+    }
 
-  if (prevIndex !== -1) {
-        const prevMarker = markers[prevIndex];
-      if(prevMarker){
-        
-        let offset = Number($('#offset').val());  
+  } else {
+
+    const prevIndex = selectedLocationIndex;
+    selectedLocationIndex = index;
+
+    [].slice
+      .call(document.querySelectorAll(".result") || [])
+      .forEach(function (el) {
+        el.classList.remove("selected");
+      });
+
+    if (prevIndex !== -1) {
+      const prevMarker = markers[prevIndex];
+      if (prevMarker) {
+
+        let offset = Number($('#offset').val());
         let markerLabel = Number(prevIndex + 1);
         prevMarker.setClickable(false);
-       
+
         prevMarker.setZIndex(null);
 
         setTimeout(function () {
           prevMarker.setClickable(true);
         }, 50);
-      
+
       }
-  }
+    }
 
 
-  const selectedMarker = markers[selectedLocationIndex];
+    const selectedMarker = markers[selectedLocationIndex];
 
 
-let offset = Number($('#offset').val());  
-if (typeof offset === 'undefined'){
-   offset = 0;
-}
-let markerLabel = Number(selectedLocationIndex + 1) ;
+    let offset = Number($('#offset').val());
+    if (typeof offset === 'undefined') {
+      offset = 0;
+    }
+    let markerLabel = Number(selectedLocationIndex + 1);
 
-  
+
+
 	if(selectedMarker){
 		 /* selectedMarker.setLabel({
 		   
@@ -268,17 +450,19 @@ let markerLabel = Number(selectedLocationIndex + 1) ;
 			map.setCenter(marker.position);
 		}
 	}
-  
-  if(infoWindow){   
-   
-    var fullcontent = $('#result-'+index).html();
-    $('#full-details').empty();
-    $('#full-details').append(fullcontent).prepend('<a href="javascript:void(0);" class="back mb-5 text-sm leading-[22px] py-1.5 font-semibold text-white px-6 rounded-sm border bg-red border-red inline-flex items-center transition-all duration-300 group hover:text-red hover:bg-white"><svg class="mr-1.5 fill-white group-hover:fill-red transform  rotate-180" xmlns="http://www.w3.org/2000/svg" width="16.987" height="11.33" viewBox="0 0 16.987 11.33"><path data-name="Icon ionic-ios-arrow-round-forward" d="M18.708,11.469a.771.771,0,0,0-.006,1.086l3.587,3.593H8.636a.767.767,0,0,0,0,1.534H22.284L18.7,21.275a.777.777,0,0,0,.006,1.086.764.764,0,0,0,1.08-.006l4.862-4.9h0a.861.861,0,0,0,.159-.242.732.732,0,0,0,.059-.3.769.769,0,0,0-.218-.537l-4.862-4.9A.752.752,0,0,0,18.708,11.469Z" transform="translate(-7.875 -11.252)"></path></svg> </a>');
-    $('#full-details').removeClass('-translate-x-full').addClass('translate-x-0');
-    $('#full-details').removeClass('-translate-x-full').addClass('translate-x-0');
-    $('#full-details *').removeAttr('id');
 
-  }}}
+
+    if (infoWindow) {
+
+      var fullcontent = $('#result-' + index).find('.center-column').html();
+      $('#full-details').empty();
+      $('#full-details').append(fullcontent).prepend('<a href="javascript:void(0);" class="back"><span class="icon font-chrisfo-icon">i</span></a><span class="space"></span>');
+      $('#full-details').addClass('active-detail');
+      $('#full-details *').removeAttr('id');
+
+    }
+  }
+}
 export const geoCorder = new google.maps.Geocoder();
 
 function getCustomPinColor(hex) {
@@ -292,7 +476,7 @@ function getCustomPinColor(hex) {
       fill: hex,
       stroke: "#fff",
       text: "#fff",
-      fill_selected: changeColor(hex,150),
+      fill_selected: changeColor(hex, 150),
       stroke_selected: hex,
       text_selected: "#000",
     };

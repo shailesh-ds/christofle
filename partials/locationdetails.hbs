@@ -1,56 +1,48 @@
-<div class="flex flex-wrap bg-light_grey p-4 rounded-lg mt-8">
-    <div class="w-full lg:max-w-xs xl:max-w-md order-2 lg:order-1 flex flex-wrap">
-        <div
-            class="w-full sm:w-[48%] lg:w-full bg-white text-dark_grey text-base leading-6 p-3 border border-border_grey rounded-lg mb-0.5 shadow-[4px_8px_6px_rgba(0,0,0,0.10)]">
-            <h2 class="text-lg uppercase font-bold pb-3 border-b border-dark_grey leading-tight mb-5">{{c_bannerTitle}}
-            </h2>
-            <div class="flex uppercase pl-2.5">
-                <svg class="bg-red rounded-full fill-white w-9 h-9 p-2.5 mr-2" xmlns="http://www.w3.org/2000/svg"
-                    width="7.954" height="10.606" viewBox="0 0 7.954 10.606">
-                    <path data-name="Icon awesome-map-marker-alt"
-                        d="M3.568,10.392C.559,6.029,0,5.581,0,3.977a3.977,3.977,0,0,1,7.954,0c0,1.6-.559,2.051-3.568,6.415a.5.5,0,0,1-.817,0Zm.409-4.758A1.657,1.657,0,1,0,2.32,3.977,1.657,1.657,0,0,0,3.977,5.634Z"
-                        fill="#fff" />
-                </svg>
-                <div class="w-[calc(100%_-_44px)]">
-                    <div class="">{{address.line1}}</div>
-                    <div class="">{{address.city}}, {{address.region}} {{address.postalCode}}</div>
-                    <div class="">{{address.countryCode}}</div>
+<div class="location-information pb-7 md:pb-[60px]">
+    <div class="container container-fluid">
+        <div class="row">
+            <div class="col store-address-info">
+                <h3 class="box-title">{{c_bannerTitle}}</h3>
+                <div class="info-row address-info">
+                    <span class="icon font-chrisfo-icon">R</span>
+                    <address class="info-row-content">
+                        {{address.line1}} <br />
+                        {{address.city}}, {{address.region}} {{address.postalCode}} <br />
+                        {{address.countryCode}}
+                    </address>
+                </div>
+                <div class="info-row"><span class="icon font-chrisfo-icon">Q</span><a class="info-row-content"
+                        href="tel:{{mainPhone}}">{{phoneNumber "uk" mainPhone "INTERNATIONAL"}}</a></div>
+                <div class="info-row"><span class="icon font-chrisfo-icon">O</span><a href="mailto:{{emails}}"
+                        class="info-row-content">{{emails}}</a></div>
+
+                <div class="info-row currentStatus"><span class="icon font-chrisfo-icon">0</span><span
+                        class="info-row-content">Ouvert maintenant - Ferme à 23:00</span></div>
+                <div class="location-action">
+                    <a id="address"
+                    class="button primary-button"
+                    href="https://www.google.com/maps/dir/?api=1&destination={{address.line1}} {{address.city}} {{address.region}} {{address.postalCode}}"
+                    target="_blank"> <span class="icon font-chrisfo-icon">p</span> 
+                     Itinéraire vers la boutique
+                </a>
+
+                   
                 </div>
             </div>
-            <p class="flex uppercase pl-2.5 items-center mt-5">
-                <svg class="bg-red rounded-full fill-white w-9 h-9 p-2.5 mr-2" xmlns="http://www.w3.org/2000/svg"
-                    width="7.955" height="7.955" viewBox="0 0 7.955 7.955">
-                    <path data-name="Icon awesome-phone-alt"
-                        d="M7.728,5.621l-1.74-.746a.373.373,0,0,0-.435.107l-.771.942A5.759,5.759,0,0,1,2.029,3.172L2.971,2.4a.372.372,0,0,0,.107-.435L2.332.226A.375.375,0,0,0,1.9.01L.289.383A.373.373,0,0,0,0,.746,7.208,7.208,0,0,0,7.209,7.955a.373.373,0,0,0,.364-.289L7.945,6.05a.377.377,0,0,0-.218-.429Z"
-                        transform="translate(0 0)" fill="#fff" />
-                </svg>
-                <a class="transition-all duration-300 hover:text-red" href="tel:{{mainPhone}}"> {{phoneNumber "uk" mainPhone "INTERNATIONAL"}}</a>
-            </p>
-            <div class="mt-6 pl-2.5 mb-4">
-                <a id="address"
-                    class="text-sm leading-[22px] py-1.5 font-semibold text-red px-6 rounded-sm border border-red inline-flex items-center transition-all duration-300 group hover:text-white hover:bg-red"
-                    href="https://www.google.com/maps/dir/?api=1&destination={{address.line1}} {{address.city}} {{address.region}} {{address.postalCode}}"
-                    target="_blank">
-                    <svg class="fill-red w-4 h-4 mr-2 group-hover:fill-white" xmlns="http://www.w3.org/2000/svg"
-                        width="7.954" height="10.606" viewBox="0 0 7.954 10.606">
-                        <path data-name="Icon awesome-map-marker-alt"
-                            d="M3.568,10.392C.559,6.029,0,5.581,0,3.977a3.977,3.977,0,0,1,7.954,0c0,1.6-.559,2.051-3.568,6.415a.5.5,0,0,1-.817,0Zm.409-4.758A1.657,1.657,0,1,0,2.32,3.977,1.657,1.657,0,0,0,3.977,5.634Z"
-                             />
-                    </svg>
-                    <div class="Getdirectionslug"></div> </a>
+
+            <div class="col store-hours">
+                <div class="inner-box">
+                    <h3 class="box-title">{{c_nature}}</h3>
+                    <div class="hours-div">{{>hours hours}}</div>
+                </div>
             </div>
 
+            <div class="col store-location-map">
+                <iframe class="border-none"
+                    src="https://maps.google.com/maps?q={{geocodedCoordinate.latitude}},{{geocodedCoordinate.longitude}}&hl={{meta.locale}}&z=14&amp;output=embed"
+                    width="100%" height="450" loading="lazy"></iframe>
+            </div>
 
         </div>
-        <div
-            class="w-full sm:w-[48%] lg:w-full ml-auto hours bg-white text-dark_grey text-xs leading-8 p-3 border border-border_grey rounded-lg mt-5 sm:mt-0 lg:mt-5 shadow-[4px_8px_6px_rgba(0,0,0,0.10)]">
-            <h2 class="text-lg uppercase font-bold pb-3 border-b border-dark_grey leading-tight mb-5 Storehour">{{c_nature}}</h2>
-            <div class="hours-div text-text_646464">{{>hours hours}}</div>
-        </div>
-    </div>
-    <div class="w-full lg:max-w-[calc(100%_-_20rem)] xl:max-w-[calc(100%_-_28rem)] lg:pl-8 order-1 lg:order-2 mb-5 lg:mb-0">
-         <iframe class="border-none"
-            src="https://maps.google.com/maps?q={{geocodedCoordinate.latitude}},{{geocodedCoordinate.longitude}}&hl={{meta.locale}}&z=14&amp;output=embed"
-            width="100%" height="450" loading="lazy"></iframe>
     </div>
 </div>
