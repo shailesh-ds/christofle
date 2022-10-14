@@ -4,7 +4,7 @@ import { getValueFromPath, scrollToRow } from "./utils";
 import { currentLatitude, currentLongitude, } from "./locations";
 import { locationOptions, limit, locationInput } from "./constants";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
-let zoom = 12;
+let zoom = 6;
 let pinStyles;
 let marker_icon;
 let selected_marker_icon;
@@ -209,7 +209,7 @@ export function centerOnGeo(geo) {
       el.textContent = "";
     });
   map.setCenter({ lat: lat, lng: lng });
-  map.setZoom(8);
+  map.setZoom(zoom);
 }
 
 function hexToRgb(hex) {
@@ -437,12 +437,7 @@ export function highlightLocation(
     }
     let markerLabel = Number(selectedLocationIndex + 1);
 
-
-
 	if(selectedMarker){
-		 /* selectedMarker.setLabel({
-		   
-		  }); */
 		  selectedMarker.setZIndex(999);
 	}
 	if(typeof marker !== 'undefined'){

@@ -75,6 +75,9 @@ export function getRequest(request_url, queryString) {
     } else {
       window.history.replaceState({ queryString: queryString }, "", newUrl);
     }
+  }else{
+	const newUrl = window.location.href.split('?')[0];
+	window.history.pushState({}, '', newUrl); 
   }
 
   startLoading();
@@ -130,9 +133,9 @@ export function getRequest(request_url, queryString) {
           
       
       if (rowCount >= data.response.count) {
-		$('.viewMoreBtnDiv').css("display", "none");
+		      $('.viewMoreBtnDiv').css("display", "none");
       } else {
-		$('.viewMoreBtnDiv').css("display", "block");		 
+		      $('.viewMoreBtnDiv').css("display", "block");		 
       }
           
       $('#offset').val(offset);
@@ -147,7 +150,7 @@ export function getRequest(request_url, queryString) {
 
       if (locations.length == 0) {
         centerOnGeo(data.response.geo);
-		$(".result-list-inner").html(`<div id="result-0" class="result !pl-4 text-center"><div class="center-column">Data not found.</div></div>`);
+		$(".result-list-inner").html(`<div id="result-0" class="result !pl-4 text-center"><div class="center-column py-5">Data not found.</div></div>`);
 		
       }
 	  

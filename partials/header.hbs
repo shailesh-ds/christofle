@@ -1,20 +1,27 @@
 <header class="site-header">
     <div class="container">
         <div class="row">
-            <div class="col left-panel"><a href="#" class="store-locator"><span class="icon font-chrisfo-icon">R</span> Nos Boutiques</a>
-			<div class="flex p-6">
-				<h1 class="LanguageTitle"></h1>
-				
-			</div>
-			</div>
+            <div class="col left-panel"><a href="#" class="store-locator"><span class="icon font-chrisfo-icon">R</span>
+                    Nos Boutiques</a>
+            </div>
             <div class="col middle-panel">
-                <button id="menu-btn" type="button" class="humburger-btn w-5 h-4 flex flex-col justify-between lg:hidden">
+                <button id="menu-btn" type="button"
+                    class="humburger-btn w-5 h-4 flex flex-col justify-between lg:hidden">
                     <span class="bg-black w-full h-0.5"></span>
                     <span class="bg-black w-full h-0.5"></span>
                     <span class="bg-black w-full h-0.5"></span>
                 </button>
-                <a href="#" class="logo"><img src="/images/logo.svg" alt="Christofle"/></a></div>
-            <div class="col right-panel"><a href="#" class="customer-service"><span class="icon font-chrisfo-icon">Q</span> Service client</a> </div>
+                <a href="#" class="logo"><img src="/images/logo.svg" alt="Christofle" /></a>
+            </div>
+            <div class="col right-panel">
+                <div class="flex justify-end mb-2.5">
+                    <h1 class="LanguageTitle"></h1>
+                    <a class="m-2 langSwitcher" onclick="langSwitcher('en');" href="javascript:void(0);">English</a>
+                    <a class="m-2 langSwitcher" onclick="langSwitcher('fr');" href="javascript:void(0);">Français</a>
+                    <a class="m-2 langSwitcher" onclick="langSwitcher('ja');" href="javascript:void(0);">日本</a>
+                </div>
+                <a href="#" class="customer-service hover:no-underline"><span class="icon font-chrisfo-icon">Q</span> Service client</a>
+            </div>
         </div>
     </div>
 </header>
@@ -23,8 +30,10 @@
         <div class="row">
             <div class="col">
                 <ul class="nav">
-                    <li class="nav-item for-m"><a href="#" class="store-locator"><span class="icon font-chrisfo-icon">R</span> Nos Boutiques</a></li>
-                    <li class="nav-item for-m"><a href="#" class="customer-service"><span class="icon font-chrisfo-icon">Q</span> Service client</a></li>
+                    <li class="nav-item for-m"><a href="#" class="store-locator"><span
+                                class="icon font-chrisfo-icon">R</span> Nos Boutiques</a></li>
+                    <li class="nav-item for-m"><a href="#" class="customer-service"><span
+                                class="icon font-chrisfo-icon">Q</span> Service client</a></li>
                     {{#each c_locations}}{{#each c_header}}
                     <li class="nav-item">
                         <a href="{{cta.link}}">{{cta.label}}</a>
@@ -38,13 +47,13 @@
 
 <script>
     document.getElementById("menu-btn").onclick = function () { myFunction() };
-    /*function langSwitcher(lang) {
+    function langSwitcher(lang) {
         let currentUrl = window.location.href;
         let newUrl = currentUrl.replace("/{{locale}}/", "/" + lang + "/");
         if (newUrl != currentUrl) window.location.href = newUrl;
-    }*/
+    }
     function myFunction() {
-        document.getElementById("navigation").classList.toggle("!translate-x-0");
+        document.getElementById("navigation").classList.toggle("translate-x-0");
         document.getElementById("body").classList.toggle("overflow-hidden");
     }
 </script>

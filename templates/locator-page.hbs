@@ -163,7 +163,7 @@
                     $('.location').removeClass('active');
                     $(this).closest('.location').addClass('active');
                     $('#full-details').empty();
-                    $('#full-details').append(findChild).prepend('<a href="javascript:void(0);" class="back"><span class="icon font-chrisfo-icon">i</span></a><span class="space"></span>');
+                    $('#full-details').append("<div class="">"+findChild+"</div>").prepend('<a href="javascript:void(0);" class="back"><span class="icon font-chrisfo-icon">i</span></a><span class="space"></span>');
                     $('#full-details').addClass('active-detail');
                     $('#full-details .space').css('height', getHeight);
 

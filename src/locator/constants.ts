@@ -13,13 +13,14 @@ export const locationNounPlural = "Locations";
 
 // Live Api query variables
 var script_tag = document.getElementById('js-locator');
-export const liveAPIKey = script_tag.getAttribute('data');
+export const liveAPIKey = "b262ae7768eec3bfa53bfca6d48e4000";
 export const savedFilterId = "982931142";
 export const entityTypes = "location";
 export const loadLocationsOnLoad = true;
 export const enableAutocomplete = true;
 export const base_url = "https://liveapi-sandbox.yext.com/v2/accounts/me/";
 export const useMiles = true;
+
 
 export type locationOption = {
   // The value of the content, either a field name or a constant value

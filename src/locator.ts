@@ -44,7 +44,7 @@ window.addEventListener("load", function () {
   const params = getQueryParamsFromUrl();
   const queryString = params["q"] || defaultQuery;
   locationInput.value = decodeURI(queryString);
-  getNearestLocationsByString();
+  // getNearestLocationsByString();
 });
 
 
@@ -102,6 +102,9 @@ if (enableAutocomplete) {
     }
   });
 }
+
+
+
 
 //for backspace data reload:-
 // locationInput.addEventListener("keyup", function (e) {
