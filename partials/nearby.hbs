@@ -380,19 +380,31 @@
    	html +=	'<h2 class="location-name"><a href="' + location.slug + '" class="storelocation-name details">';
    	html +=	'<p>' + ucwords(location.name) + '</p>';
    	html +=	'</a></h2>';
-   	html +=	'<div class="shop-type"><span class="miles">0.5 Miles</span><img src="/images/green_pin.png" alt=""></div>';
+   	html +=	'<div class="shop-type"><!--<span class="miles">0.5 Miles</span>--><img src="/images/green_pin.png" alt=""></div>';
    	html +=	'<div class="result-content">';
    	html +=	'<div class="info-row address-info"><span class="icon font-chrisfo-icon">R</span>';
    	html +=	'<address class="info-row-content">' + address + '</address>';
    	html +=	'</div>';
-   	html +=	'<div class="info-row"><span class="icon font-chrisfo-icon">Q</span>';			
-   	html +=	'<a class="info-row-content"href="tel:' + location.mainPhone + '">' + location.mainPhone + '</a></div>';
+    
+    if(typeof location.mainPhone != undefined){
+      html +=	'<div class="info-row"><span class="icon font-chrisfo-icon">Q</span>';			
+      html +=	'<a class="info-row-content"href="tel:' + location.mainPhone + '">' + location.mainPhone + '</a></div>';
+    }   
    	html +=	'<div class="info-row"><span class="icon font-chrisfo-icon">O</span>';
    	html +=	'<a href="mailto:'+location.emails+'" class="info-row-content">'+location.emails+'</a></div>';
-   	html +=	'<div class="info-row currentStatus" data-id="main-shop-0"><span class="icon font-chrisfo-icon">0</span>';
-   
-   	html +=	'<span class="info-row-content">' + window.getOpenNowString(location.hours, parsedOffset) + '</span>';
-   	html +=	'</div>';
+
+    
+    let currentStatus = "";
+    if(typeof location.hours != undefined){
+      let currentStatus = window.getOpenNowString(location.hours, parsedOffset);
+    }
+
+    if(currentStatus != ""){  
+   	  html +=	'<div class="info-row currentStatus" data-id="main-shop-0"><span class="icon font-chrisfo-icon">0</span>';   
+   	  html +=	'<span class="info-row-content">' + currentStatus + '</span>';
+   	  html +=	'</div>';
+     }
+
    	html +=	'</div>';
    	html +=	'<div class="location-action">';
    	html +=	'<a target="_blank" class="ghost-btn" href="https://www.google.com/maps/dir/?api=1&destination=' +address+ '">';

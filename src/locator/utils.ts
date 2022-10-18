@@ -30,7 +30,7 @@ export function formatNumber(numberString) {
 
 export function formatMiOrKm(miles: number, kilometers: number): string {
   if (useMiles) {
-    return miles.toFixed(0) + " mi.";
+    return miles.toFixed(0) + " Miles.";
   } else {
     return kilometers.toFixed(0) + " km.";
   }

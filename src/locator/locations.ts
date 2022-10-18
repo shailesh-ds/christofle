@@ -105,7 +105,11 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
       ['en', 'fr', 'ja'], {
           type: 'region'
       });
-  html += '<h2 class="location-name"><a href="javascript:void(0);" class="storelocation-name details">' + ucwords(cardTitleValue) + '</a></h2><div class="shop-type"><span class="miles">0.5 Miles</span><img src="/images/green_pin.png" alt=""/></div><div class="result-img"><img src="' + photoGallery2[0].image.url + '"/></div>';
+        let distanceString = "";
+        if (entityProfile.__distance) {
+            distanceString = `<span class="miles"> ${formatMiOrKm(entityProfile.__distance.distanceMiles, entityProfile.__distance.distanceKilometers)}</span>`;
+        }    
+  html += '<h2 class="location-name"><a href="javascript:void(0);" class="storelocation-name details">' + ucwords(cardTitleValue) + '</a></h2><div class="shop-type">'+distanceString+'<img src="/images/green_pin.png" alt=""/></div><div class="result-img"><img src="' + photoGallery2[0].image.url + '"/></div>';
   html += '<div class="result-content">';
   html += '<div class="info-row address-info"><span class="icon font-chrisfo-icon">R</span><address class="info-row-content">';
   html += ucwords(addressValue.line1) + ', ' + '<br>' + ucwords(addressValue.city) + ', ' + ucwords(addressValue.postalCode) + ', ' + '<br>' + ucwords(regionNames.of(addressValue.countryCode)) + "</address></div>";
