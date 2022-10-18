@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col left-panel"><a href="#" class="store-locator"><span class="icon font-chrisfo-icon">R</span>
-                   <span>{{c_headerRightLink}}</span></a>
+                   <span>{{c_headerLeftLink}}</span></a>
             </div>
             <div class="col middle-panel">
                 <button id="menu-btn" type="button"
@@ -20,7 +20,7 @@
                     <a class="m-2 langSwitcher" onclick="langSwitcher('fr');" href="javascript:void(0);">Français</a>
                     <a class="m-2 langSwitcher" onclick="langSwitcher('ja');" href="javascript:void(0);">日本</a>
                 </div>
-                <a href="#" class="customer-service hover:no-underline"><span class="icon font-chrisfo-icon">Q</span> {{c_headerLeftLink}}</a>
+                <a href="#" class="customer-service hover:no-underline"><span class="icon font-chrisfo-icon">Q</span> {{c_headerRightLink}}</a>
             </div>
         </div>
     </div>
@@ -31,9 +31,9 @@
             <div class="col">
                 <ul class="nav">
                     <li class="nav-item for-m"><a href="#" class="store-locator"><span
-                                class="icon font-chrisfo-icon">R</span> {{c_headerRightLink}}</a></li>
+                                class="icon font-chrisfo-icon">R</span> {{c_headerLeftLink}}</a></li>
                     <li class="nav-item for-m"><a href="#" class="customer-service"><span
-                                class="icon font-chrisfo-icon">Q</span> {{c_headerLeftLink}}</a></li>
+                                class="icon font-chrisfo-icon">Q</span> {{c_headerRightLink}}</a></li>
                     {{#each c_locations}}{{#each c_header}}
                     <li class="nav-item">
                         <a href="{{cta.link}}">{{cta.label}}</a>
