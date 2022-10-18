@@ -358,16 +358,6 @@ export function highlightLocation(
 
     if (infoWindow) {
 
-      // var findChild = $(this).closest('.center-column').html();
-      // var getHeight = $(this).closest('.center-column').outerHeight();
-
-      // $('.location').removeClass('active');
-      // $(this).closest('.location').addClass('active');
-      // $('#full-details').empty();
-      // $('#full-details').append(findChild).prepend('<a href="javascript:void(0);" class="back"><span class="icon icon-thin-close"></span></a><span class="space"></span>');
-      // $('#full-details').addClass('active-detail');
-      // $('#full-details .space').css('height', getHeight);
-
       var fullcontent = $('#result-' + index).html();
       $('#full-details').empty();
       $('#full-details').append(fullcontent).prepend('<a href="javascript:void(0);" class="back"><span class="icon font-chrisfo-icon">i</span></a><span class="space"></span>');

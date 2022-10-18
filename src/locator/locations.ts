@@ -293,42 +293,9 @@ export function getNearestLocationsByString() {
   let filterAnd = {};
   let filterOr = {};
   if (queryString) {
-      /* filterOr = {
-        "$or": [
-          { "address.line1": { "$contains": queryString } },
-          { "address.city": { "$contains": queryString } },
-          { "address.region": { "$contains": queryString } },
-          { "address.countryCode": { "$contains": queryString } },
-          { "address.postalCode": { "$contains": queryString } },
-          { "name": { "$contains": queryString } },
-          { "mainPhone": { "$contains": queryString } }
-        ]
-      }; */
+      
   }
-  /*var ce_departments = [];
-  $('.checkbox_departments').each(function() {
-      if ($(this).is(":checked")) {
-          ce_departments.push($(this).val());
-      }
-  });
-  if (ce_departments.length > 0) {
-      filterAnd = {
-          "$and": [{
-              "c_departments": {
-                  "$in": ce_departments
-              }
-          }]
-      };
-  }
-  filterParameters = {
-      ...filterOr,
-      ...filterAnd
-  };
-  var filterpar = JSON.stringify(filterParameters);
-  var filter = encodeURI(filterpar);
-  if (filter) {
-      request_url += "&filter=" + filter;
-  }*/
+  
   getRequest(request_url, queryString);
 }
 
@@ -550,10 +517,7 @@ export function getDepartments() {
                   }
               }
           }
-          // //alert(regionNames.of(newBRCC));
-          // somecountry += '<option value="' + newBRCC + '">' + regionNames.of(newBRCC) + '</option>';
-          // somecountry += '<option value="' + newBECC + '">' + regionNames.of(newBECC) + '</option>';
-          // somecountry += '<option value="' + newFRCC + '">' + regionNames.of(newFRCC) + '</option>';
+          
           html += somecountry;
           html += '</select>';
           html += '</div>';
@@ -679,14 +643,14 @@ export function getcity(selectcity) {
       }
   });
 }
-// getcity("");
+
 export function getshop(selectcity) {
   var baseURL = base_url+"entities?";
   var api_key = liveAPIKey;
   var vparam = "20161012";
   var entityTypes = "ce_christofleshop";
   var requesturl = baseURL + "api_key=" + api_key + "&v=" + vparam + "&resolvePlaceholders=true" + "&entityTypes=" + entityTypes + "&languages=" + langauage;
-  //alert(requesturl)
+
   fetch(requesturl).then(response => response.json()).then(result => {
       if (!result.errors) {
           var html = '';
@@ -704,9 +668,7 @@ export function getshop(selectcity) {
       }
   })
 }
-// getshop("");
-//end here
-// To get the Location of the system
+
 export function getUsersLocation() {
   if (navigator.geolocation) {
       startLoading();
