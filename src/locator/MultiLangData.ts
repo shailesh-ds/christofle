@@ -57,7 +57,7 @@ export let multilangData ={
         Am: "AM",
         Pm: "PM",
         Open: "Open",
-        Close: "closes At",
+        Close: "Closed at",
         tmClosed: "Closed Opens at",
         tomorrow: "Tommorrow",
         Closed: "Closed",

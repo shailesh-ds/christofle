@@ -14,10 +14,12 @@ import { isLoading } from "./locator/loader";
 import google from "google";
 
 researchButton.addEventListener("click", function () {
-	// $('#offset').val(0);
-	if(locationInput.value !== ''){   
+	 
+	if(locationInput.value !== ''){  
+    $('#offset').val(0); 
 		getNearestLocationsByString();
 	}
+
 });
 
 
@@ -29,6 +31,7 @@ searchButton.addEventListener("click", function () {
 
 
 useMyLocation.addEventListener("click", function () {
+  $('#offset').val(0);
   getUsersLocation();  
 });
 
@@ -49,8 +52,9 @@ window.addEventListener("load", function () {
 
 
 locationInput.addEventListener("keydown", function (e) { 
-  if(locationInput.value.trim() != "" && ( e.key=="Enter" )){    
-    getLocations(0);
+  if(locationInput.value.trim() != "" && ( e.key=="Enter" )){  
+    $('#offset').val(0);  
+    getLocations();
   }  
 }, {passive: true} ); 
 
@@ -62,7 +66,8 @@ locationInput.addEventListener("keyup", function (e) {
     }
 	keyup_loading=true; 	
 	if( locationInput.value.trim() == "" && (e.key === "Delete" || e.key === "Backspace" || e.key=="x") && keyup_loading ){	  
-	  getLocations(0);	
+    $('#offset').val(0);
+	  getLocations();	
 	  keyup_loading=false;	
     }
 });
@@ -71,8 +76,9 @@ locationInput.addEventListener("selected", function (e) {
 	if(locationInput.value.trim() != "" ){
       keyup_loading = true; 
     }
-	if(locationInput.value.trim() == "" && keyup_loading){	    
-	  getLocations(0);	
+	if(locationInput.value.trim() == "" && keyup_loading){
+    $('#offset').val(0);	    
+	  getLocations();	
 	  keyup_loading=false;	
     }
 	
@@ -80,11 +86,20 @@ locationInput.addEventListener("selected", function (e) {
 
 
 if (loadLocationsOnLoad) {
-  getLocations(0);
+  $('#offset').val(0);
+  getLocations();
   getDepartments();
   getcity("");
   getshop("");
 }
+
+document.getElementById("viewMoreBtn").addEventListener("click", function() {
+  if(locationInput.value == ''){
+      getLocations();
+  }else{
+      getNearestLocationsByString();
+  }
+});
 
 if (enableAutocomplete) {
   const autocomplete = new google.maps.places.Autocomplete(
@@ -98,7 +113,7 @@ if (enableAutocomplete) {
   );
   autocomplete.addListener("place_changed", () => {
     if (!isLoading) {
-        getLocations(0);
+        getLocations();
     }
   });
 }

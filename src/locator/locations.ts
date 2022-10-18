@@ -100,18 +100,7 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
   const phoneNumberValue = phone.toString();
   let viewDetailsLinkUrlValue = getValue(locationOptions.viewDetailsLinkUrl);
   let html = '';
-  // '<div class="lp-param-results lp-subparam-cardTitle lp-subparam-cardTitleLinkUrl">';
-  // if (cardTitleLinkUrlValue && cardTitleValue) {
-  //   if (cardTitleLinkUrlValue["url"]) {
-  //     cardTitleLinkUrlValue = cardTitleLinkUrlValue["url"];
-  //   }
-  // }
-  // else if (cardTitleValue) {
-  //   html += `<button id ="result1" class="name hover:underline hover:font-semibold text-ll-red " >
-  //     ${cardTitleValue}
-  //   </button>`;
-  // }
-  // html += "</div>";
+
   const regionNames = new Intl.DisplayNames(
       ['en', 'fr', 'ja'], {
           type: 'region'
@@ -198,6 +187,7 @@ export function locationJSONtoHTML(entityProfile, index, locationOptions) {
   html = `<div class="center-column">${html}</div>`;
   return `<div id="result-${index}" class="result location">${html}</div>`;
 }
+
 export function renderLocations(locations, append, viewMore) {
   if (!append) {
       [].slice.call(document.querySelectorAll(".result-list-inner") || []).forEach(function(el) {
@@ -292,20 +282,13 @@ export function renderSearchDetail(geo, visible, total, queryString) {
   });
 }
 export function getNearestLocationsByString() {
+
   const queryString = locationInput.value;
-  // let request_url =
-  //   base_url +
-  //   "entities" +
-  //   "?limit=" +
-  //   limit +
-  //   "&offset=" +
-  //   offset +
-  //   '&sortBy=[{"name":"ASCENDING"}]';
   var request_url = base_url + "entities/geosearch";
   // var request_url = base_url + "entities?";	
   request_url += "?radius=" + radius;
-  request_url += "&location=" + queryString;
-  limit + "&offset=" + offset + '&sortBy=[{"name":"ASCENDING"}]';
+  request_url += "&location=" + queryString + '&sortBy=[{"name":"ASCENDING"}]'; 
+
   let filterParameters = {};
   let filterAnd = {};
   let filterOr = {};
@@ -322,7 +305,7 @@ export function getNearestLocationsByString() {
         ]
       }; */
   }
-  var ce_departments = [];
+  /*var ce_departments = [];
   $('.checkbox_departments').each(function() {
       if ($(this).is(":checked")) {
           ce_departments.push($(this).val());
@@ -345,7 +328,7 @@ export function getNearestLocationsByString() {
   var filter = encodeURI(filterpar);
   if (filter) {
       request_url += "&filter=" + filter;
-  }
+  }*/
   getRequest(request_url, queryString);
 }
 
@@ -457,13 +440,13 @@ function getNearestLatLng(position) {
           if (filter) {
               request_url += "&filter=" + filter;
           }
-          request_url += "&limit=" + limit;
+          
           getRequest(request_url, null);
       }
   }).catch((e) => {});
 }
-export function getLocations(offset) {
-  let request_url = base_url + "entities" + "?limit=" + limit + "&offset=" + offset + "&languages=" + langauage + '&sortBy=[{"name":"ASCENDING"}]';
+export function getLocations() {
+  let request_url = base_url + "entities" + "?&languages=" + langauage + '&sortBy=[{"name":"ASCENDING"}]';
   let filterParameters = {};
   let filterAnd = {};
   let filterOr = {};
@@ -524,11 +507,7 @@ export function getLocations(offset) {
   getRequest(request_url, null);
 }
 // getLocations(0);
-document.getElementById("viewMoreBtn").addEventListener("click", function() {
-  let newOffset = offset + limit;
-  offset = newOffset;
-  getLocations(offset);
-});
+
 // End Here
 function ucwords(title) {
   let str = title.toLowerCase();
@@ -810,6 +789,7 @@ function getnature(newCity, newCountry) {
   "&savedFilterIds=" + savedFilterId + getRequest(request_url, null);
 }
 document.getElementById("data").addEventListener("click", function() {
+  $('#offset').val(0);  
   var countryElement = document.getElementById("mySelect") as HTMLSelectElement;
   var cityElement = document.getElementById("mySelect1") as HTMLSelectElement;
   var shopElement = document.getElementById("selectshop") as HTMLSelectElement;

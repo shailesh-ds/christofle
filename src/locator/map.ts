@@ -289,16 +289,15 @@ export function addMarkersToMap(locations) {
 
       marker_icon = "/images/map-pin.png";
       selected_marker_icon = "/images/map-pin.png";
+
     } else if (location.c_christoflecountry == "all-shopes,reseller-shop") {
 
       marker_icon = "/images/green_pin.png";
       selected_marker_icon = "/images/green_pin.png";
+
     }
 
-
-
     var html = '';
-
 
     if (coordinatesValue) {
       marker = new google.maps.Marker({
@@ -308,8 +307,7 @@ export function addMarkersToMap(locations) {
           lng: coordinatesValue.longitude,
         },
         map: map,
-        //icon: marker_icon,
-
+        icon: marker_icon,
         optimized: false,
       });
       const selected_marker = new google.maps.Marker({
@@ -318,8 +316,7 @@ export function addMarkersToMap(locations) {
           lng: coordinatesValue.longitude,
         },
         map: map,
-        //icon: selected_marker_icon,
-
+        icon: selected_marker_icon,
         optimized: false,
       });
 

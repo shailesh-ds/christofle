@@ -16,6 +16,10 @@
 "c_datashow",
 "c_aboutdatatext",
 "c_locations.name",
+"c_headerRightLink",
+"c_headerLeftLink",
+"c_useMyLocationLabel",
+"c_locatorPageTitle",
 "c_locations.c_singletext.text",
 "c_locations.c_header.cta",
 "c_locations.c_topfooter.text",
@@ -134,11 +138,9 @@
     {{>breadcrumb}}
     <div class="page-title">
         <div class="container">
-            <h1>BOUTIQUES</h1>
+            <h1>{{c_locatorPageTitle}}</h1>
         </div>
-    </div>
-
-    
+    </div>  
 
     {{>locator}}
    <h1>{{c_datashow.text}}</h1>
@@ -163,7 +165,7 @@
                     $('.location').removeClass('active');
                     $(this).closest('.location').addClass('active');
                     $('#full-details').empty();
-                    $('#full-details').append("<div class="">"+findChild+"</div>").prepend('<a href="javascript:void(0);" class="back"><span class="icon font-chrisfo-icon">i</span></a><span class="space"></span>');
+                    $('#full-details').append(findChild).prepend('<a href="javascript:void(0);" class="back"><span class="icon font-chrisfo-icon">i</span></a><span class="space"></span>');
                     $('#full-details').addClass('active-detail');
                     $('#full-details .space').css('height', getHeight);
 

@@ -1,5 +1,5 @@
-export const limit = 3;
-export const radius = 1000;
+export const limit = 1;
+export const radius = 2500;
 export const defaultQuery = "";
 
 export const locationInput = <HTMLInputElement>(
