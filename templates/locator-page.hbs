@@ -66,7 +66,7 @@
                 document.head.appendChild(script);
             });
         }
-        window.mapsLoader = loadScriptAsync("https://maps.googleapis.com/maps/api/js?key={{global.googleApiKey}}&callback=initMaps&libraries=places");
+        window.mapsLoader = loadScriptAsync("https://maps.googleapis.com/maps/api/js?key={{global.googleApiKey}}&callback=initMaps&libraries=places&language={{locale}}");
     
     </script>
 </head>
