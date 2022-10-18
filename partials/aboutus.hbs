@@ -11,6 +11,7 @@
         </div>
     </div>
 </div>
+{{#if c_christofleRelatedProducts}}
 <div class="product-sec sec-padd-60">
     <div class="container">
         <div class="col sec-heading">
@@ -20,73 +21,27 @@
         </div>
         <div class="col">
             <div class="product-slider owl-carousel">
+                 {{#each c_christofleRelatedProducts}}
                 <div class="product">
                     <div class="product-img">
-                        <img src="/images/product-img-1.png" alt=""/>
+                        {{#if this.photoGallery}}
+                        {{#each this.photoGallery}}
+                            <img src="{{this.image.url}}" alt=""/>
+                        {{/each}}
+                        {{/if}}
                     </div>
                     <div class="pro-details">
-                        <p class="title">VERTIGO</p>
-                        <h3 class="desc">Bougeoir 1 anneau en métal argenté</h3>
+                        <p class="title">{{this.name}}</p>
+                        <h3 class="desc">{{this.c_richTextDescription}}</h3>
                         <div class="price">
-                            <p>220€</p>
+                            <p>{{this.price.value}}€</p>
                         </div>
                         <a href="#" class="button primary-button" title="Découvrir"> Découvrir </a>
                     </div>
                 </div>
-                <div class="product">
-                    <div class="product-img">
-                        <img src="/images/product-img-1.png" alt=""/>
-                    </div>
-                    <div class="pro-details">
-                        <p class="title">VERTIGO</p>
-                        <h3 class="desc">Bougeoir 1 anneau en métal argenté</h3>
-                        <div class="price">
-                            <p>220€</p>
-                        </div>
-                        <a href="#" class="button primary-button" title="Découvrir"> Découvrir </a>
-                    </div>
-                </div>
-                <div class="product">
-                    <div class="product-img">
-                        <img src="/images/product-img-1.png" alt=""/>
-                    </div>
-                    <div class="pro-details">
-                        <p class="title">VERTIGO</p>
-                        <h3 class="desc">Bougeoir 1 anneau en métal argenté</h3>
-                        <div class="price">
-                            <p>220€</p>
-                        </div>
-                        <a href="#" class="button primary-button" title="Découvrir"> Découvrir </a>
-                    </div>
-                </div>
-                <div class="product">
-                    <div class="product-img">
-                        <img src="/images/product-img-1.png" alt=""/>
-                    </div>
-                    <div class="pro-details">
-                        <p class="title">VERTIGO</p>
-                        <h3 class="desc">Bougeoir 1 anneau en métal argenté</h3>
-                        <div class="price">
-                            <p>220€</p>
-                        </div>
-                        <a href="#" class="button primary-button" title="Découvrir"> Découvrir </a>
-                    </div>
-                </div>
-                <div class="product">
-                    <div class="product-img">
-                        <img src="/images/product-img-1.png" alt=""/>
-                    </div>
-                    <div class="pro-details">
-                        <p class="title">VERTIGO</p>
-                        <h3 class="desc">Bougeoir 1 anneau en métal argenté</h3>
-                        <div class="price">
-                            <p>220€</p>
-                        </div>
-                        <a href="#" class="button primary-button" title="Découvrir"> Découvrir </a>
-                    </div>
-                </div>
-
+                {{/each}}
             </div>
         </div>
     </div>
 </div>
+{{/if}}
