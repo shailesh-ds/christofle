@@ -254,6 +254,40 @@
          }
        }
      }
+
+    var ourURL = window.location.href;
+    let open24houres = 'Open 24 Hours';
+    let open_now_closeat =  'Open Now - Closes at';
+    let closed_openat = 'Closed - Opens at';
+    
+    if (ourURL.includes("/fr")) {
+        open24houres = 'Ouvert 24 heures';
+        open_now_closeat = 'Ouvert maintenant - Ferme à';
+        closed_openat = 'Fermé - Ouvre à';
+    } else if (ourURL.includes("/ja")) {
+         open24houres = '２４時間営業';
+         open_now_closeat = '今すぐ開店 - 閉店時間';
+         closed_openat = '閉店 - 開店時間';
+    } 
+
+    let message = 'Closed';
+    if (openRightNow) {
+        if (currentInterval.start === "00:00" && currentInterval.end === "23:59") {
+            message = open24houres;
+        } else {
+            message = open_now_closeat+' [closingTime]';
+            message = message.replace("[closingTime]", formatTime(currentInterval.end));
+        }
+    } else if (nextInterval) {
+        if (nextIsTomorrow) {
+            message = closed_openat+' [openingTime] tomorrow';
+            message = message.replace("[openingTime]", formatTime(nextInterval.start));
+        } else {
+            message = closed_openat+' [openingTime]';
+            message = message.replace("[openingTime]", formatTime(nextInterval.start));
+        }
+    }
+    return message;
    
    };
    
@@ -399,11 +433,11 @@
       let currentStatus = window.getOpenNowString(location.hours, parsedOffset);
     }
 
-    if(currentStatus != ""){  
+   // if(currentStatus != ""){  
    	  html +=	'<div class="info-row currentStatus" data-id="main-shop-0"><span class="icon font-chrisfo-icon">0</span>';   
-   	  html +=	'<span class="info-row-content">' + currentStatus + '</span>';
+   	  html +=	'<span class="info-row-content">' + window.getOpenNowString(location.hours, parsedOffset) + '</span>';
    	  html +=	'</div>';
-     }
+    // }
 
    	html +=	'</div>';
    	html +=	'<div class="location-action">';
